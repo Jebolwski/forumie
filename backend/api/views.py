@@ -8,7 +8,6 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .models import *
 from .serializers import *
-from django.utils.text import slugify
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -44,7 +43,7 @@ def Routes(request):
 
     return Response(routes)
 
-@permission_classes([IsAdminUser])
+@permission_classes([IsAuthenticated])
 @api_view(['GET','PUT','DELETE'])
 def ForumView(request,my_slug):
     if request.method=="GET":
@@ -59,6 +58,10 @@ def ForumView(request,my_slug):
         return Response("Başarıyla silindi.")
 
     if request.method=='PUT':
+        fake_data = request.data.copy()
+        fake_data['user'] = request.user.id
+        fake_data['baslik_slug'] = slugify(request.data['baslik'])
+        fake_data['username'] = request.user.username
         inst = Forum.objects.get(baslik_slug=my_slug)
         serializer = ForumSerializer(instance = inst,data = fake_data)
         if serializer.is_valid():
@@ -68,29 +71,39 @@ def ForumView(request,my_slug):
         return Response("Error!")
 
 
-@permission_classes([IsAdminUser])
 @api_view(['POST','GET'])
+@permission_classes([IsAuthenticated])
 def ForumEkleView(request):
-    if request.method=="POST":
-            fake_data = request.data.copy()
-            fake_data['user'] = request.user.id
-            fake_data['baslik_slug'] = slugify(request.data['baslik'])
-            fake_data['username'] = request.user.username
-            serializer = ForumSerializer(data = fake_data)
-            if serializer.is_valid():
-                serializer.save()
-
-                return Response(serializer.data)
-            return Response("Error!")
-    return Response("Enter data!")
+    user = request.user
+    Forum.objects.create(
+        user = request.user,
+        baslik_slug = request.data['baslik_slug'].lower(),
+        username = request.user.username,
+        baslik = request.data['baslik'],
+        soru = request.data['soru'],
+        category = request.data['category'],
+    )
+    # fake_data = request.data.copy()
+    # fake_data['user'] = request.user.id
+    # fake_data['baslik_slug'] = slugify(fake_data['baslik'])
+    # fake_data['username'] = request.user.username
+    # serializer = ForumSerializer(data = fake_data)
+    # if serializer.is_valid():
+    #     serializer.save()
+    #     print("valid.")
+    #     print(fake_data)
+    # else:
+    #     print("valid değil.",serializer.is_valid())
+    #     print(fake_data)
+    return Response("Yes")
 
 
 @api_view(['GET'])
 def ForumlarView(request):
     forumlar = Forum.objects.all()
     serializer = ForumSerializer(forumlar,many=True)
-
     return Response(serializer.data)
+
 
 @api_view(['GET'])
 def SporForumlarView(request):
@@ -99,12 +112,14 @@ def SporForumlarView(request):
 
     return Response(serializer.data)
 
+
 @api_view(['GET'])
 def CombatForumlarView(request):
     forumlar = Forum.objects.filter(category="MMA")
     serializer = ForumSerializer(forumlar,many=True)
 
     return Response(serializer.data)
+
 
 @api_view(['GET'])
 def ForumDetayView(request,my_slug):

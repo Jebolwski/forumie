@@ -11,7 +11,7 @@ CATEGORY_CHOICES = (
 
 
 class Forum(models.Model):
-    user          = models.ForeignKey(User,on_delete=models.CASCADE,null=False,blank=False)
+    user          = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
     username      = models.CharField(max_length=160,null=False,blank=False)
     baslik        = models.CharField(max_length=160,null=False,blank=False)
     category      = models.CharField(max_length=10,choices=CATEGORY_CHOICES,null=False,blank=False)
