@@ -36,7 +36,7 @@ def Routes(request):
         '/api/token/',
         '/api/token/refresh/',
         '/register/',
-        '/forum/<slug:my_slug>/',
+        '/forum/<int:pk>/',
         '/forum-kabul/',
         '/forumlar/',
     ]
@@ -45,30 +45,30 @@ def Routes(request):
 
 @permission_classes([IsAuthenticated])
 @api_view(['GET','PUT','DELETE'])
-def ForumView(request,my_slug):
+def ForumView(request,pk):
     if request.method=="GET":
-        forum = Forum.objects.get(baslik_slug=my_slug)
+        forum = Forum.objects.get(id=pk)
         serializer = ForumSerializer(forum,many=False)
         return Response(serializer.data)
-
+    
     if request.method=="DELETE":
-        forum = Forum.objects.get(baslik_slug=my_slug)
+        forum = Forum.objects.get(id=pk)
         forum.delete()
+        return Response("Başarıyla silindi.")    
         
-        return Response("Başarıyla silindi.")
 
     if request.method=='PUT':
         fake_data = request.data.copy()
         fake_data['user'] = request.user.id
-        fake_data['baslik_slug'] = slugify(request.data['baslik'])
         fake_data['username'] = request.user.username
-        inst = Forum.objects.get(baslik_slug=my_slug)
+        inst = Forum.objects.get(id=pk)
         serializer = ForumSerializer(instance = inst,data = fake_data)
         if serializer.is_valid():
             serializer.save()
 
             return Response(serializer.data)
         return Response("Error!")
+
 
 
 @api_view(['POST','GET'])
@@ -104,6 +104,18 @@ def ForumlarView(request):
     serializer = ForumSerializer(forumlar,many=True)
     return Response(serializer.data)
 
+@api_view(['GET'])
+def ForumlarMMAView(request):
+    forumlar = Forum.objects.all().filter(category="MMA")
+    serializer = ForumSerializer(forumlar,many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def ForumlarSporView(request):
+    forumlar = Forum.objects.all().filter(category="Spor")
+    serializer = ForumSerializer(forumlar,many=True)
+    return Response(serializer.data)
+
 
 @api_view(['GET'])
 def SporForumlarView(request):
@@ -122,8 +134,8 @@ def CombatForumlarView(request):
 
 
 @api_view(['GET'])
-def ForumDetayView(request,my_slug):
-    forum = Forum.objects.get(baslik_slug=my_slug)
+def ForumDetayView(request,pk):
+    forum = Forum.objects.get(id=pk)
     serializer = ForumSerializer(forum,many=False) 
 
     return Response(serializer.data)
