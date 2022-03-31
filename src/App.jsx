@@ -29,8 +29,8 @@ function App() {
               <Route path="/forum/:id/sil/" element={<ForumSil />} />
               <Route path="/forum/:id/duzenle/" element={<ForumDuzenle />} />
               <Route path="/forum-ekle/" element={<ForumEkle />} />
+              <Route path="/ayarlar/" element={<Ayarlar />} />
             </Route>
-            <Route path="/ayarlar/" element={<Ayarlar />} />
           </Routes>
         </AuthProvider>
       </Router>

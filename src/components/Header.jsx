@@ -38,15 +38,18 @@ const Header = () => {
             <span className="d-none d-lg-block">Forumlar</span>
           </Link>
         </li>
-        <li>
-          <Link
-            to={"/ayarlar/"}
-            className="text-white text-decoration-none d-flex"
-          >
-            <FiSettings size={24} className="mx-1" />
-            <span className="d-none d-lg-block">Ayarlar</span>
-          </Link>
-        </li>
+        {user ? (
+          <li>
+            <Link
+              to={"/ayarlar/"}
+              className="text-white text-decoration-none d-flex"
+            >
+              <FiSettings size={24} className="mx-1" />
+              <span className="d-none d-lg-block">Ayarlar</span>
+            </Link>
+          </li>
+        ) : null}
+
         <li>
           {user ? (
             <a

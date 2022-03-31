@@ -13,10 +13,29 @@ const Forumlar = () => {
 
   return (
     <div className="text-center">
-      <Link to={"/forumlar/mma/"}>MMA</Link>
+      <ul className="d-flex list-unstyled py-5 my-5 justify-content-evenly">
+        <li>
+          <Link
+            to={"/forumlar/mma/"}
+            className="text-black text-decoration-none"
+            style={{ fontSize: "20px", fontWeight: "400" }}
+          >
+            MMA
+          </Link>
+        </li>
+        <li>
+          <Link
+            to={"/forumlar/spor/"}
+            className="text-black text-decoration-none"
+            style={{ fontSize: "20px", fontWeight: "400" }}
+          >
+            Spor
+          </Link>
+        </li>
+      </ul>
+
       <br />
       <br />
-      <Link to={"/forumlar/spor/"}>Spor</Link>
     </div>
   );
 };
