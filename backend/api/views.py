@@ -8,7 +8,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .models import *
 from .serializers import *
-
+from django.utils.text import slugify
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
@@ -69,7 +69,19 @@ def ForumView(request,pk):
             return Response(serializer.data)
         return Response("Error!")
 
-
+@api_view(['GET','PUT','DELETE'])
+def KayitOl(request):
+    if request.method=='POST':
+        serializer = UserSerializer(request.data,many=False)
+        if serializer.is_valid():
+            serializer.save()
+            Profil.objects.create(
+                profil_foto=None,
+                arkaplan_foto=None,
+                biyografi=None,
+                user=User.objects.get(username=request.user.username),
+                username=slugify(request.user.username)
+            )
 
 @api_view(['POST','GET'])
 @permission_classes([IsAuthenticated])
@@ -138,4 +150,12 @@ def ForumDetayView(request,pk):
     forum = Forum.objects.get(id=pk)
     serializer = ForumSerializer(forum,many=False) 
 
+    return Response(serializer.data)
+
+
+@permission_classes([IsAuthenticated])
+@api_view(['GET'])
+def ProfilView(request,my_slug):
+    profil = Profil.objects.get(username_slug=my_slug)
+    serializer = ProfilSerializer(profil,many=False)
     return Response(serializer.data)

@@ -17,5 +17,6 @@ urlpatterns = [
     path('forum-ekle/',views.ForumEkleView,name="forum-ekle"),
     path('forumlar/',views.ForumlarView,name="forumlar"),
     path('forumlar/mma/',views.ForumlarMMAView,name="forumlar-mma"),
+    path('profil/<slug:my_slug>/',views.ProfilView,name="profil"),
     path('forumlar/spor/',views.ForumlarSporView,name="forumlar-spor"),
 ]
