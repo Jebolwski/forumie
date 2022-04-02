@@ -1,4 +1,5 @@
 from pydoc import doc
+from urllib import response
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated,IsAdminUser
@@ -69,19 +70,22 @@ def ForumView(request,pk):
             return Response(serializer.data)
         return Response("Error!")
 
-@api_view(['GET','PUT','DELETE'])
+@api_view(['GET','POST'])
 def KayitOl(request):
     if request.method=='POST':
-        serializer = UserSerializer(request.data,many=False)
+        serializer = UserSerializer(data=request.data,many=False)
         if serializer.is_valid():
             serializer.save()
             Profil.objects.create(
                 profil_foto=None,
                 arkaplan_foto=None,
                 biyografi=None,
-                user=User.objects.get(username=request.user.username),
-                username=slugify(request.user.username)
+                user=User.objects.get(username=request.data['username']),
+                username=User.objects.get(username=request.data['username']).username,
+                username_slug=(request.data['username_slug']).lower()
             )
+            return Response(serializer.data)
+    return Response("Kayıt Ol")
 
 @api_view(['POST','GET'])
 @permission_classes([IsAuthenticated])
