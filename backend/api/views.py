@@ -92,25 +92,13 @@ def KayitOl(request):
 def ForumEkleView(request):
     user = request.user
     Forum.objects.create(
-        user = request.user,
+        profil = Profil.objects.get(user_id = request.user.id),
         baslik_slug = request.data['baslik_slug'].lower(),
         username = request.user.username,
         baslik = request.data['baslik'],
         soru = request.data['soru'],
         category = request.data['category'],
     )
-    # fake_data = request.data.copy()
-    # fake_data['user'] = request.user.id
-    # fake_data['baslik_slug'] = slugify(fake_data['baslik'])
-    # fake_data['username'] = request.user.username
-    # serializer = ForumSerializer(data = fake_data)
-    # if serializer.is_valid():
-    #     serializer.save()
-    #     print("valid.")
-    #     print(fake_data)
-    # else:
-    #     print("valid değil.",serializer.is_valid())
-    #     print(fake_data)
     return Response("Yes")
 
 
