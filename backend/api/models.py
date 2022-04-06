@@ -23,6 +23,8 @@ class Profil(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
     username_slug = models.SlugField(max_length=200,null=True,blank=True)
     username = models.CharField(max_length=160,null=True,blank=True)
+    olusturma     = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    guncelle      = models.DateTimeField(auto_now=True,blank=True, null=True)
 
     def __str__(self):
         return self.username_slug
