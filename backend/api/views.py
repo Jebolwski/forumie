@@ -133,7 +133,6 @@ def SporForumlarView(request):
 def CombatForumlarView(request):
     forumlar = Forum.objects.filter(category="MMA")
     serializer = ForumSerializer(forumlar,many=True)
-
     return Response(serializer.data)
 
 
@@ -141,9 +140,15 @@ def CombatForumlarView(request):
 def ForumDetayView(request,pk):
     forum = Forum.objects.get(id=pk)
     serializer = ForumSerializer(forum,many=False) 
-
     return Response(serializer.data)
 
+
+@api_view(['GET'])
+def KisininForumlariView(request,my_slug):
+    profil = Profil.objects.get(username_slug=my_slug)
+    forumlari = Forum.objects.all().filter(username = profil.username)
+    serializer = ForumSerializer(forumlari,many=True)
+    return Response(serializer.data)
 
 @permission_classes([IsAuthenticated])
 @api_view(['GET'])
