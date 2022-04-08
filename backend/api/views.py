@@ -1,4 +1,6 @@
+from multiprocessing import managers
 from pydoc import doc
+import re
 from urllib import response
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
@@ -60,13 +62,16 @@ def ForumView(request,pk):
 
     if request.method=='PUT':
         fake_data = request.data.copy()
-        fake_data['user'] = request.user.id
-        fake_data['username'] = request.user.username
+        user = User.objects.get(username=request.data['username'])
+        fake_data['user'] = user
+        fake_data['username'] = user.username
+        fake_data['category'] = request.data['category']
         inst = Forum.objects.get(id=pk)
-        serializer = ForumSerializer(instance = inst,data = fake_data)
+        serializer = ForumSerializer(instance = inst,data = request.data)
+        
         if serializer.is_valid():
             serializer.save()
-
+            print(Forum.objects.get(id=pk))
             return Response(serializer.data)
         return Response("Error!")
 
@@ -101,6 +106,13 @@ def ForumEkleView(request):
     )
     return Response("Yes")
 
+@api_view(['POST','GET'])
+def EmailDegistir(request):
+    user = User.objects.get(id=request.data['userId'])
+    user.email=request.data['newEmail']
+    user.save()
+    serializer = UserSerializer(user,many=False)
+    return Response(serializer.data)
 
 @api_view(['GET'])
 def ForumlarView(request):
