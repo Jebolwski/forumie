@@ -2,10 +2,11 @@ from unicodedata import name
 from django.urls import path
 from . import views
 from .views import MyTokenObtainPairView
-
+from django.contrib.auth import views as authview
 from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
+from django.views.decorators.csrf import csrf_exempt
 
 
 urlpatterns = [
@@ -22,4 +23,5 @@ urlpatterns = [
     path('forumlar/spor/',views.ForumlarSporView,name="forumlar-spor"),
     path('forumlarim/<slug:my_slug>/',views.KisininForumlariView,name="forumlarim"),
     path('email-degistir/',views.EmailDegistir,name="email-degistir"),
+    path('sifre-sifirla/', csrf_exempt(authview.PasswordChangeView.as_view())),
 ]

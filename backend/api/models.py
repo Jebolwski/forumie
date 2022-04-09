@@ -30,7 +30,7 @@ class Profil(models.Model):
         return self.username_slug
 
 class Forum(models.Model):
-    profil         = models.ForeignKey(Profil,on_delete=models.CASCADE,null=True,blank=True)
+    profil        = models.ForeignKey(Profil,on_delete=models.CASCADE,null=True,blank=True)
     username      = models.CharField(max_length=160,null=False,blank=False)
     baslik        = models.CharField(max_length=160,null=False,blank=False)
     category      = models.CharField(max_length=10,choices=CATEGORY_CHOICES,null=False,blank=False)

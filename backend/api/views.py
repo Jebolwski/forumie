@@ -62,13 +62,13 @@ def ForumView(request,pk):
 
     if request.method=='PUT':
         fake_data = request.data.copy()
-        user = User.objects.get(username=request.data['username'])
-        fake_data['user'] = user
-        fake_data['username'] = user.username
-        fake_data['category'] = request.data['category']
+        fake_data['profil'] = Profil.objects.get(username=request.data['username'])
+        fake_data['username'] = request.data['username']
+        fake_data['baslik_slug'] = request.data['baslik_slug']
+        fake_data['baslik'] = request.data['baslik']
         inst = Forum.objects.get(id=pk)
         serializer = ForumSerializer(instance = inst,data = request.data)
-        
+        print(fake_data)
         if serializer.is_valid():
             serializer.save()
             print(Forum.objects.get(id=pk))
