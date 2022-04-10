@@ -126,6 +126,21 @@ def ForumlarMMAView(request):
     serializer = ForumSerializer(forumlar,many=True)
     return Response(serializer.data)
 
+@api_view(['GET','POST'])
+def ForumCevapla(request):
+    fake_data = request.data.copy()
+    fake_data['profil'] = Profil.objects.get(username = request.data['username']).id
+    serializer = ForumYanitSerializer(data = fake_data)
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def ForumCevaplari(request,pk):
+    cevaplar = ForumYanit.objects.filter(forum_id=pk)
+    serializer = ForumYanitSerializer(cevaplar,many=True)
+    return Response(serializer.data)
+
 @api_view(['GET'])
 def ForumlarSporView(request):
     forumlar = Forum.objects.all().filter(category="Spor")
