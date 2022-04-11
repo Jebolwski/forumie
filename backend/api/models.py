@@ -43,6 +43,7 @@ class Forum(models.Model):
         return str(self.baslik)
 
 class ForumYanit(models.Model):
+    username      = models.CharField(max_length=160,null=False,blank=False)
     profil        = models.ForeignKey(Profil,on_delete=models.CASCADE,null=False,blank=False)
     forum         = models.ForeignKey(Forum,on_delete=models.CASCADE,null=True,blank=True)
     cevap         = models.CharField(max_length=700,null=False,blank=False)

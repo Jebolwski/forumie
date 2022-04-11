@@ -130,10 +130,17 @@ def ForumlarMMAView(request):
 def ForumCevapla(request):
     fake_data = request.data.copy()
     fake_data['profil'] = Profil.objects.get(username = request.data['username']).id
+    fake_data['username'] = request.data['username']
     serializer = ForumYanitSerializer(data = fake_data)
     if serializer.is_valid():
         serializer.save()
     return Response(serializer.data)
+
+@api_view(['DELETE'])
+def ForumCevapSil(request,pk):
+    forumyanit = ForumYanit.objects.get(id = pk)
+    forumyanit.delete()
+    return Response("Silindi!")
 
 @api_view(['GET'])
 def ForumCevaplari(request,pk):

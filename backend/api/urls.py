@@ -20,6 +20,7 @@ urlpatterns = [
     path('forumlar/mma/',views.ForumlarMMAView,name="forumlar-mma"),
     path('kayit-ol/',views.KayitOl,name="kayit"),
     path('forum/cevap/',views.ForumCevapla,name="forumlar-cevapla"),
+    path('forum/cevap/<int:pk>/sil/',views.ForumCevapSil,name="forumlar-cevapl-sil"),
     path('forum/<int:pk>/cevaplari/',views.ForumCevaplari,name="forumlar-cevaplari"),
     path('profil/<slug:my_slug>/',views.ProfilView,name="profil"),
     path('forumlar/spor/',views.ForumlarSporView,name="forumlar-spor"),
