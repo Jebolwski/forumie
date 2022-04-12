@@ -131,6 +131,9 @@ def ForumCevapla(request):
     fake_data = request.data.copy()
     fake_data['profil'] = Profil.objects.get(username = request.data['username']).id
     fake_data['username'] = request.data['username']
+    sorted_data = sorted(list(request.data))
+    if sorted_data[0]!='cevaba_cevap':
+        fake_data['cevaba_cevap'] = ForumYanit.objects.get(id=request.data['cevaba_cevap'])
     serializer = ForumYanitSerializer(data = fake_data)
     if serializer.is_valid():
         serializer.save()
