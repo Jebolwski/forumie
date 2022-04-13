@@ -99,7 +99,7 @@ def ForumEkleView(request):
     Forum.objects.create(
         profil = Profil.objects.get(user_id = request.user.id),
         baslik_slug = request.data['baslik_slug'].lower(),
-        username = request.user.username,
+        username = request.data['username'],
         baslik = request.data['baslik'],
         soru = request.data['soru'],
         category = request.data['category'],
@@ -133,6 +133,7 @@ def ForumCevapla(request):
     fake_data['username'] = request.data['username']
     sorted_data = sorted(list(request.data))
     if sorted_data[0]!='cevaba_cevap':
+        fake_data['cevaba_cevap_profil_username'] = request.data['cevaba_cevap_profil_username']
         fake_data['cevaba_cevap'] = ForumYanit.objects.get(id=request.data['cevaba_cevap'])
     serializer = ForumYanitSerializer(data = fake_data)
     if serializer.is_valid():
