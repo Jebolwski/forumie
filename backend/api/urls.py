@@ -23,6 +23,7 @@ urlpatterns = [
     path('forum/cevap/<int:pk>/sil/',views.ForumCevapSil,name="forumlar-cevapl-sil"),
     path('forum/<int:pk>/cevaplari/',views.ForumCevaplari,name="forumlar-cevaplari"),
     path('profil/<slug:my_slug>/',views.ProfilView,name="profil"),
+    path('profil/<slug:my_slug>/duzenle/',views.ProfilDuzenleView,name="profil-duzenle"),
     path('forumlar/spor/',views.ForumlarSporView,name="forumlar-spor"),
     path('forumlarim/<slug:my_slug>/',views.KisininForumlariView,name="forumlarim"),
     path('email-degistir/',views.EmailDegistir,name="email-degistir"),

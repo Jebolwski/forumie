@@ -1,4 +1,5 @@
 from multiprocessing import managers
+import profile
 from pydoc import doc
 import re
 from urllib import response
@@ -193,4 +194,14 @@ def KisininForumlariView(request,my_slug):
 def ProfilView(request,my_slug):
     profil = Profil.objects.get(username_slug=my_slug)
     serializer = ProfilSerializer(profil,many=False)
+    return Response(serializer.data)
+
+@permission_classes([IsAuthenticated])
+@api_view(['GET','PUT','POST'])
+def ProfilDuzenleView(request,my_slug):
+    profil = Profil.objects.get(username_slug=my_slug)
+    serializer = ProfilSerializer(profil,data = request.data)
+    if serializer.is_valid():
+        serializer.save()
+
     return Response(serializer.data)
