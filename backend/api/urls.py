@@ -7,7 +7,8 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 from django.views.decorators.csrf import csrf_exempt
-
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.Routes),
@@ -28,4 +29,4 @@ urlpatterns = [
     path('forumlarim/<slug:my_slug>/',views.KisininForumlariView,name="forumlarim"),
     path('email-degistir/',views.EmailDegistir,name="email-degistir"),
     path('sifre-sifirla/', csrf_exempt(authview.PasswordChangeView.as_view())),
-]
+]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

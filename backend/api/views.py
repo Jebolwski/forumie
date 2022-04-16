@@ -14,6 +14,8 @@ from .models import *
 from .serializers import *
 from django.utils.text import slugify
 
+
+
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
@@ -29,7 +31,6 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         # ...
 
         return token
-
 
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
@@ -132,13 +133,16 @@ def ForumCevapla(request):
     fake_data = request.data.copy()
     fake_data['profil'] = Profil.objects.get(username = request.data['username']).id
     fake_data['username'] = request.data['username']
+    fake_data['url'] = Profil.objects.get(username = request.data['username']).profil_foto.url
     sorted_data = sorted(list(request.data))
     if sorted_data[0]!='cevaba_cevap':
         fake_data['cevaba_cevap_profil_username'] = request.data['cevaba_cevap_profil_username']
         fake_data['cevaba_cevap'] = ForumYanit.objects.get(id=request.data['cevaba_cevap'])
     serializer = ForumYanitSerializer(data = fake_data)
+    print(fake_data)
     if serializer.is_valid():
         serializer.save()
+    
     return Response(serializer.data)
 
 @api_view(['DELETE'])
@@ -201,6 +205,7 @@ def ProfilView(request,my_slug):
 def ProfilDuzenleView(request,my_slug):
     profil = Profil.objects.get(username_slug=my_slug)
     serializer = ProfilSerializer(profil,data = request.data)
+    print(request.data)
     if serializer.is_valid():
         serializer.save()
 
