@@ -204,7 +204,8 @@ def ProfilView(request,my_slug):
 @api_view(['GET','PUT','POST'])
 def ProfilDuzenleView(request,my_slug):
     profil = Profil.objects.get(username_slug=my_slug)
-    serializer = ProfilSerializer(profil,data = request.data)
+    fake_data = request.data.copy()
+    serializer = ProfilSerializer(profil,data = fake_data)
     print(request.data)
     if serializer.is_valid():
         serializer.save()
