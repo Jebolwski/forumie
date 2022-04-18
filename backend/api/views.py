@@ -205,8 +205,11 @@ def ProfilView(request,my_slug):
 def ProfilDuzenleView(request,my_slug):
     profil = Profil.objects.get(username_slug=my_slug)
     fake_data = request.data.copy()
-    serializer = ProfilSerializer(profil,data = fake_data)
-    print(request.data)
+    print(request.FILES)
+    fake_data['arkaplan_foto'] = request.data['arkaplan_foto']
+    serializer = ProfilSerializer(profil,data = fake_data,files=request.FILES)
+    
+    print(fake_data)
     if serializer.is_valid():
         serializer.save()
 
