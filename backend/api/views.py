@@ -70,10 +70,8 @@ def ForumView(request,pk):
         fake_data['baslik'] = request.data['baslik']
         inst = Forum.objects.get(id=pk)
         serializer = ForumSerializer(instance = inst,data = request.data)
-        print(fake_data)
         if serializer.is_valid():
             serializer.save()
-            print(Forum.objects.get(id=pk))
             return Response(serializer.data)
         return Response("Error!")
 
@@ -133,13 +131,11 @@ def ForumCevapla(request):
     fake_data = request.data.copy()
     fake_data['profil'] = Profil.objects.get(username = request.data['username']).id
     fake_data['username'] = request.data['username']
-    fake_data['url'] = Profil.objects.get(username = request.data['username']).profil_foto.url
     sorted_data = sorted(list(request.data))
     if sorted_data[0]!='cevaba_cevap':
         fake_data['cevaba_cevap_profil_username'] = request.data['cevaba_cevap_profil_username']
         fake_data['cevaba_cevap'] = ForumYanit.objects.get(id=request.data['cevaba_cevap'])
     serializer = ForumYanitSerializer(data = fake_data)
-    print(fake_data)
     if serializer.is_valid():
         serializer.save()
     
@@ -200,16 +196,12 @@ def ProfilView(request,my_slug):
     serializer = ProfilSerializer(profil,many=False)
     return Response(serializer.data)
 
-@permission_classes([IsAuthenticated])
 @api_view(['GET','PUT','POST'])
 def ProfilDuzenleView(request,my_slug):
     profil = Profil.objects.get(username_slug=my_slug)
     fake_data = request.data.copy()
-    print(request.FILES)
-    fake_data['arkaplan_foto'] = request.data['arkaplan_foto']
-    serializer = ProfilSerializer(profil,data = fake_data,files=request.FILES)
+    serializer = ProfilSerializer(profil,data = fake_data)
     
-    print(fake_data)
     if serializer.is_valid():
         serializer.save()
 

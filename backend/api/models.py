@@ -17,8 +17,8 @@ CATEGORY_CHOICES = (
 
 
 class Profil(models.Model):
-    profil_foto = models.ImageField(upload_to="profil_foto",null=True,blank=True)
-    arkaplan_foto = models.ImageField(upload_to="arkaplan_foto",null=True,blank=True)
+    profil_foto = models.FileField(default="",null=True,blank=True)
+    arkaplan_foto = models.FileField(default="",null=True,blank=True)
     biyografi = models.CharField(max_length=160,null=True,blank=True)
     user = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
     username_slug = models.SlugField(max_length=200,null=True,blank=True)
@@ -46,7 +46,6 @@ class ForumYanit(models.Model):
     username      = models.CharField(max_length=160,null=False,blank=False)
     profil        = models.ForeignKey(Profil,on_delete=models.CASCADE,null=False,blank=False)
     username      = models.CharField(max_length=160,null=False,blank=False)
-    url           = models.CharField(max_length=160,null=True,blank=True)
     cevaba_cevap  = models.ForeignKey('self',on_delete=models.CASCADE,null=True,blank=True)
     cevaba_cevap_profil_username  = models.CharField(max_length=160,null=True,blank=True)
     forum         = models.ForeignKey(Forum,on_delete=models.CASCADE,null=True,blank=True)
