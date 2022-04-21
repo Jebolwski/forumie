@@ -4,16 +4,23 @@ from .models import *
 from rest_framework.serializers import ModelSerializer
 from django.contrib.auth.models import User
 class ForumSerializer(ModelSerializer):
+
     class Meta:
         model       = Forum
         fields      = "__all__"
 
+
 class ForumYanitSerializer(ModelSerializer):
+    
+    url = serializers.SerializerMethodField('get_profil_url')
     class Meta:
         model       = ForumYanit
-        fields      = "__all__"
+        fields      = ['id','username','profil','cevaba_cevap','cevaba_cevap_profil_username','forum','cevap','url','olusturma','guncelle']
 
-
+    def get_profil_url(self,yanit):
+        url = yanit.profil.profil_foto.url
+        return url
+    
 class UserSerializer(ModelSerializer):
     class Meta:
         model = User

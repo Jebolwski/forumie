@@ -45,7 +45,6 @@ class Forum(models.Model):
 class ForumYanit(models.Model):
     username      = models.CharField(max_length=160,null=False,blank=False)
     profil        = models.ForeignKey(Profil,on_delete=models.CASCADE,null=False,blank=False)
-    username      = models.CharField(max_length=160,null=False,blank=False)
     cevaba_cevap  = models.ForeignKey('self',on_delete=models.CASCADE,null=True,blank=True)
     cevaba_cevap_profil_username  = models.CharField(max_length=160,null=True,blank=True)
     forum         = models.ForeignKey(Forum,on_delete=models.CASCADE,null=True,blank=True)
