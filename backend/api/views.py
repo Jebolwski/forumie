@@ -182,6 +182,7 @@ def ForumDetayView(request,pk):
     return Response(serializer.data)
 
 
+
 @api_view(['GET'])
 def KisininForumlariView(request,my_slug):
     profil = Profil.objects.get(username_slug=my_slug)
