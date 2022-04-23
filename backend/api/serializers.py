@@ -1,10 +1,21 @@
+from asyncio.windows_events import NULL
 from dataclasses import fields
 from rest_framework import serializers
 from .models import *
 from rest_framework.serializers import ModelSerializer
 from django.contrib.auth.models import User
 class ForumSerializer(ModelSerializer):
+    url = serializers.SerializerMethodField('get_profil_url')
+    class Meta:
+        model       = Forum
+        fields      = ['id','username','profil','url','forum','soru','baslik_slug','category','baslik','olusturma','guncelle']
 
+    def get_profil_url(self,forum):
+        if forum.profil:
+            url = forum.profil.profil_foto.url
+            return url
+        else:
+            return NULL
     class Meta:
         model       = Forum
         fields      = "__all__"
