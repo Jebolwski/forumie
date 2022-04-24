@@ -11,11 +11,11 @@ class ForumSerializer(ModelSerializer):
         fields      = ['id','username','profil','url','forum','soru','baslik_slug','category','baslik','olusturma','guncelle']
 
     def get_profil_url(self,forum):
-        if forum.profil:
+        if forum.profil.profil_foto:
             url = forum.profil.profil_foto.url
             return url
         else:
-            return NULL
+            return None
     class Meta:
         model       = Forum
         fields      = "__all__"
@@ -28,9 +28,12 @@ class ForumYanitSerializer(ModelSerializer):
         model       = ForumYanit
         fields      = ['id','username','profil','cevaba_cevap','cevaba_cevap_profil_username','forum','cevap','url','olusturma','guncelle']
 
-    def get_profil_url(self,yanit):
-        url = yanit.profil.profil_foto.url
-        return url
+    def get_profil_url(self,forum):
+        if forum.profil.profil_foto:
+            url = forum.profil.profil_foto.url
+            return url
+        else:
+            return None
     
 class UserSerializer(ModelSerializer):
     class Meta:

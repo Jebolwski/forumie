@@ -211,3 +211,29 @@ def ProfilDuzenleView(request,my_slug):
         serializer.save()
 
     return Response(serializer.data)
+
+@api_view(['GET','PUT','POST'])
+def ForumBegen(request,pk):
+    user = User.objects.get(id = request.data['id'])
+    forum = ForumYanit.objects.get(id=pk)
+    print(forum.likes.all())
+    if user in forum.likes.all():
+        forum.likes.remove(user.id)
+    else:
+        forum.likes.add(user.id)
+        forum.dislikes.remove(user.id)
+    
+    return Response("Begenildi.")
+
+@api_view(['GET','PUT','POST'])
+def ForumBegenme(request,pk):
+    user = User.objects.get(id = request.data['id'])
+    forum = ForumYanit.objects.get(id=pk)
+    print(forum.likes.all())
+    if user in forum.dislikes.all():
+        forum.dislikes.remove(user.id)
+    else:
+        forum.dislikes.add(user.id)
+        forum.likes.remove(user.id)
+    
+    return Response("Begenilmedi.")

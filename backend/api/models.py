@@ -19,7 +19,7 @@ CATEGORY_CHOICES = (
 class Profil(models.Model):
     profil_foto = models.FileField(default="",null=True,blank=True)
     arkaplan_foto = models.FileField(default="",null=True,blank=True)
-    biyografi = models.CharField(max_length=160,null=True,blank=True)
+    biyografi = models.CharField(max_length=160,default="",null=True,blank=True)
     user = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
     username_slug = models.SlugField(max_length=200,null=True,blank=True)
     username = models.CharField(max_length=160,null=True,blank=True)
@@ -38,6 +38,8 @@ class Forum(models.Model):
     soru          = models.CharField(max_length=700,null=False,blank=False)
     olusturma     = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     guncelle      = models.DateTimeField(auto_now=True,blank=True, null=True)
+    likes         = models.ManyToManyField(User,related_name='likes1',default=None,blank=True)
+    dislikes      = models.ManyToManyField(User,related_name='dislikes1',default=None,blank=True)
 
     def __str__(self):
         return str(self.baslik)
@@ -51,6 +53,8 @@ class ForumYanit(models.Model):
     cevap         = models.CharField(max_length=700,null=False,blank=False)
     olusturma     = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     guncelle      = models.DateTimeField(auto_now=True,blank=True, null=True)
+    likes         = models.ManyToManyField(User,related_name='likes',default=None,blank=True)
+    dislikes      = models.ManyToManyField(User,related_name='dislikes',default=None,blank=True)
 
     def __str__(self):
         return str(self.cevap)
