@@ -26,8 +26,8 @@ urlpatterns = [
     path('forum/<int:pk>/cevaplari/',views.ForumCevaplari,name="forumlar-cevaplari"),
     path('forumlar/spor/',views.ForumlarSporView,name="forumlar-spor"),
     path('forumlarim/<slug:my_slug>/',views.KisininForumlariView,name="forumlarim"),
-    path('forum/<slug:my_slug>/begen/',views.ForumBegen,name="forum-begen"),
-    path('forum/<slug:my_slug>/begenme/',views.ForumBegenme,name="forum-begenme"),
+    path('forum/<int:pk>/begen/',views.ForumBegen,name="forum-begen"),
+    path('forum/<int:pk>/begenme/',views.ForumBegenme,name="forum-begenme"),
 
 
     path('kayit-ol/',views.KayitOl,name="kayit"),

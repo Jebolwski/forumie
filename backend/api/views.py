@@ -214,8 +214,9 @@ def ProfilDuzenleView(request,my_slug):
 
 @api_view(['GET','PUT','POST'])
 def ForumBegen(request,pk):
-    user = User.objects.get(id = request.data['id'])
-    forum = ForumYanit.objects.get(id=pk)
+    print(request.data)
+    user = User.objects.get(username = request.data['username'])
+    forum = Forum.objects.get(id=pk)
     print(forum.likes.all())
     if user in forum.likes.all():
         forum.likes.remove(user.id)
@@ -227,8 +228,9 @@ def ForumBegen(request,pk):
 
 @api_view(['GET','PUT','POST'])
 def ForumBegenme(request,pk):
-    user = User.objects.get(id = request.data['id'])
-    forum = ForumYanit.objects.get(id=pk)
+    print(request.data)
+    user = User.objects.get(username = request.data['username'])
+    forum = Forum.objects.get(id=pk)
     print(forum.likes.all())
     if user in forum.dislikes.all():
         forum.dislikes.remove(user.id)
