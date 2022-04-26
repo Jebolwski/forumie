@@ -28,6 +28,7 @@ urlpatterns = [
     path('forumlarim/<slug:my_slug>/',views.KisininForumlariView,name="forumlarim"),
     path('forum/<int:pk>/begen/',views.ForumBegen,name="forum-begen"),
     path('forum/<int:pk>/begenme/',views.ForumBegenme,name="forum-begenme"),
+    path('forum/<int:pk>/goruldu/',views.ForumGoruldu,name="forum-goruldu"),
 
 
     path('kayit-ol/',views.KayitOl,name="kayit"),

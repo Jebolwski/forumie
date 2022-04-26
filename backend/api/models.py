@@ -40,6 +40,7 @@ class Forum(models.Model):
     guncelle      = models.DateTimeField(auto_now=True,blank=True, null=True)
     likes         = models.ManyToManyField(User,related_name='likes1',default=None,blank=True)
     dislikes      = models.ManyToManyField(User,related_name='dislikes1',default=None,blank=True)
+    goruldu       = models.ManyToManyField(User,related_name='goruldu',default=None,blank=True)
 
     def __str__(self):
         return str(self.baslik)

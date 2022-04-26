@@ -122,7 +122,7 @@ def ForumlarView(request):
 
 @api_view(['GET'])
 def ForumlarMMAView(request):
-    forumlar = Forum.objects.all().filter(category="MMA")
+    forumlar = Forum.objects.all().filter(category="MMA").order_by('-guncelle')
     serializer = ForumSerializer(forumlar,many=True)
     return Response(serializer.data)
 
@@ -239,3 +239,11 @@ def ForumBegenme(request,pk):
         forum.likes.remove(user.id)
     
     return Response("Begenilmedi.")
+
+@api_view(['GET','POST'])
+def ForumGoruldu(request,pk):
+    forum = Forum.objects.get(id=pk)
+    user = User.objects.get(username = request.data['username'])
+    forum.goruldu.add(user.id)
+    serializer = ForumSerializer(forum,many=False)
+    return Response(serializer.data)
