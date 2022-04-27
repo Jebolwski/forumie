@@ -116,7 +116,7 @@ def EmailDegistir(request):
 
 @api_view(['GET'])
 def ForumlarView(request):
-    forumlar = Forum.objects.all()
+    forumlar = Forum.objects.all().order_by('guncelle')
     serializer = ForumSerializer(forumlar,many=True)
     return Response(serializer.data)
 
@@ -214,10 +214,8 @@ def ProfilDuzenleView(request,my_slug):
 
 @api_view(['GET','PUT','POST'])
 def ForumBegen(request,pk):
-    print(request.data)
     user = User.objects.get(username = request.data['username'])
     forum = Forum.objects.get(id=pk)
-    print(forum.likes.all())
     if user in forum.likes.all():
         forum.likes.remove(user.id)
     else:
@@ -228,10 +226,8 @@ def ForumBegen(request,pk):
 
 @api_view(['GET','PUT','POST'])
 def ForumBegenme(request,pk):
-    print(request.data)
     user = User.objects.get(username = request.data['username'])
     forum = Forum.objects.get(id=pk)
-    print(forum.likes.all())
     if user in forum.dislikes.all():
         forum.dislikes.remove(user.id)
     else:
