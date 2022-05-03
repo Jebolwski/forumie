@@ -13,6 +13,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from .models import *
 from .serializers import *
 from django.utils.text import slugify
+from rest_framework.pagination import PageNumberPagination
 
 
 
@@ -121,10 +122,36 @@ def ForumlarView(request):
     return Response(serializer.data)
 
 @api_view(['GET'])
-def ForumlarMMAView(request):
+def AllForumlarMMAView(request):
     forumlar = Forum.objects.all().filter(category="MMA").order_by('-guncelle')
     serializer = ForumSerializer(forumlar,many=True)
     return Response(serializer.data)
+
+@api_view(['GET'])
+def AllForumlarSporView(request):
+    forumlar = Forum.objects.all().filter(category="Spor").order_by('-guncelle')
+    serializer = ForumSerializer(forumlar,many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def ForumlarMMAView(request):
+    paginator = PageNumberPagination()
+    paginator.page_size = 5
+    forumlar = Forum.objects.all().filter(category="MMA").order_by('-guncelle')
+    forumar_paginated = paginator.paginate_queryset(forumlar, request)
+    serializer = ForumSerializer(forumar_paginated,many=True)
+    return Response(serializer.data)
+
+    
+@api_view(['GET'])
+def ForumlarSporView(request):
+    paginator = PageNumberPagination()
+    paginator.page_size = 5
+    forumlar = Forum.objects.all().filter(category="Spor").order_by('-guncelle')
+    forumar_paginated = paginator.paginate_queryset(forumlar, request)
+    serializer = ForumSerializer(forumar_paginated,many=True)
+    return Response(serializer.data)
+
 
 @api_view(['GET','POST'])
 def ForumCevapla(request):
@@ -153,11 +180,7 @@ def ForumCevaplari(request,pk):
     serializer = ForumYanitSerializer(cevaplar,many=True)
     return Response(serializer.data)
 
-@api_view(['GET'])
-def ForumlarSporView(request):
-    forumlar = Forum.objects.all().filter(category="Spor")
-    serializer = ForumSerializer(forumlar,many=True)
-    return Response(serializer.data)
+
 
 
 @api_view(['GET'])
