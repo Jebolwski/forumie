@@ -209,7 +209,7 @@ def ForumDetayView(request,pk):
 @api_view(['GET'])
 def KisininForumlariView(request,my_slug):
     profil = Profil.objects.get(username_slug=my_slug)
-    forumlari = Forum.objects.all().filter(username = profil.username)
+    forumlari = Forum.objects.all().filter(username = profil.username).order_by("category")
     serializer = ForumSerializer(forumlari,many=True)
     return Response(serializer.data)
 
