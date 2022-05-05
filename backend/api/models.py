@@ -33,7 +33,6 @@ class Forum(models.Model):
     profil        = models.ForeignKey(Profil,on_delete=models.CASCADE,null=True,blank=True)
     username      = models.CharField(max_length=160,null=False,blank=False)
     baslik        = models.CharField(max_length=160,null=False,blank=False)
-    category      = models.CharField(max_length=10,choices=CATEGORY_CHOICES,null=False,blank=False)
     baslik_slug   = models.SlugField(unique=False,null=False,blank=False)
     soru          = models.CharField(max_length=700,null=False,blank=False)
     olusturma     = models.DateTimeField(auto_now_add=True, blank=True, null=True)

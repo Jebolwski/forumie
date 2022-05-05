@@ -103,7 +103,6 @@ def ForumEkleView(request):
         username = request.data['username'],
         baslik = request.data['baslik'],
         soru = request.data['soru'],
-        category = request.data['category'],
     )
     return Response("Yes")
 
@@ -115,43 +114,17 @@ def EmailDegistir(request):
     serializer = UserSerializer(user,many=False)
     return Response(serializer.data)
 
+
 @api_view(['GET'])
 def ForumlarView(request):
-    forumlar = Forum.objects.all().order_by('guncelle')
-    serializer = ForumSerializer(forumlar,many=True)
-    return Response(serializer.data)
-
-@api_view(['GET'])
-def AllForumlarMMAView(request):
-    forumlar = Forum.objects.all().filter(category="MMA").order_by('-guncelle')
-    serializer = ForumSerializer(forumlar,many=True)
-    return Response(serializer.data)
-
-@api_view(['GET'])
-def AllForumlarSporView(request):
-    forumlar = Forum.objects.all().filter(category="Spor").order_by('-guncelle')
-    serializer = ForumSerializer(forumlar,many=True)
-    return Response(serializer.data)
-
-@api_view(['GET'])
-def ForumlarMMAView(request):
     paginator = PageNumberPagination()
     paginator.page_size = 5
-    forumlar = Forum.objects.all().filter(category="MMA").order_by('-guncelle')
+    forumlar = Forum.objects.all().order_by('-guncelle')
     forumar_paginated = paginator.paginate_queryset(forumlar, request)
     serializer = ForumSerializer(forumar_paginated,many=True)
     return Response(serializer.data)
 
     
-@api_view(['GET'])
-def ForumlarSporView(request):
-    paginator = PageNumberPagination()
-    paginator.page_size = 5
-    forumlar = Forum.objects.all().filter(category="Spor").order_by('-guncelle')
-    forumar_paginated = paginator.paginate_queryset(forumlar, request)
-    serializer = ForumSerializer(forumar_paginated,many=True)
-    return Response(serializer.data)
-
 
 @api_view(['GET','POST'])
 def ForumCevapla(request):
@@ -180,22 +153,10 @@ def ForumCevaplari(request,pk):
     serializer = ForumYanitSerializer(cevaplar,many=True)
     return Response(serializer.data)
 
-
-
-
 @api_view(['GET'])
-def SporForumlarView(request):
-    forumlar = Forum.objects.filter(category="Spor")
-    serializer = ForumSerializer(forumlar,many=True)
-
-    return Response(serializer.data)
-
-
-@api_view(['GET'])
-def CombatForumlarView(request):
-    forumlar = Forum.objects.filter(category="MMA")
-    serializer = ForumSerializer(forumlar,many=True)
-    return Response(serializer.data)
+def AllForumlarView(request):
+    forumlar = Forum.objects.all().count()
+    return Response(forumlar)
 
 
 @api_view(['GET'])
@@ -209,7 +170,7 @@ def ForumDetayView(request,pk):
 @api_view(['GET'])
 def KisininForumlariView(request,my_slug):
     profil = Profil.objects.get(username_slug=my_slug)
-    forumlari = Forum.objects.all().filter(username = profil.username).order_by("category")
+    forumlari = Forum.objects.all().filter(username = profil.username)
     serializer = ForumSerializer(forumlari,many=True)
     return Response(serializer.data)
 

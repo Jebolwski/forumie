@@ -1,5 +1,3 @@
-from asyncio.windows_events import NULL
-from dataclasses import fields
 from rest_framework import serializers
 from .models import *
 from rest_framework.serializers import ModelSerializer
