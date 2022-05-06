@@ -114,7 +114,6 @@ def EmailDegistir(request):
     serializer = UserSerializer(user,many=False)
     return Response(serializer.data)
 
-
 @api_view(['GET'])
 def ForumlarView(request):
     paginator = PageNumberPagination()
@@ -123,8 +122,6 @@ def ForumlarView(request):
     forumar_paginated = paginator.paginate_queryset(forumlar, request)
     serializer = ForumSerializer(forumar_paginated,many=True)
     return Response(serializer.data)
-
-    
 
 @api_view(['GET','POST'])
 def ForumCevapla(request):
@@ -158,7 +155,6 @@ def AllForumlarView(request):
     forumlar = Forum.objects.all().count()
     return Response(forumlar)
 
-
 @api_view(['GET'])
 def ForumDetayView(request,pk):
     forum = Forum.objects.get(id=pk)
@@ -166,11 +162,10 @@ def ForumDetayView(request,pk):
     return Response(serializer.data)
 
 
-
 @api_view(['GET'])
 def KisininForumlariView(request,my_slug):
     profil = Profil.objects.get(username_slug=my_slug)
-    forumlari = Forum.objects.all().filter(username = profil.username)
+    forumlari = Forum.objects.all().filter(username = profil.username).order_by('-guncelle')
     serializer = ForumSerializer(forumlari,many=True)
     return Response(serializer.data)
 

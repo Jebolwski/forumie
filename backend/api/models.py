@@ -32,14 +32,14 @@ class Profil(models.Model):
 class Forum(models.Model):
     profil        = models.ForeignKey(Profil,on_delete=models.CASCADE,null=True,blank=True)
     username      = models.CharField(max_length=160,null=False,blank=False)
-    baslik        = models.CharField(max_length=160,null=False,blank=False)
+    baslik        = models.CharField(max_length=60,null=False,blank=False)
     baslik_slug   = models.SlugField(unique=False,null=False,blank=False)
-    soru          = models.CharField(max_length=700,null=False,blank=False)
+    soru          = models.CharField(max_length=300,null=False,blank=False)
     olusturma     = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     guncelle      = models.DateTimeField(auto_now=True,blank=True, null=True)
     likes         = models.ManyToManyField(User,related_name='likes1',default=None,blank=True)
     dislikes      = models.ManyToManyField(User,related_name='dislikes1',default=None,blank=True)
-    goruldu       = models.ManyToManyField(User,related_name='goruldu',default=None,blank=True)
+    reforumie     = models.ManyToManyField(User,related_name='reforumie',default=None,blank=True)
 
     def __str__(self):
         return str(self.baslik)
@@ -50,11 +50,12 @@ class ForumYanit(models.Model):
     cevaba_cevap  = models.ForeignKey('self',on_delete=models.CASCADE,null=True,blank=True)
     cevaba_cevap_profil_username  = models.CharField(max_length=160,null=True,blank=True)
     forum         = models.ForeignKey(Forum,on_delete=models.CASCADE,null=True,blank=True)
-    cevap         = models.CharField(max_length=700,null=False,blank=False)
+    cevap         = models.CharField(max_length=400,null=False,blank=False)
     olusturma     = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     guncelle      = models.DateTimeField(auto_now=True,blank=True, null=True)
     likes         = models.ManyToManyField(User,related_name='likes',default=None,blank=True)
     dislikes      = models.ManyToManyField(User,related_name='dislikes',default=None,blank=True)
+    reforumie     = models.ManyToManyField(User,related_name='reforumie1',default=None,blank=True)
 
     def __str__(self):
         return str(self.cevap)
