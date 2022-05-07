@@ -4,15 +4,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 
 const ForumDuzenle = () => {
-  let { authTokens, user } = useContext(AuthContext);
-  let { id } = useParams();
-  const [forum, setForum] = useState([]);
-  const [baslik, setBaslik] = useState(null);
-  const [soru, setSoru] = useState(null);
-  const [category, setCategory] = useState(null);
-  let navigate = useNavigate();
-  let categ = document.querySelector(".category");
-  let categ_err = document.querySelector(".categ_err");
   let forumlarGel = async () => {
     let response = await fetch(`http://127.0.0.1:8000/api/forum/${id}/`, {
       method: "GET",
@@ -21,44 +12,38 @@ const ForumDuzenle = () => {
       },
     });
     let data = await response.json();
-    console.log(response.status);
     if (response.status === 200) {
       setForum(data);
-      console.log(data);
     }
   };
+  let { authTokens, user } = useContext(AuthContext);
+  let { id } = useParams();
+  const [forum, setForum] = useState([]);
+  const [baslik, setBaslik] = useState(forum.baslik);
+  const [soru, setSoru] = useState(forum.soru);
+  const [category, setCategory] = useState("MMA");
+  let navigate = useNavigate();
+  let categ = document.querySelector(".category");
+  let categ_err = document.querySelector(".categ_err");
+
   let forumDuzenle = async (e) => {
     e.preventDefault();
-    if (categ.innerHTML == "Default") {
-      categ_err.innerHTML = "You have to select an category.";
-      alert("You have to select an category.");
+    let response = await fetch(`http://127.0.0.1:8000/api/forum/${id}/`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + String(authTokens.access),
+      },
+      body: JSON.stringify({
+        username: user.username,
+        soru: soru,
+        baslik: baslik,
+        baslik_slug: slugify(baslik).toLocaleLowerCase(),
+      }),
+    });
+    if (response.status == 200) {
+      navigate(`/forumlar/`);
     } else {
-      let response = await fetch(`http://127.0.0.1:8000/api/forum/${id}/`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + String(authTokens.access),
-        },
-        body: JSON.stringify({
-          soru: soru,
-          baslik: baslik,
-          baslik_slug: slugify(baslik),
-          category: category,
-        }),
-      });
-      if (response.status == 200) {
-        console.log(
-          JSON.stringify({
-            soru: soru,
-            baslik: baslik,
-            username: user.username,
-            user: user.user_id,
-          })
-        );
-        navigate(`/forumlar/${category.toLowerCase()}/`);
-      } else {
-        console.log(response.status);
-      }
     }
   };
   useEffect(() => {
@@ -90,22 +75,8 @@ const ForumDuzenle = () => {
             className="form-control"
             defaultValue={forum.soru}
           />
-          <select
-            className="category form-control mt-5"
-            onChange={(e) => {
-              setCategory(e.target.value);
-            }}
-            defaultValue={forum.category}
-          >
-            <option value="Default">Select a Category</option>
-            <option value="MMA">MMA</option>
-            <option value="Spor">Spor</option>
-          </select>
           <p className="categ_err"></p>
-          <input
-            type="submit"
-            className="btn btn-outline-danger mt-4 offset-5"
-          />
+          <input type="submit" className="btn btn-outline-dark mt-4 offset-5" />
         </form>
       </div>
     </div>

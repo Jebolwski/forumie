@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import AuthContext from "../context/AuthContext";
+import { Link } from "react-router-dom";
 
 const Giris = () => {
   let { loginUser } = useContext(AuthContext);
@@ -20,6 +21,12 @@ const Giris = () => {
             style={{ marginLeft: "50%", transform: "translate(-50%)" }}
           />
         </form>
+        <p className="mt-5 text-center">
+          Hesabınız yok mu ?{" "}
+          <Link to={"/kayit-ol/"} className="text-black">
+            Kayıt Ol
+          </Link>
+        </p>
       </div>
     </>
   );

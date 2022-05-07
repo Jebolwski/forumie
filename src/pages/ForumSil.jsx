@@ -2,27 +2,10 @@ import React, { useState, useEffect, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 const ForumSil = () => {
-  let { authTokens } = useContext(AuthContext);
+  let { authTokens, user } = useContext(AuthContext);
   let { id } = useParams();
   let navigate = useNavigate();
   const [forum, setForum] = useState([]);
-  let forumlarGel = async () => {
-    let response = await fetch(`http://127.0.0.1:8000/api/forum/${id}/`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    let data = await response.json();
-    console.log(response.status);
-    if (response.status === 200) {
-      setForum(data);
-      console.log(data);
-    }
-  };
-  useEffect(() => {
-    forumlarGel();
-  }, []);
 
   let deleteForum = async (e) => {
     e.preventDefault();
@@ -33,14 +16,28 @@ const ForumSil = () => {
         Authorization: "Bearer " + String(authTokens.access),
       },
     });
-    let data = await response.json();
-    console.log(response.status);
     if (response.status === 200) {
-      navigate(`/forumlar/${forum.category.toLowerCase()}`);
+      navigate("/forumlar/");
     } else {
       alert("Something went wrong!");
     }
   };
+
+  let forumlarGel = async () => {
+    let response = await fetch(`http://127.0.0.1:8000/api/forum/${id}/`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    let data = await response.json();
+    if (response.status === 200) {
+      setForum(data);
+    }
+  };
+  useEffect(() => {
+    forumlarGel();
+  }, []);
 
   return (
     <div>

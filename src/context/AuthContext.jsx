@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
+import slugify from "../../node_modules/slugify/slugify";
 
 const AuthContext = createContext();
 
@@ -18,11 +19,18 @@ export const AuthProvider = ({ children }) => {
       : null
   );
 
-  let [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [forumlar, setForumlar] = useState([]);
+  const [varMi, setVarMi] = useState(false);
+  const [forum, setForum] = useState([]);
+  const [cevaplar, setCevaplar] = useState(null);
 
+  let username_slug = slugify(username);
   let navigate = useNavigate();
 
-  const [currentPage, setCurrentPage] = useState(1);
   let loginUser = async (e) => {
     e.preventDefault();
     let response = await fetch("http://127.0.0.1:8000/api/token/", {
@@ -44,6 +52,26 @@ export const AuthProvider = ({ children }) => {
       navigate("/");
     } else {
       alert("Wrong!");
+    }
+  };
+
+  let forumEkle = async (e) => {
+    e.preventDefault();
+    let response = await fetch("http://127.0.0.1:8000/api/forum-ekle/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + String(authTokens.access),
+      },
+      body: JSON.stringify({
+        soru: e.target.soru.value,
+        baslik: e.target.baslik.value,
+        baslik_slug: slugify(e.target.baslik.value),
+        username: user.username,
+      }),
+    });
+    if (response.status == 200) {
+      navigate(`/forumlar/`);
     }
   };
 
@@ -79,7 +107,8 @@ export const AuthProvider = ({ children }) => {
   };
 
   let registerUser = async (e) => {
-    let response = await fetch("http://127.0.0.1:8000/api/register/", {
+    e.preventDefault();
+    let response = await fetch("http://127.0.0.1:8000/api/kayit-ol/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -88,19 +117,27 @@ export const AuthProvider = ({ children }) => {
         username: e.target.username.value,
         email: e.target.email.value,
         password: e.target.password.value,
+        username_slug: slugify(e.target.username.value),
       }),
     });
     if (response.status == 200) {
-      navigate("/login");
+      navigate("/giris/");
     } else {
-      alert("Something went wrong!");
-      console.log(response.status);
+      alert(response.status + " error");
     }
   };
 
   let contextData = {
     user: user,
     authTokens: authTokens,
+
+    loading: loading,
+    varMi: varMi,
+    forum: forum,
+    cevaplar: cevaplar,
+
+    forumEkle: forumEkle,
+
     loginUser: loginUser,
     logoutUser: logoutUser,
     registerUser: registerUser,

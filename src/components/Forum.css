@@ -1,7 +1,8 @@
 .aciklama {
-    overflow: hidden;
-    max-width: 100px;
-    max-height: 32px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 300px;
+  max-height: 32px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: left;
 }

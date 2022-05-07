@@ -1,16 +1,18 @@
 import React, { useContext } from "react";
 import AuthContext from "../context/AuthContext";
+import { Link } from "react-router-dom";
 const Ayarlar = () => {
-  let { user } = useContext(AuthContext);
   return (
     <div className="col-10 col-lg-8 offset-1 offset-lg-2">
-      <p>{user.username}</p>
-      <p>{user.email}</p>
-      {user.is_superuser ? (
-        <p>Adminsin</p>
-      ) : user.is_authenticated ? (
-        <p>Normal kullanıcısın</p>
-      ) : null}
+      <Link
+        to={"/sifre-degistir/"}
+        className="my-5 text-decoration-none text-black"
+      >
+        <h5 className="text-center">Şifre Değiştir</h5>
+      </Link>
+      <Link to={"/email-degistir/"} className="text-decoration-none text-black">
+        <h5 className="mt-5 text-center">Email Değiştir</h5>
+      </Link>
     </div>
   );
 };

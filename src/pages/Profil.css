@@ -1,0 +1,54 @@
+p {
+  font-weight: 300;
+}
+
+h5 {
+  font-weight: 300;
+}
+
+.profil-rest {
+  z-index: 1;
+  height: 100vh;
+  background-color: white;
+  position: relative;
+  border-top: 3px solid darkred;
+}
+
+.profil-rest .img {
+  width: 10vw;
+  min-width: 60px;
+  height: 18vh;
+  min-height: 100px;
+  margin-top: -55px;
+  margin-left: 15vw;
+  border-radius: 50%;
+  border: 3px solid darkred;
+}
+
+.profil-rest p {
+  font-size: 25px;
+}
+
+.biyografi {
+  font-size: 19px;
+  font-weight: 300;
+}
+
+.user-edit {
+  position: absolute;
+  right: 50px;
+  top: 10px;
+}
+
+table th {
+  font-weight: 400;
+}
+
+@media only screen and (max-width: 650px) {
+  .profil-rest p {
+    font-size: 19px;
+  }
+  .biyografi {
+    font-size: 16px;
+  }
+}

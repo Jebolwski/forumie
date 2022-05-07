@@ -1,0 +1,17 @@
+.hidden {
+  display: none;
+}
+
+.visible {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  border-radius: 6px;
+  padding: 4px;
+  padding-left: 11px;
+}
+
+.visible:focus {
+  outline: 4px solid rgba(28, 107, 255, 0.324);
+  border: 1px solid rgba(0, 132, 255, 0.582);
+}
