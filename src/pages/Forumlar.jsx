@@ -1,21 +1,14 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { BsChatDots } from "../../node_modules/react-icons/bs/index.esm";
-import {
-  BiSearchAlt,
-  BiUpvote,
-  BiDownvote,
-} from "../../node_modules/react-icons/bi/index.esm";
+import { BiSearchAlt } from "../../node_modules/react-icons/bi/index.esm";
 import AuthContext from "../context/AuthContext";
-import { GoArrowDown, GoArrowUp } from "../../node_modules/react-icons/go";
-import { AiFillEye, AiOutlineLoading3Quarters } from "react-icons/ai/index.esm";
 import {
-  FcLike,
-  FcLikePlaceholder,
-} from "../../node_modules/react-icons/fc/index.esm";
+  AiFillHeart,
+  AiOutlineLoading3Quarters,
+} from "react-icons/ai/index.esm";
 import { FaRetweet } from "../../node_modules/react-icons/fa/index.esm";
-
-import "./Forumlar.css";
+import Forum from "../components/Forum";
 import slugify from "slugify";
 
 const Forumlar = () => {
@@ -24,6 +17,7 @@ const Forumlar = () => {
   const [arama, setArama] = useState("");
   const [paginationNumber, setPaginationNumber] = useState(2);
   const [scrollFetchState, setScrollFetchState] = useState(0);
+
   let forumlarGel = async () => {
     setPaginationNumber(2);
     let response = await fetch("http://127.0.0.1:8000/api/forumlar/?page=1", {
@@ -120,117 +114,7 @@ const Forumlar = () => {
               return forum;
             }
           })
-          .map((forum) => (
-            <div
-              className="forumie-toplam col-10 offset-1 col-md-8 offset-md-2"
-              key={forum.id}
-            >
-              <div className="forumie" key={forum.id}>
-                <Link
-                  to={`/forum/${forum.id}/`}
-                  className="ms-2 text-decoration-none text-black"
-                >
-                  <div>
-                    <Link
-                      to={`/profil/${slugify(forum.username).toLowerCase()}/`}
-                      className="text-black text-decoration-none"
-                    >
-                      <div>
-                        <img
-                          src={`http://127.0.0.1:8000/api${forum.url}`}
-                          className="forumie-profil-foto  rounded-circle mt-1"
-                        />
-                        <span className="ms-2">
-                          {forum.username}{" "}
-                          <span className="d-none d-md-inline">
-                            · {forum.guncelle}
-                          </span>
-                        </span>
-                      </div>
-                    </Link>
-
-                    <hr />
-                    <h5
-                      className="ms-3 ms-lg-5 me-4 text-break"
-                      style={{ fontWeight: "500", textAlign: "left" }}
-                    >
-                      {forum.baslik}
-                    </h5>
-                    <hr />
-                    <h6
-                      className="ms-3 ms-lg-5 me-4 text-break"
-                      style={{ fontWeight: "400", textAlign: "left" }}
-                    >
-                      {forum.soru}
-                    </h6>
-                    <p></p>
-                  </div>
-                </Link>
-                <hr />
-                <ul className="list-unstyled justify-content-evenly d-flex">
-                  <li>
-                    <div className="reforumie">
-                      <FaRetweet className="my-2 r-icon" />
-                      <span className="ms-2 my-1 py-1">0</span>
-                    </div>
-                  </li>
-                  <li>
-                    <span
-                      onClick={async () => {
-                        if (user) {
-                          let response = await fetch(
-                            `http://127.0.0.1:8000/api/forum/${forum.id}/begen/`,
-                            {
-                              method: "POST",
-                              headers: {
-                                "Content-Type": "application/json",
-                                Authorization:
-                                  "Bearer " + String(authTokens.access),
-                              },
-                              body: JSON.stringify({
-                                username: user.username,
-                              }),
-                            }
-                          );
-                          if (response.status === 200) {
-                            forumlarGel();
-                          }
-                        }
-                      }}
-                    >
-                      <div className="like">
-                        {user && forum.likes.includes(user.user_id) ? (
-                          <>
-                            <span className="p-1">
-                              <FcLike
-                                className="l-icon"
-                                size={19}
-                                style={{ cursor: "pointer" }}
-                              />
-                            </span>
-                            <span className="p-1">{forum.likes.length}</span>
-                          </>
-                        ) : (
-                          <>
-                            <span>
-                              <FcLikePlaceholder
-                                className="l-icon"
-                                size={19}
-                                style={{ cursor: "pointer" }}
-                              />
-                            </span>
-                            <span className="ms-2 my-1 py-1">
-                              {forum.likes.length}
-                            </span>
-                          </>
-                        )}
-                      </div>
-                    </span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          ))
+          .map((forum) => <Forum forum={forum} />)
       ) : (
         <h5 className="text-center mt-5" style={{ fontWeight: "400" }}>
           Herhangi bir forumie oluşturulmamış.
