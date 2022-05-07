@@ -49,32 +49,6 @@ def Routes(request):
 
     return Response(routes)
 
-@permission_classes([IsAuthenticated])
-@api_view(['GET','PUT','DELETE'])
-def ForumView(request,pk):
-    if request.method=="GET":
-        forum = Forum.objects.get(id=pk)
-        serializer = ForumSerializer(forum,many=False)
-        return Response(serializer.data)
-    
-    if request.method=="DELETE":
-        forum = Forum.objects.get(id=pk)
-        forum.delete()
-        return Response("Başarıyla silindi.")    
-        
-
-    if request.method=='PUT':
-        fake_data = request.data.copy()
-        fake_data['profil'] = Profil.objects.get(username=request.data['username'])
-        fake_data['username'] = request.data['username']
-        fake_data['baslik_slug'] = request.data['baslik_slug']
-        fake_data['baslik'] = request.data['baslik']
-        inst = Forum.objects.get(id=pk)
-        serializer = ForumSerializer(instance = inst,data = request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response("Error!")
 
 @api_view(['GET','POST'])
 def KayitOl(request):
@@ -113,6 +87,36 @@ def EmailDegistir(request):
     user.save()
     serializer = UserSerializer(user,many=False)
     return Response(serializer.data)
+
+
+#!FORUMLAR VIEW
+
+@permission_classes([IsAuthenticated])
+@api_view(['GET','PUT','DELETE'])
+def ForumView(request,pk):
+    if request.method=="GET":
+        forum = Forum.objects.get(id=pk)
+        serializer = ForumSerializer(forum,many=False)
+        return Response(serializer.data)
+    
+    if request.method=="DELETE":
+        forum = Forum.objects.get(id=pk)
+        forum.delete()
+        return Response("Başarıyla silindi.")    
+        
+
+    if request.method=='PUT':
+        fake_data = request.data.copy()
+        fake_data['profil'] = Profil.objects.get(username=request.data['username'])
+        fake_data['username'] = request.data['username']
+        fake_data['baslik_slug'] = request.data['baslik_slug']
+        fake_data['baslik'] = request.data['baslik']
+        inst = Forum.objects.get(id=pk)
+        serializer = ForumSerializer(instance = inst,data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response("Error!")
 
 @api_view(['GET'])
 def ForumlarView(request):
@@ -161,7 +165,6 @@ def ForumDetayView(request,pk):
     serializer = ForumSerializer(forum,many=False) 
     return Response(serializer.data)
 
-
 @api_view(['GET'])
 def KisininForumlariView(request,my_slug):
     profil = Profil.objects.get(username_slug=my_slug)
@@ -169,6 +172,79 @@ def KisininForumlariView(request,my_slug):
     serializer = ForumSerializer(forumlari,many=True)
     return Response(serializer.data)
 
+@api_view(['GET','PUT','POST'])
+def ForumBegen(request,pk):
+    user = User.objects.get(username = request.data['username'])
+    forum = Forum.objects.get(id=pk)
+    if user in forum.likes.all():
+        forum.likes.remove(user.id)
+    else:
+        forum.likes.add(user.id)
+        forum.dislikes.remove(user.id)
+
+    sayi = forum.likes.all().count()
+
+    return Response(sayi)
+
+@api_view(['GET','PUT','POST'])
+def ForumBegenRenk(request,pk):
+    user = User.objects.get(username = request.data['username'])
+    forum = Forum.objects.get(id=pk)
+
+    var = 0
+    if user in forum.likes.all():
+        var=1
+    else:
+        var=0
+    
+    return Response(var)
+
+
+@api_view(['GET','POST'])
+def ForumGoruldu(request,pk):
+    forum = Forum.objects.get(id=pk)
+    user = User.objects.get(username = request.data['username'])
+    forum.goruldu.add(user.id)
+    serializer = ForumSerializer(forum,many=False)
+    return Response(serializer.data)
+
+@api_view(['GET','POST'])
+def ForumReforumie(request,pk):
+    user = User.objects.get(username = request.data['username'])
+    forum = Forum.objects.get(id=pk)
+    if user in forum.reforumie.all():
+        forum.reforumie.remove(user.id) 
+    else:
+        forum.reforumie.add(user.id) 
+
+    sayi = forum.reforumie.all().count()
+    return Response(sayi)
+
+@api_view(['GET','POST'])
+def ForumReforumieRenk(request,pk):
+    user = User.objects.get(username = request.data['username'])
+    forum = Forum.objects.get(id=pk)
+    var=0
+    if user in forum.reforumie.all():
+        var=1
+    else:
+        var=0
+    return Response(var)
+
+@api_view(['GET','POST'])
+def ForumCevapReforumie(request,pk):
+    user = User.objects.get(username = request.data['username'])
+    forum = ForumYanit.objects.get(id=pk)
+
+    if user in forum.reforumie.all():
+        forum.reforumie.remove(user.id) 
+    else:
+        forum.reforumie.add(user.id) 
+    sayi = forum.reforumie.all().count()
+    return Response(sayi)
+
+
+#!PROFİL    
 @permission_classes([IsAuthenticated])
 @api_view(['GET'])
 def ProfilView(request,my_slug):
@@ -189,36 +265,4 @@ def ProfilDuzenleView(request,my_slug):
     if serializer.is_valid():
         serializer.save()
 
-    return Response(serializer.data)
-
-@api_view(['GET','PUT','POST'])
-def ForumBegen(request,pk):
-    user = User.objects.get(username = request.data['username'])
-    forum = Forum.objects.get(id=pk)
-    if user in forum.likes.all():
-        forum.likes.remove(user.id)
-    else:
-        forum.likes.add(user.id)
-        forum.dislikes.remove(user.id)
-    
-    return Response("Begenildi.")
-
-@api_view(['GET','PUT','POST'])
-def ForumBegenme(request,pk):
-    user = User.objects.get(username = request.data['username'])
-    forum = Forum.objects.get(id=pk)
-    if user in forum.dislikes.all():
-        forum.dislikes.remove(user.id)
-    else:
-        forum.dislikes.add(user.id)
-        forum.likes.remove(user.id)
-    
-    return Response("Begenilmedi.")
-
-@api_view(['GET','POST'])
-def ForumGoruldu(request,pk):
-    forum = Forum.objects.get(id=pk)
-    user = User.objects.get(username = request.data['username'])
-    forum.goruldu.add(user.id)
-    serializer = ForumSerializer(forum,many=False)
     return Response(serializer.data)

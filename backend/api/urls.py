@@ -25,9 +25,14 @@ urlpatterns = [
     path('forum/cevap/<int:pk>/sil/',views.ForumCevapSil,name="forumlar-cevapl-sil"),
     path('forum/<int:pk>/cevaplari/',views.ForumCevaplari,name="forumlar-cevaplari"),
     path('forumlarim/<slug:my_slug>/',views.KisininForumlariView,name="forumlarim"),
-    path('forum/<int:pk>/begen/',views.ForumBegen,name="forum-begen"),
-    path('forum/<int:pk>/begenme/',views.ForumBegenme,name="forum-begenme"),
     path('forum/<int:pk>/goruldu/',views.ForumGoruldu,name="forum-goruldu"),
+    path('forum/<int:pk>/begen/',views.ForumBegen,name="forum-begen"),
+    path('forum/<int:pk>/begen/renk/',views.ForumBegenRenk,name="forum-begen-renk"),
+
+    path('forum/<int:pk>/reforumie/',views.ForumReforumie,name="forum-reforumie"),
+    path('forum/<int:pk>/reforumie/renk/',views.ForumReforumieRenk,name="forum-reforumie-renk"),
+    
+    path('forum/cevap/<int:pk>/reforumie/',views.ForumCevapReforumie,name="forum-cevap-reforumie"),
 
 
     path('kayit-ol/',views.KayitOl,name="kayit"),
