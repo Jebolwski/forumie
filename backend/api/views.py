@@ -142,6 +142,15 @@ def ForumCevapla(request):
     
     return Response(serializer.data)
 
+@api_view(['GET','POST'])
+def KisiForumReforumieleri(request,pk,self):
+    user = User.objects.get(id=pk)
+    forumlar = Forum.objects.filter(self.reforumie.all().includes(user))
+    
+    serializer = ForumSerializer(forumlar,many=False)
+    return Response(serializer)
+
+
 @api_view(['DELETE'])
 def ForumCevapSil(request,pk):
     forumyanit = ForumYanit.objects.get(id = pk)

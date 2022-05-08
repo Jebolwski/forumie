@@ -28,6 +28,7 @@ urlpatterns = [
     path('forum/<int:pk>/goruldu/',views.ForumGoruldu,name="forum-goruldu"),
     path('forum/<int:pk>/begen/',views.ForumBegen,name="forum-begen"),
     path('forum/<int:pk>/begen/renk/',views.ForumBegenRenk,name="forum-begen-renk"),
+    path('<int:pk>/reforumieleri/',views.KisiForumReforumieleri,name="reforumieleri"),
 
     path('forum/<int:pk>/reforumie/',views.ForumReforumie,name="forum-reforumie"),
     path('forum/<int:pk>/reforumie/renk/',views.ForumReforumieRenk,name="forum-reforumie-renk"),
