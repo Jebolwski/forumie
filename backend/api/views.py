@@ -1,8 +1,4 @@
-from multiprocessing import managers
-import profile
-from pydoc import doc
-import re
-from urllib import response
+import json
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated,IsAdminUser
@@ -14,6 +10,8 @@ from .models import *
 from .serializers import *
 from django.utils.text import slugify
 from rest_framework.pagination import PageNumberPagination
+import json
+
 
 
 
@@ -143,12 +141,18 @@ def ForumCevapla(request):
     return Response(serializer.data)
 
 @api_view(['GET','POST'])
-def KisiForumReforumieleri(request,pk,self):
+def KisiForumReforumieleri(request,pk):
     user = User.objects.get(id=pk)
-    forumlar = Forum.objects.filter(self.reforumie.all().includes(user))
+    forumlar = Forum.objects.all()
     
-    serializer = ForumSerializer(forumlar,many=False)
-    return Response(serializer)
+    for i in forumlar.iterator():
+        if user not in i.reforumie.all():
+            print("---------------")
+            print(Forum.objects.exclude(id=i.id))
+            print("---------------")
+            forumlar = Forum.objects.all().filter(id !=i.id)
+    serializer = ForumSerializer(forumlar,many=True)
+    return Response(serializer.data)
 
 
 @api_view(['DELETE'])
@@ -207,7 +211,6 @@ def ForumBegenRenk(request,pk):
         var=0
     
     return Response(var)
-
 
 @api_view(['GET','POST'])
 def ForumGoruldu(request,pk):

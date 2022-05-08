@@ -4,6 +4,7 @@ from rest_framework.serializers import ModelSerializer
 from django.contrib.auth.models import User
 class ForumSerializer(ModelSerializer):
     url = serializers.SerializerMethodField('get_profil_url')
+    
     class Meta:
         model       = Forum
         fields      = ['id','username','profil','url','forum','soru','baslik_slug','category','baslik','olusturma','guncelle']
