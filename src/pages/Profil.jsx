@@ -34,12 +34,28 @@ const Profil = () => {
       setForumlar(data);
     }
   };
+
+  let reforumieleri = async () => {
+    let response = await fetch(
+      `http://127.0.0.1:8000/api/${user.user_id}/reforumieleri/`,
+      {
+        method: "GET",
+        "Conent-Type": "application/json",
+      }
+    );
+    if (response.status === 200) {
+      let data = await response.json();
+      setForumlar(forumlar.concat(data));
+    }
+  };
   useEffect(() => {
     profilFonk();
     forumlari();
+    reforumieleri();
   }, []);
   useEffect(() => {
     forumlari();
+    reforumieleri();
   }, [loading]);
   if (loading) {
     return (
