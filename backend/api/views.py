@@ -143,14 +143,10 @@ def ForumCevapla(request):
 @api_view(['GET','POST'])
 def KisiForumReforumieleri(request,pk):
     user = User.objects.get(id=pk)
-    forumlar = Forum.objects.all()
-    
-    for i in forumlar.iterator():
-        if user not in i.reforumie.all():
-            print("---------------")
-            print(Forum.objects.exclude(id=i.id))
-            print("---------------")
-            forumlar = Forum.objects.all().filter(id !=i.id)
+    forumlar = []
+    for i in Forum.objects.all():
+        if user in i.reforumie.all():
+            forumlar.append(i)
     serializer = ForumSerializer(forumlar,many=True)
     return Response(serializer.data)
 
