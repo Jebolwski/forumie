@@ -40,7 +40,6 @@ const Forumlar = () => {
     let data1 = await a.json();
     setForumSayisi(data1);
   };
-  let { user, authTokens } = useContext(AuthContext);
   useEffect(() => {
     forumlarGel();
   }, []);
@@ -114,7 +113,7 @@ const Forumlar = () => {
               return forum;
             }
           })
-          .map((forum) => <Forum forum={forum} />)
+          .map((forum) => <Forum forum={forum} key={forum.id} />)
       ) : (
         <h5 className="text-center mt-5" style={{ fontWeight: "400" }}>
           Herhangi bir forumie oluşturulmamış.

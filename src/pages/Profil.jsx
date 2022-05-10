@@ -5,11 +5,14 @@ import { FaUserEdit } from "../../node_modules/react-icons/fa/index.esm";
 import "./Profil.css";
 import { Link, useParams } from "react-router-dom";
 import Forum from "../components/Forum";
+import ReForum from "../components/ReForum";
 
 const Profil = () => {
   const { slug } = useParams();
   const [profil, setProfil] = useState([]);
+  const [refresh, setRefresh] = useState(false);
   const [forumlar, setForumlar] = useState([]);
+  const [reforumlar, setReforumlar] = useState([]);
   let [loading, setLoading] = useState(true);
   let { user, authTokens } = useContext(AuthContext);
   let profilFonk = async () => {
@@ -30,34 +33,34 @@ const Profil = () => {
           "Conent-Type": "application/json",
         }
       );
-      let data = await response.json();
-      setForumlar(data);
+      if (response.status == 200) {
+        let data2 = await response.json();
+        console.log("kendi forumlari :", data2);
+        setForumlar(data2);
+      }
+
+      let response1 = await fetch(
+        `http://127.0.0.1:8000/api/${user.user_id}/reforumieleri/`,
+        {
+          method: "GET",
+          "Conent-Type": "application/json",
+        }
+      );
+      if (response1.status === 200) {
+        let data1 = await response1.json();
+        setReforumlar(data1);
+      }
     }
   };
 
-  let reforumieleri = async () => {
-    let response = await fetch(
-      `http://127.0.0.1:8000/api/${user.user_id}/reforumieleri/`,
-      {
-        method: "GET",
-        "Conent-Type": "application/json",
-      }
-    );
-    if (response.status === 200) {
-      let data = await response.json();
-      console.log(data);
-      setForumlar(forumlar.concat(data));
-    }
-  };
   useEffect(() => {
     profilFonk();
     forumlari();
-    reforumieleri();
   }, []);
   useEffect(() => {
     forumlari();
-    reforumieleri();
   }, [loading]);
+
   if (loading) {
     return (
       <>
@@ -114,7 +117,6 @@ const Profil = () => {
               </Link>
             ) : null}
           </p>
-
           {profil.biyografi ? (
             <span className="biyografi offset-2 text-break">
               {profil.biyografi}
@@ -124,8 +126,20 @@ const Profil = () => {
               Kullanıcı hakkında bilgi verilmemiş.
             </span>
           )}
-          {forumlar.length > 0 ? (
-            forumlar.map((forum) => <Forum forum={forum} className="mt-5" />)
+          {reforumlar.map((reforum) => (
+            <ReForum
+              forum={reforum}
+              key={reforum.id}
+              profil={profil}
+              setRefresh={setRefresh}
+            />
+          ))}
+          {forumlar.length > 0 && reforumlar.length > 0 ? (
+            forumlar.map((forum) => (
+              <>
+                <Forum forum={forum} key={forum.id} setRefresh={setRefresh} />
+              </>
+            ))
           ) : (
             <h5 className="text-center my-5 py-4" style={{ fontWeight: "400" }}>
               Herhangi bir forumie oluşturulmamış.

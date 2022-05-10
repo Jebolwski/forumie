@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useLocation } from "react";
 import { Link } from "react-router-dom";
 import slugify from "../../node_modules/slugify/slugify";
 import { AiFillHeart } from "react-icons/ai/index.esm";
@@ -8,7 +8,8 @@ import { FaRetweet } from "../../node_modules/react-icons/fa/index.esm";
 
 const Forum = (props) => {
   let { user, authTokens } = useContext(AuthContext);
-
+  let path = window.location.href.slice(0, 31);
+  console.log(path);
   return (
     <>
       <div
@@ -26,15 +27,29 @@ const Forum = (props) => {
                 className="text-black text-decoration-none"
               >
                 <div>
-                  {props.forum.url ? (
+                  {path == "http://localhost:3000/forumlar/" ? (
+                    props.forum.url ? (
+                      <img
+                        src={`http://127.0.0.1:8000/api${props.forum.url}`}
+                        className="forumie-profil-foto rounded-circle border mt-1"
+                      />
+                    ) : (
+                      <img
+                        src="https://i.kym-cdn.com/photos/images/facebook/001/150/314/fb4.png"
+                        className="forumie-profil-foto border rounded-circle mt-1"
+                      />
+                    )
+                  ) : props.forum.url ? (
                     <img
                       src={`http://127.0.0.1:8000/api${props.forum.url}`}
-                      className="forumie-profil-foto  rounded-circle border mt-1"
+                      className=" rounded-circle border mt-1 ms-4"
+                      style={{ width: "max(5vw,60px)" }}
                     />
                   ) : (
                     <img
                       src="https://i.kym-cdn.com/photos/images/facebook/001/150/314/fb4.png"
-                      className="forumie-profil-foto border rounded-circle mt-1"
+                      className=" border rounded-circle mt-1 ms-4"
+                      style={{ width: "max(5vw,60px)" }}
                     />
                   )}
 
@@ -134,7 +149,7 @@ const Forum = (props) => {
                   />
                 )}
               </span>
-              <span id={`${props.forum.id}`} className={`ms-2 my-1 py-1`}>
+              <span id={`${props.forum.id}`} className="ms-2 my-1 py-1">
                 {props.forum.reforumie.length}
               </span>
             </li>
@@ -183,7 +198,6 @@ const Forum = (props) => {
                       );
                       if (data == 1) {
                         likelendi.style.color = "red";
-                        console.log("likelendi", likelendi);
                       } else {
                         likelendi.style.color = "rgba(197, 119, 119, 0.589)";
                       }

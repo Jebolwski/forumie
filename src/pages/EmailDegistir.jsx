@@ -10,7 +10,6 @@ const EmailDegistir = () => {
   const [newEmail, setNewEmail] = useState(null);
   const [newEmail1, setNewEmail1] = useState(null);
   let emailDegistir = async (e) => {
-    console.log(user.email);
     if (oldEmail != user.email) {
       e.preventDefault();
       document.querySelector(".old_email").value = "";
@@ -34,12 +33,6 @@ const EmailDegistir = () => {
       if (response.status == 200) {
         navigate("/ayarlar/");
       } else {
-        console.log(
-          JSON.stringify({
-            newEmail: newEmail,
-            userId: userId,
-          })
-        );
       }
     }
   };
