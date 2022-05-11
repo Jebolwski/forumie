@@ -7,7 +7,7 @@ class ForumSerializer(ModelSerializer):
     
     class Meta:
         model       = Forum
-        fields      = ['id','username','profil','url','forum','soru','baslik_slug','category','baslik','olusturma','guncelle']
+        fields      = "__all__"
 
     def get_profil_url(self,forum):
         if forum.profil.profil_foto:
@@ -15,9 +15,7 @@ class ForumSerializer(ModelSerializer):
             return url
         else:
             return None
-    class Meta:
-        model       = Forum
-        fields      = "__all__"
+    
 
 
 class ForumYanitSerializer(ModelSerializer):

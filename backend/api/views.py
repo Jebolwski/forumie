@@ -1,3 +1,4 @@
+from cmath import log
 import json
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
@@ -142,14 +143,7 @@ def ForumCevapla(request):
 
 @api_view(['GET','POST'])
 def KisiForumReforumieleri(request,pk):
-    user = User.objects.get(id=pk)
-    forumlar = []
-    for i in Forum.objects.all():
-        if user in i.reforumie.all():
-            forumlar.append(i)
-    serializer = ForumSerializer(forumlar,many=True)
-    return Response(serializer.data)
-
+    pass
 
 @api_view(['DELETE'])
 def ForumCevapSil(request,pk):
@@ -174,11 +168,19 @@ def ForumDetayView(request,pk):
     serializer = ForumSerializer(forum,many=False) 
     return Response(serializer.data)
 
-@api_view(['GET'])
-def KisininForumlariView(request,my_slug):
-    profil = Profil.objects.get(username_slug=my_slug)
-    forumlari = Forum.objects.all().filter(username = profil.username).order_by('-guncelle')
-    serializer = ForumSerializer(forumlari,many=True)
+@api_view(['GET','POST'])
+def KisininForumlariView(request):
+    user = User.objects.get(username=request.data['username'])
+    forumlar = []
+    for i in Forum.objects.all():
+        if user in i.reforumie.all():
+            forumlar.append(i)
+
+    forumlari = Forum.objects.filter(username = request.data['username']).order_by('-guncelle')
+    for i in forumlari:
+        forumlar.append(i)
+    serializer = ForumSerializer(forumlar,many=True)
+
     return Response(serializer.data)
 
 @api_view(['GET','PUT','POST'])
