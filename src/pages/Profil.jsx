@@ -12,7 +12,6 @@ const Profil = () => {
   const [profil, setProfil] = useState([]);
   const [refresh, setRefresh] = useState(false);
   const [forumlar, setForumlar] = useState([]);
-  const [reforumlar, setReforumlar] = useState([]);
   let [loading, setLoading] = useState(true);
   let { user, authTokens } = useContext(AuthContext);
   let profilFonk = async () => {
@@ -26,29 +25,18 @@ const Profil = () => {
   };
   let forumlari = async () => {
     if (loading == false) {
-      let response = await fetch(
-        `http://127.0.0.1:8000/api/forumlarim/${slug}/`,
-        {
-          method: "GET",
-          "Conent-Type": "application/json",
-        }
-      );
+      let response = await fetch(`http://127.0.0.1:8000/api/forumlarim/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: user.username,
+        }),
+      });
       if (response.status == 200) {
-        let data2 = await response.json();
-        console.log("kendi forumlari :", data2);
-        setForumlar(data2);
-      }
-
-      let response1 = await fetch(
-        `http://127.0.0.1:8000/api/${user.user_id}/reforumieleri/`,
-        {
-          method: "GET",
-          "Conent-Type": "application/json",
-        }
-      );
-      if (response1.status === 200) {
-        let data1 = await response1.json();
-        setReforumlar(data1);
+        let data = await response.json();
+        setForumlar(data);
       }
     }
   };
@@ -126,25 +114,34 @@ const Profil = () => {
               Kullanıcı hakkında bilgi verilmemiş.
             </span>
           )}
-          {reforumlar.map((reforum) => (
-            <ReForum
-              forum={reforum}
-              key={reforum.id}
-              profil={profil}
-              setRefresh={setRefresh}
-            />
-          ))}
-          {forumlar.length > 0 && reforumlar.length > 0 ? (
-            forumlar.map((forum) => (
-              <>
-                <Forum forum={forum} key={forum.id} setRefresh={setRefresh} />
-              </>
-            ))
-          ) : (
-            <h5 className="text-center my-5 py-4" style={{ fontWeight: "400" }}>
-              Herhangi bir forumie oluşturulmamış.
-            </h5>
-          )}
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+
+          <div style={{ borderTop: "2px solid darkred" }}>
+            {forumlar.length > 0 ? (
+              forumlar.map((forum) => (
+                <>
+                  <Forum
+                    forum={forum}
+                    profil={profil}
+                    key={forum.id}
+                    setRefresh={setRefresh}
+                  />
+                </>
+              ))
+            ) : (
+              <h5
+                className="text-center my-5 py-4"
+                style={{ fontWeight: "400" }}
+              >
+                Herhangi bir forumie oluşturulmamış.
+              </h5>
+            )}
+          </div>
         </div>
       </>
     );

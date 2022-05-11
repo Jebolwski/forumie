@@ -6,26 +6,24 @@ import "./Forum.css";
 import AuthContext from "../context/AuthContext";
 import { FaRetweet } from "../../node_modules/react-icons/fa/index.esm";
 
-const Forum = (props) => {
+const ReForum = (props) => {
   let { user, authTokens } = useContext(AuthContext);
-  let path = window.location.href.slice(0, 31);
+  let path = window.location.href.slice(0, 29);
   return (
     <>
       <div
         className="forumie-toplam col-10 offset-1 col-md-8 offset-md-2"
         key={props.forum.id}
       >
-        {props.profil && props.profil.username != props.forum.username ? (
-          <span>
-            <FaRetweet
-              size={16}
-              style={{ color: "darkred" }}
-              className="my-3 ms-4 me-3 r-icon"
-            />
-            {props.profil.username} ReForumieledi
-          </span>
-        ) : null}
-
+        <span>
+          <FaRetweet
+            size={16}
+            id={`-${props.forum.id}`}
+            style={{ color: "darkred" }}
+            className="my-3 ms-4 me-3 r-icon"
+          />
+          {props.profil.username} ReForumieledi
+        </span>
         <div className="forumie" key={props.forum.id}>
           <Link
             to={`/forum/${props.forum.id}/`}
@@ -37,28 +35,16 @@ const Forum = (props) => {
                 className="text-black text-decoration-none"
               >
                 <div>
-                  {path == "http://localhost:3000/forumlar/" ? (
-                    props.forum.url ? (
-                      <img
-                        src={`http://127.0.0.1:8000/api${props.forum.url}`}
-                        className="forumie-profil-foto rounded-circle border mt-1"
-                      />
-                    ) : (
-                      <img
-                        src="https://i.kym-cdn.com/photos/images/facebook/001/150/314/fb4.png"
-                        className="forumie-profil-foto border rounded-circle mt-1"
-                      />
-                    )
-                  ) : props.forum.url ? (
+                  {props.forum.url ? (
                     <img
                       src={`http://127.0.0.1:8000/api${props.forum.url}`}
-                      className=" rounded-circle border mt-1 ms-4"
+                      className="rounded-circle border mt-1 ms-4"
                       style={{ width: "max(5vw,60px)" }}
                     />
                   ) : (
                     <img
                       src="https://i.kym-cdn.com/photos/images/facebook/001/150/314/fb4.png"
-                      className=" border rounded-circle mt-1 ms-4"
+                      className="border rounded-circle mt-1 ms-4"
                       style={{ width: "max(5vw,60px)" }}
                     />
                   )}
@@ -256,4 +242,4 @@ const Forum = (props) => {
   );
 };
 
-export default Forum;
+export default ReForum;
