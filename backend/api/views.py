@@ -170,15 +170,17 @@ def ForumDetayView(request,pk):
 
 @api_view(['GET','POST'])
 def KisininForumlariView(request):
-    user = User.objects.get(username=request.data['username'])
+    profil = Profil.objects.get(user_id=request.data['user_id'])
+    user = User.objects.get(id=request.data['user_id'])
     forumlar = []
     for i in Forum.objects.all():
         if user in i.reforumie.all():
             forumlar.append(i)
 
-    forumlari = Forum.objects.filter(username = request.data['username']).order_by('-guncelle')
+    forumlari = Forum.objects.filter(profil_id = profil.id).order_by('-guncelle')
     for i in forumlari:
         forumlar.append(i)
+
     serializer = ForumSerializer(forumlar,many=True)
 
     return Response(serializer.data)

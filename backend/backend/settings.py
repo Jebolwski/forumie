@@ -27,7 +27,7 @@ INSTALLED_APPS = [
 ]
 
 REST_FRAMEWORK = {
-    'DATETIME_FORMAT': '%s000',
+    'DATETIME_FORMAT': '%d %B %Y %H:%M',
     'DEFAULT_AUTHENTICATION_CLASSES': (
 
         'rest_framework_simplejwt.authentication.JWTAuthentication',
