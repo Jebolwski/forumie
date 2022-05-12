@@ -5,7 +5,6 @@ import { FaUserEdit } from "../../node_modules/react-icons/fa/index.esm";
 import "./Profil.css";
 import { Link, useParams } from "react-router-dom";
 import Forum from "../components/Forum";
-import ReForum from "../components/ReForum";
 
 const Profil = () => {
   const { slug } = useParams();
@@ -31,7 +30,7 @@ const Profil = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username: user.username,
+          user_id: profil.user,
         }),
       });
       if (response.status == 200) {
@@ -48,7 +47,10 @@ const Profil = () => {
   useEffect(() => {
     forumlari();
   }, [loading]);
-
+  useEffect(() => {
+    forumlari();
+    console.log("aaaaaaa");
+  }, [refresh]);
   if (loading) {
     return (
       <>

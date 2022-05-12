@@ -7,14 +7,6 @@ import FormData from "form-data";
 
 const ProfilDuzenle = () => {
   let navigate = useNavigate();
-  const [biyografi, setBiyografi] = useState(null);
-  const [profil_foto, setProfil_foto] = useState();
-  const [arkaplan_foto, setArkaplan_foto] = useState();
-  const [profil, setProfil] = useState([]);
-  const [arkaplan_foto_tem, setArkaplan_foto_tem] = useState(false);
-  const [profil_foto_tem, setProfil_foto_tem] = useState(false);
-  let [loading, setLoading] = useState(true);
-  let { user, authTokens } = useContext(AuthContext);
   let profilFonk = async () => {
     let response = await fetch(
       `http://127.0.0.1:8000/api/profil/${slugify(
@@ -28,7 +20,16 @@ const ProfilDuzenle = () => {
     let data = await response.json();
     setProfil(data);
     setLoading(false);
+    setBiyografi(data.biyografi);
   };
+  const [biyografi, setBiyografi] = useState();
+  const [profil_foto, setProfil_foto] = useState();
+  const [arkaplan_foto, setArkaplan_foto] = useState();
+  const [profil, setProfil] = useState([]);
+  const [arkaplan_foto_tem, setArkaplan_foto_tem] = useState(false);
+  const [profil_foto_tem, setProfil_foto_tem] = useState(false);
+  let [loading, setLoading] = useState(true);
+  let { user, authTokens } = useContext(AuthContext);
 
   let duzenle = async (e) => {
     e.preventDefault();

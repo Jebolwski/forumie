@@ -8,14 +8,14 @@ import { FaRetweet } from "../../node_modules/react-icons/fa/index.esm";
 
 const Forum = (props) => {
   let { user, authTokens } = useContext(AuthContext);
-  let path = window.location.href.slice(0, 31);
+  let path = window.location.href.slice(0, 29);
   return (
     <>
       <div
         className="forumie-toplam col-10 offset-1 col-md-8 offset-md-2"
         key={props.forum.id}
       >
-        {props.profil && props.profil.username != props.forum.username ? (
+        {props.profil && props.forum.reforumie.includes(props.profil.user) ? (
           <span>
             <FaRetweet
               size={16}
@@ -37,7 +37,7 @@ const Forum = (props) => {
                 className="text-black text-decoration-none"
               >
                 <div>
-                  {path == "http://localhost:3000/forumlar/" ? (
+                  {path == "http://localhost:3000/forumla" ? (
                     props.forum.url ? (
                       <img
                         src={`http://127.0.0.1:8000/api${props.forum.url}`}
@@ -111,6 +111,10 @@ const Forum = (props) => {
                       }
                     );
                     if (response.status === 200) {
+                      if (path === "http://localhost:3000/profil/") {
+                        props.setRefresh(true);
+                        props.setRefresh(false);
+                      }
                       let data = await response.json();
                       let like_sayi = document.getElementById(
                         `${props.forum.id}`
@@ -131,6 +135,10 @@ const Forum = (props) => {
                       }
                     );
                     if (response1.status === 200) {
+                      if (path === "http://localhost:3000/profil/") {
+                        props.setRefresh(true);
+                        props.setRefresh(false);
+                      }
                       let data = await response1.json();
                       let re_forumielendi = document.getElementById(
                         `-${props.forum.id}`
