@@ -51,7 +51,15 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("authTokens", JSON.stringify(data));
       navigate("/");
     } else {
-      alert("Wrong!");
+      let alert = document.querySelector(".giris-alert-1");
+      alert.classList.remove("display-none");
+      alert.classList.add("giris-alert");
+      alert.classList.add("display-block");
+      setTimeout(() => {
+        alert.classList.remove("display-block");
+        alert.classList.add("display-none");
+        alert.classList.remove("giris-alert");
+      }, 5000);
     }
   };
 
@@ -108,6 +116,7 @@ export const AuthProvider = ({ children }) => {
 
   let registerUser = async (e) => {
     e.preventDefault();
+
     let response = await fetch("http://127.0.0.1:8000/api/kayit-ol/", {
       method: "POST",
       headers: {
@@ -123,7 +132,19 @@ export const AuthProvider = ({ children }) => {
     if (response.status == 200) {
       navigate("/giris/");
     } else {
-      alert(response.status + " error");
+      let data = await response.json();
+      if (data === "Bu kullanıcı adı mevcut.") {
+        let alert = document.querySelector(".giris-alert-1");
+        alert.innerHTML = "Bu kullanıcı adı mevcut.";
+        alert.classList.remove("display-none");
+        alert.classList.add("giris-alert");
+        alert.classList.add("display-block");
+        setTimeout(() => {
+          alert.classList.remove("display-block");
+          alert.classList.add("display-none");
+          alert.classList.remove("giris-alert");
+        }, 5000);
+      }
     }
   };
 
