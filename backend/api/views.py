@@ -52,19 +52,35 @@ def Routes(request):
 @api_view(['GET','POST'])
 def KayitOl(request):
     if request.method=='POST':
-        serializer = UserSerializer(data=request.data,many=False)
-        if serializer.is_valid():
-            serializer.save()
-            Profil.objects.create(
-                profil_foto=None,
-                arkaplan_foto=None,
-                biyografi=None,
-                user=User.objects.get(username=request.data['username']),
-                username=User.objects.get(username=request.data['username']).username,
-                username_slug=(request.data['username_slug']).lower()
-            )
-            return Response(serializer.data)
-    return Response("Kayıt Ol")
+        usernames=[]
+        emails=[]
+        for i in User.objects.all():
+            usernames.append(i.username)
+            emails.append(i.email)
+        if request.data['username'] in usernames:
+            return Response("Bu kullanıcı adı mevcut.")
+
+        elif request.data['password1']!=request.data['password']:
+            return Response("Şifreler uyuşmuyor.")
+
+        elif len(request.data['password1']) or len(request.data['password']):
+            return Response("Şifre en az 8 karakter olmalıdır.")
+
+        elif request.data['email'] in emails:
+            return Response("Bu email mevcut.")
+        else:
+            serializer = UserSerializer(data=request.data,many=False)
+            if serializer.is_valid():
+                serializer.save()
+                Profil.objects.create(
+                    profil_foto=None,
+                    arkaplan_foto=None,
+                    biyografi=None,
+                    user=User.objects.get(username=request.data['username']),
+                    username=User.objects.get(username=request.data['username']).username,
+                    username_slug=(request.data['username_slug']).lower()
+                )
+                return Response(serializer.data)
 
 @api_view(['POST','GET'])
 @permission_classes([IsAuthenticated])
