@@ -6,12 +6,8 @@ import { HiReply } from "../../node_modules/react-icons/hi/index.esm";
 import { AiOutlineEdit, AiFillDelete } from "react-icons/ai/index.esm";
 import slugify from "../../node_modules/slugify/slugify";
 import "./ForumDetay.css";
-import { GoArrowDown, GoArrowUp } from "../../node_modules/react-icons/go";
-import {
-  BiSearchAlt,
-  BiUpvote,
-  BiDownvote,
-} from "../../node_modules/react-icons/bi/index.esm";
+import { AiFillHeart } from "react-icons/ai/index.esm";
+import { FaRetweet } from "../../node_modules/react-icons/fa/index.esm";
 const ForumDetay = () => {
   let { user, authTokens } = useContext(AuthContext);
   let { id } = useParams();
@@ -88,14 +84,18 @@ const ForumDetay = () => {
     });
     if (response.status == 200) {
       cevaplarGel();
+      let cevap_div = e.target.querySelector(".div");
+      cevap_div.classList.toggle("visible");
       cevap_area.value = "";
+      cevap_area.innerHTML = "";
+      window.scrollTo(0, document.body.scrollHeight);
     }
   };
   if (loading) {
     return <h4 className="text-center mt-5">Yükleniyor</h4>;
   } else {
     return (
-      <>
+      <div className="col-10 col-md-8 offset-1 offset-md-2">
         {user && forum.username == user.username ? (
           <ul className="list-unstyled d-flex justify-content-evenly pt-4">
             <li>
@@ -111,99 +111,19 @@ const ForumDetay = () => {
           </ul>
         ) : null}
 
-        <div className="col-10 offset-1">
+        <div>
           <h4 className="pb-3 pt-4">Soru</h4>
           <ul className="list-unstyled d-grid">
             <li>
-              {user ? (
-                <div className="py-2 mb-4">
-                  <span
-                    onClick={async () => {
-                      let response = await fetch(
-                        `http://127.0.0.1:8000/api/forum/${forum.id}/begen/`,
-                        {
-                          method: "POST",
-                          headers: {
-                            "Content-Type": "application/json",
-                            Authorization:
-                              "Bearer " + String(authTokens.access),
-                          },
-                          body: JSON.stringify({
-                            username: user.username,
-                          }),
-                        }
-                      );
-                      if (response.status === 200) {
-                        forumlarGel();
-                      }
-                    }}
-                  >
-                    {user && forum.likes.includes(user.user_id) ? (
-                      <GoArrowUp
-                        size={28}
-                        style={{ cursor: "pointer", marginBottom: "8px" }}
-                      />
-                    ) : (
-                      <BiUpvote
-                        size={22}
-                        style={{ cursor: "pointer", marginBottom: "8px" }}
-                      />
-                    )}
-                  </span>
-                  <span className="ms-2 my-1 py-1 h4">
-                    {forum.likes.length}
-                  </span>
-                  <span></span>
-                  <span
-                    className="ms-2"
-                    onClick={async () => {
-                      let response = await fetch(
-                        `http://127.0.0.1:8000/api/forum/${forum.id}/begenme/`,
-                        {
-                          method: "POST",
-                          headers: {
-                            "Content-Type": "application/json",
-                            Authorization:
-                              "Bearer " + String(authTokens.access),
-                          },
-                          body: JSON.stringify({
-                            username: user.username,
-                          }),
-                        }
-                      );
-                      if (response.status === 200) {
-                        forumlarGel();
-                      }
-                    }}
-                  >
-                    {user && forum.dislikes.includes(user.user_id) ? (
-                      <GoArrowDown
-                        size={28}
-                        style={{ cursor: "pointer", marginBottom: "8px" }}
-                      />
-                    ) : (
-                      <BiDownvote
-                        size={22}
-                        style={{ cursor: "pointer", marginBottom: "8px" }}
-                      />
-                    )}
-                  </span>
-                  <span className="ms-2 my-1 py-1 h4">
-                    {forum.dislikes.length}
-                  </span>
-                </div>
-              ) : null}
-            </li>
-            <li>
-              <div className="col-8 col-lg-6 border p-3">
-                <Link
-                  to={`/profil/${slugify(forum.username).toLowerCase()}/`}
-                  className="text-decoration-none text-black"
-                >
-                  <h5>
-                    {" "}
-                    {forum.url ? (
-                      <>
+              <div className="border p-3">
+                <h5>
+                  {" "}
+                  {forum.url ? (
+                    <>
+                      <Link
+                        to={`/profil/${slugify(forum.username).toLowerCase()}/`}
+                        className="text-decoration-none text-dark"
+                      >
                         <img
                           src={`http://127.0.0.1:8000/api${forum.url}`}
                           style={{
@@ -215,8 +135,13 @@ const ForumDetay = () => {
                           }}
                           className="text-decoration-none"
                         />
-                      </>
-                    ) : (
+                      </Link>
+                    </>
+                  ) : (
+                    <Link
+                      to={`/profil/${slugify(forum.username).toLowerCase()}/`}
+                      className="text-decoration-none text-dark"
+                    >
                       <img
                         src="https://i.kym-cdn.com/photos/images/facebook/001/150/314/fb4.png"
                         style={{
@@ -228,15 +153,186 @@ const ForumDetay = () => {
                         }}
                         className="text-decoration-none"
                       />
-                    )}
-                    <span className="mx-2">{forum.username}</span>
-                  </h5>
-                </Link>
+                    </Link>
+                  )}
+                  <Link
+                    to={`/profil/${slugify(forum.username).toLowerCase()}/`}
+                    className="text-decoration-none text-dark"
+                  >
+                    <span className="mx-2 text-dark">{forum.username}</span>
+                  </Link>
+                </h5>
                 <hr />
                 <h5>{forum.baslik}</h5>
                 <hr />
                 <p>{forum.soru}</p>
-                {/* <p>{tarih}</p> */}
+                <p>{forum.guncelle}</p>
+                <hr />
+                <ul className="list-unstyled justify-content-evenly d-flex">
+                  <li>
+                    <span
+                      className="reforumie"
+                      style={{ cursor: "pointer" }}
+                      onClick={async () => {
+                        if (user) {
+                          let response = await fetch(
+                            `http://127.0.0.1:8000/api/forum/${forum.id}/reforumie/`,
+                            {
+                              method: "POST",
+                              headers: {
+                                "Content-Type": "application/json",
+                                Authorization:
+                                  "Bearer " + String(authTokens.access),
+                              },
+                              body: JSON.stringify({
+                                username: user.username,
+                              }),
+                            }
+                          );
+                          if (response.status === 200) {
+                            let data = await response.json();
+                            let like_sayi = document.getElementById(
+                              `${forum.id}`
+                            );
+                            like_sayi.innerHTML = data;
+                          }
+                          let response1 = await fetch(
+                            `http://127.0.0.1:8000/api/forum/${forum.id}/reforumie/renk/`,
+                            {
+                              method: "POST",
+                              headers: {
+                                "Content-Type": "application/json",
+                                Authorization:
+                                  "Bearer " + String(authTokens.access),
+                              },
+                              body: JSON.stringify({
+                                username: user.username,
+                              }),
+                            }
+                          );
+                          if (response1.status === 200) {
+                            let data = await response1.json();
+                            let re_forumielendi = document.getElementById(
+                              `-${forum.id}`
+                            );
+                            if (data == 1) {
+                              re_forumielendi.style.color = "green";
+                            } else {
+                              re_forumielendi.style.color = "black";
+                            }
+                          }
+                        }
+                      }}
+                    >
+                      {user && forum.reforumie.includes(user.user_id) ? (
+                        <FaRetweet
+                          size={19}
+                          id={`-${forum.id}`}
+                          style={{ color: "green" }}
+                          className="my-2 r-icon"
+                        />
+                      ) : (
+                        <FaRetweet
+                          size={19}
+                          id={`-${forum.id}`}
+                          className="my-2 r-icon"
+                        />
+                      )}
+                    </span>
+                    <span id={`${forum.id}`} className="ms-2 my-1 py-1">
+                      {forum.reforumie.length}
+                    </span>
+                  </li>
+                  <li>
+                    <span
+                      onClick={async () => {
+                        if (user) {
+                          let response = await fetch(
+                            `http://127.0.0.1:8000/api/forum/${forum.id}/begen/`,
+                            {
+                              method: "POST",
+                              headers: {
+                                "Content-Type": "application/json",
+                                Authorization:
+                                  "Bearer " + String(authTokens.access),
+                              },
+                              body: JSON.stringify({
+                                username: user.username,
+                              }),
+                            }
+                          );
+                          if (response.status === 200) {
+                            let data = await response.json();
+                            let like_sayi = document.getElementById(
+                              `--${forum.id}`
+                            );
+                            like_sayi.innerHTML = data;
+                          }
+
+                          let response1 = await fetch(
+                            `http://127.0.0.1:8000/api/forum/${forum.id}/begen/renk/`,
+                            {
+                              method: "POST",
+                              headers: {
+                                "Content-Type": "application/json",
+                                Authorization:
+                                  "Bearer " + String(authTokens.access),
+                              },
+                              body: JSON.stringify({
+                                username: user.username,
+                              }),
+                            }
+                          );
+                          if (response1.status === 200) {
+                            let data = await response1.json();
+                            let likelendi = document.getElementById(
+                              `!${forum.id}`
+                            );
+                            if (data == 1) {
+                              likelendi.style.color = "red";
+                            } else {
+                              likelendi.style.color =
+                                "rgba(197, 119, 119, 0.589)";
+                            }
+                          }
+                        }
+                      }}
+                    >
+                      {user && forum.likes.includes(user.user_id) ? (
+                        <div className="like">
+                          <span className="p-1">
+                            <AiFillHeart
+                              className="l-icon"
+                              id={`!${forum.id}`}
+                              size={19}
+                              style={{ color: "red", cursor: "pointer" }}
+                            />
+                          </span>
+                          <span id={`--${forum.id}`} className="ms-2 my-1 py-1">
+                            {forum.likes.length}
+                          </span>
+                        </div>
+                      ) : (
+                        <div className="like">
+                          <span>
+                            <AiFillHeart
+                              id={`!${forum.id}`}
+                              className="l-icon"
+                              size={19}
+                              style={{
+                                color: "rgba(197, 119, 119, 0.589)",
+                                cursor: "pointer",
+                              }}
+                            />
+                          </span>
+                          <span id={`--${forum.id}`} className="ms-2 my-1 py-1">
+                            {forum.likes.length}
+                          </span>
+                        </div>
+                      )}
+                    </span>
+                  </li>
+                </ul>
               </div>
             </li>
           </ul>
@@ -244,21 +340,12 @@ const ForumDetay = () => {
         <div>
           {cevaplar
             ? cevaplar.map((cevap, index) => (
-                <div
-                  key={index}
-                  className="col-7 offset-3 border rounded p-4 mt-4"
-                >
-                  {cevap.cevaba_cevap ? (
-                    <>
-                      <h6>Cevaplandı : {cevap.cevaba_cevap_profil_username}</h6>
-                      <hr />
-                    </>
-                  ) : null}
+                <div key={index} className="border rounded p-4 my-4">
                   <h6 style={{ fontWeight: "400" }}>
                     {" "}
                     <Link
                       to={`/profil/${slugify(cevap.username).toLowerCase()}/`}
-                      className="text-decoration-none text-black"
+                      className="text-decoration-none text-dark"
                     >
                       {forum.url ? (
                         <img
@@ -289,6 +376,22 @@ const ForumDetay = () => {
                     </Link>
                   </h6>
                   <hr />
+                  {cevap.cevaba_cevap ? (
+                    <>
+                      <h6>
+                        <Link
+                          to={`/profil/${slugify(
+                            cevap.cevaba_cevap_profil_username
+                          ).toLowerCase()}/`}
+                          className="text-decoration-none"
+                        >
+                          @{cevap.cevaba_cevap_profil_username}
+                        </Link>{" "}
+                        adlı kullanıcıya yanıt olarak
+                      </h6>
+                      <hr />
+                    </>
+                  ) : null}
                   <h6 style={{ fontWeight: "400" }}>
                     {cevap.cevap}{" "}
                     {user && user.username == cevap.username ? (
@@ -328,7 +431,7 @@ const ForumDetay = () => {
                   <form onSubmit={cevapla}>
                     <div className={`${`-${cevap.id}`}`}>
                       {user ? (
-                        <div id={`${`-${cevap.id}`}`} className="hidden">
+                        <div id={`${`-${cevap.id}`}`} className="div hidden">
                           {" "}
                           <textarea
                             rows="5"
@@ -384,7 +487,7 @@ const ForumDetay = () => {
             : null}
         </div>
         <form onSubmit={cevapla}>
-          <div className="col-8 offset-2 mt-5">
+          <div>
             {user ? (
               <>
                 <textarea
@@ -423,7 +526,7 @@ const ForumDetay = () => {
             )}
           </div>
         </form>
-      </>
+      </div>
     );
   }
 };

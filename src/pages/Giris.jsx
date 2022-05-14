@@ -42,7 +42,7 @@ const Giris = () => {
         </form>
         <p className="mt-5 text-center">
           Hesabınız yok mu ?{" "}
-          <Link to={"/kayit-ol/"} className="text-black">
+          <Link to={"/kayit-ol/"} className="text-dark">
             Kayıt Ol
           </Link>
         </p>

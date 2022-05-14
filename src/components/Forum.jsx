@@ -29,14 +29,14 @@ const Forum = (props) => {
         <div className="forumie" key={props.forum.id}>
           <Link
             to={`/forum/${props.forum.id}/`}
-            className="ms-2 text-decoration-none text-black"
+            className="ms-2 text-decoration-none text-dark"
           >
             <div>
-              <Link
-                to={`/profil/${slugify(props.forum.username).toLowerCase()}/`}
-                className="text-black text-decoration-none"
-              >
-                <div>
+              <div>
+                <Link
+                  to={`/profil/${slugify(props.forum.username).toLowerCase()}/`}
+                  className="ms-2 text-decoration-none text-dark"
+                >
                   {path == "http://localhost:3000/forumla" ? (
                     props.forum.url ? (
                       <img
@@ -62,15 +62,19 @@ const Forum = (props) => {
                       style={{ width: "max(5vw,60px)" }}
                     />
                   )}
-
+                </Link>
+                <Link
+                  to={`/profil/${slugify(props.forum.username).toLowerCase()}/`}
+                  className="ms-2 text-decoration-none text-dark"
+                >
                   <span className="ms-2">
                     {props.forum.username}{" "}
                     <span className="d-none d-md-inline">
                       · {props.forum.guncelle}
                     </span>
                   </span>
-                </div>
-              </Link>
+                </Link>
+              </div>
 
               <hr />
               <h5

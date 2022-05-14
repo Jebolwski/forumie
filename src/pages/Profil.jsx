@@ -12,7 +12,7 @@ const Profil = () => {
   const [refresh, setRefresh] = useState(false);
   const [forumlar, setForumlar] = useState([]);
   let [loading, setLoading] = useState(true);
-  let { user, authTokens } = useContext(AuthContext);
+  let { user } = useContext(AuthContext);
   let profilFonk = async () => {
     let response = await fetch(`http://127.0.0.1:8000/api/profil/${slug}/`, {
       method: "GET",
@@ -75,6 +75,7 @@ const Profil = () => {
     forumlari();
     console.log("aaaaaaa");
   }, [refresh]);
+
   if (loading) {
     return (
       <>
