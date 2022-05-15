@@ -1,22 +1,61 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
 import { BsChatDots } from "../../node_modules/react-icons/bs/index.esm";
 import { BiSearchAlt } from "../../node_modules/react-icons/bi/index.esm";
 import AuthContext from "../context/AuthContext";
-import {
-  AiFillHeart,
-  AiOutlineLoading3Quarters,
-} from "react-icons/ai/index.esm";
-import { FaRetweet } from "../../node_modules/react-icons/fa/index.esm";
+import { AiOutlineLoading3Quarters } from "react-icons/ai/index.esm";
+import { ImCross } from "react-icons/im/index.esm";
 import Forum from "../components/Forum";
+import "./Forumlar.css";
 import slugify from "slugify";
-
 const Forumlar = () => {
   const [forumlar, setForumlar] = useState([]);
+  const [profil, setProfil] = useState([]);
   const [forumSayisi, setForumSayisi] = useState(0);
   const [arama, setArama] = useState("");
   const [paginationNumber, setPaginationNumber] = useState(2);
   const [scrollFetchState, setScrollFetchState] = useState(0);
+  let { user, authTokens } = useContext(AuthContext);
+
+  let profilGel = async () => {
+    if (user) {
+      let response = await fetch(
+        `http://127.0.0.1:8000/api/profil/${slugify(
+          user.username
+        ).toLowerCase()}/`,
+        {
+          method: "GET",
+          "Conent-Type": "application/json",
+        }
+      );
+      if (response.status === 200) {
+        let data = await response.json();
+        setProfil(data);
+      }
+    }
+  };
+
+  let forumEkle = async (e) => {
+    e.preventDefault();
+    let response = await fetch("http://127.0.0.1:8000/api/forum-ekle/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + String(authTokens.access),
+      },
+      body: JSON.stringify({
+        soru: e.target.soru.value,
+        baslik: e.target.baslik.value,
+        baslik_slug: slugify(e.target.baslik.value),
+        username: user.username,
+      }),
+    });
+    if (response.status == 200) {
+      forumlarGel();
+      divKapa();
+      e.target.soru.value = "";
+      e.target.baslik.value = "";
+    }
+  };
 
   let forumlarGel = async () => {
     setPaginationNumber(2);
@@ -30,6 +69,7 @@ const Forumlar = () => {
     let data = await response.json();
     if (response.status === 200) {
       setForumlar(data);
+      profilGel();
     }
     let a = await fetch("http://127.0.0.1:8000/api/forumlar/hepsi/", {
       method: "GET",
@@ -39,6 +79,7 @@ const Forumlar = () => {
     });
     let data1 = await a.json();
     setForumSayisi(data1);
+    profilGel();
   };
   useEffect(() => {
     forumlarGel();
@@ -61,6 +102,16 @@ const Forumlar = () => {
       setScrollFetchState(0);
     }
     setPaginationNumber(paginationNumber + 1);
+  };
+
+  const ekleme = () => {
+    let div = document.querySelector(".ekleme-div-parent");
+    div.classList.toggle("visible");
+  };
+
+  const divKapa = () => {
+    let div = document.querySelector(".ekleme-div-parent");
+    div.classList.toggle("visible");
   };
 
   window.onscroll = () => {
@@ -92,15 +143,46 @@ const Forumlar = () => {
                 />
               </td>
               <td>
-                <Link to="/forum-ekle/">
+                <div onClick={ekleme}>
                   <BsChatDots size={30} color="darkred" />
-                </Link>
+                </div>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
+      <div className="ekleme-div-parent hidden">
+        <div className="ekleme-div p-5">
+          <ImCross color="darkred" className="cross" onClick={divKapa} />
+          <form onSubmit={forumEkle}>
+            <img
+              src={"http://127.0.0.1:8000/api" + profil.profil_foto}
+              className="ekleme-div-foto"
+            />
 
+            <input
+              type="text"
+              name="baslik"
+              maxLength={60}
+              className="form-control1 col-10"
+              placeholder="Başlık"
+            />
+            <br />
+            <input
+              type="text"
+              maxLength={300}
+              name="soru"
+              className="form-control1 col-9"
+              placeholder="Soru"
+            />
+            <input
+              type="submit"
+              value={"Ekle"}
+              className="btn btn-danger mt-4"
+            />
+          </form>
+        </div>
+      </div>
       <hr />
       {forumlar.length > 0 ? (
         forumlar

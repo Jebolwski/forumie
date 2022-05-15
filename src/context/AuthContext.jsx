@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
   const [varMi, setVarMi] = useState(false);
   const [forum, setForum] = useState([]);
   const [cevaplar, setCevaplar] = useState(null);
-
+  const [eklesignal, setEklesignal] = useState(false);
   let username_slug = slugify(username);
   let navigate = useNavigate();
 
@@ -60,26 +60,6 @@ export const AuthProvider = ({ children }) => {
         alert.classList.add("display-none");
         alert.classList.remove("giris-alert");
       }, 5000);
-    }
-  };
-
-  let forumEkle = async (e) => {
-    e.preventDefault();
-    let response = await fetch("http://127.0.0.1:8000/api/forum-ekle/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + String(authTokens.access),
-      },
-      body: JSON.stringify({
-        soru: e.target.soru.value,
-        baslik: e.target.baslik.value,
-        baslik_slug: slugify(e.target.baslik.value),
-        username: user.username,
-      }),
-    });
-    if (response.status == 200) {
-      navigate(`/forumlar/`);
     }
   };
 
@@ -156,8 +136,6 @@ export const AuthProvider = ({ children }) => {
     varMi: varMi,
     forum: forum,
     cevaplar: cevaplar,
-
-    forumEkle: forumEkle,
 
     loginUser: loginUser,
     logoutUser: logoutUser,
