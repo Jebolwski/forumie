@@ -113,7 +113,7 @@ const ForumDetay = () => {
 
         <div>
           <h4 className="pb-3 pt-4">Soru</h4>
-          <ul className="list-unstyled d-grid">
+          <ul className="list-unstyled d-grid bg-light">
             <li>
               <div className="border p-3">
                 <h5>
@@ -133,7 +133,7 @@ const ForumDetay = () => {
                             minWidth: "30px",
                             borderRadius: "100%",
                           }}
-                          className="text-decoration-none"
+                          className="text-decoration-none border"
                         />
                       </Link>
                     </>
@@ -151,7 +151,7 @@ const ForumDetay = () => {
                           minWidth: "30px",
                           borderRadius: "100%",
                         }}
-                        className="text-decoration-none"
+                        className="text-decoration-none border"
                       />
                     </Link>
                   )}
@@ -357,7 +357,7 @@ const ForumDetay = () => {
                             minWidth: "30px",
                             borderRadius: "100%",
                           }}
-                          className="text-decoration-none"
+                          className="text-decoration-none border"
                         />
                       ) : (
                         <img
@@ -369,7 +369,7 @@ const ForumDetay = () => {
                             minWidth: "30px",
                             borderRadius: "100%",
                           }}
-                          className="text-decoration-none"
+                          className="text-decoration-none border"
                         />
                       )}{" "}
                       <span className="mx-2">{cevap.username}</span>

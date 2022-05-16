@@ -143,9 +143,11 @@ const Forumlar = () => {
                 />
               </td>
               <td>
-                <div onClick={ekleme}>
-                  <BsChatDots size={30} color="darkred" />
-                </div>
+                {user ? (
+                  <div onClick={ekleme}>
+                    <BsChatDots size={30} color="darkred" />
+                  </div>
+                ) : null}
               </td>
             </tr>
           </tbody>
@@ -155,10 +157,19 @@ const Forumlar = () => {
         <div className="ekleme-div p-5">
           <ImCross color="darkred" className="cross" onClick={divKapa} />
           <form onSubmit={forumEkle}>
-            <img
-              src={"http://127.0.0.1:8000/api" + profil.profil_foto}
-              className="ekleme-div-foto"
-            />
+            {profil.profil_foto ? (
+              <img
+                src={"http://127.0.0.1:8000/api" + profil.profil_foto}
+                className="ekleme-div-foto"
+              />
+            ) : (
+              <img
+                src={
+                  "https://i.kym-cdn.com/photos/images/facebook/001/150/314/fb4.png"
+                }
+                className="ekleme-div-foto"
+              />
+            )}
 
             <input
               type="text"

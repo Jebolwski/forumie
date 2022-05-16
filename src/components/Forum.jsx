@@ -1,5 +1,5 @@
-import React, { useContext, useLocation } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import slugify from "../../node_modules/slugify/slugify";
 import { AiFillHeart } from "react-icons/ai/index.esm";
 import "./Forum.css";
@@ -9,10 +9,11 @@ import { FaRetweet } from "../../node_modules/react-icons/fa/index.esm";
 const Forum = (props) => {
   let { user, authTokens } = useContext(AuthContext);
   let path = window.location.href.slice(0, 29);
+  let navigate = useNavigate();
   return (
     <>
       <div
-        className="forumie-toplam col-10 offset-1 col-md-8 offset-md-2"
+        className="forumie-toplam col-10 offset-1 col-md-8 offset-md-2 mb-3"
         key={props.forum.id}
       >
         {props.profil && props.forum.reforumie.includes(props.profil.user) ? (

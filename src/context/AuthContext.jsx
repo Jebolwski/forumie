@@ -109,7 +109,7 @@ export const AuthProvider = ({ children }) => {
         username_slug: slugify(e.target.username.value),
       }),
     });
-    if (response.status == 200) {
+    if (response.status === 200) {
       navigate("/giris/");
     } else {
       let data = await response.json();

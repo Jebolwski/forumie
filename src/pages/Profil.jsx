@@ -5,7 +5,7 @@ import { FaUserEdit } from "../../node_modules/react-icons/fa/index.esm";
 import "./Profil.css";
 import { Link, useParams } from "react-router-dom";
 import Forum from "../components/Forum";
-import { GrFormClose } from "../../node_modules/react-icons/gr/index.esm";
+import { ImCross } from "../../node_modules/react-icons/im/index.esm";
 const Profil = () => {
   const { slug } = useParams();
   const [profil, setProfil] = useState([]);
@@ -73,7 +73,6 @@ const Profil = () => {
   }, [loading]);
   useEffect(() => {
     forumlari();
-    console.log("aaaaaaa");
   }, [refresh]);
 
   if (loading) {
@@ -117,7 +116,7 @@ const Profil = () => {
             className="profil-foto-buyuk display-none"
             onClick={profil_foto_kucul}
           >
-            <GrFormClose size={45} color="white" className="buyuk_div_icon" />
+            <ImCross size={20} color="white" className="buyuk_div_icon" />
             {profil.profil_foto ? (
               <img src={`http://127.0.0.1:8000/api${profil.profil_foto}`} />
             ) : (
@@ -128,7 +127,7 @@ const Profil = () => {
             className="arkaplan-foto-buyuk display-none"
             onClick={arkaplan_foto_kucul}
           >
-            <GrFormClose size={45} color="white" className="buyuk_div_icon" />
+            <ImCross size={20} color="white" className="buyuk_div_icon" />
             {profil.arkaplan_foto ? (
               <img
                 src={`http://127.0.0.1:8000/api${profil.arkaplan_foto}`}
