@@ -40,5 +40,7 @@ urlpatterns = [
     path('profil/<slug:my_slug>/',views.ProfilView,name="profil"),
     path('profil/<slug:my_slug>/duzenle/',views.ProfilDuzenleView,name="profil-duzenle"),
     path('email-degistir/',views.EmailDegistir,name="email-degistir"),
-    path('sifre-sifirla/', csrf_exempt(authview.PasswordChangeView.as_view())),
+
+    path('change_password/<int:pk>/', views.ChangePasswordView.as_view(), name='auth_change_password'),
+
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

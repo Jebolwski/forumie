@@ -11,6 +11,7 @@ from .models import *
 from .serializers import *
 from django.utils.text import slugify
 from rest_framework.pagination import PageNumberPagination
+from rest_framework import generics
 import json
 
 
@@ -294,3 +295,10 @@ def ProfilDuzenleView(request,my_slug):
         serializer.save()
 
     return Response(serializer.data)
+
+
+class ChangePasswordView(generics.UpdateAPIView):
+
+    queryset = User.objects.all()
+    permission_classes = (IsAuthenticated,)
+    serializer_class = ChangePasswordSerializer
