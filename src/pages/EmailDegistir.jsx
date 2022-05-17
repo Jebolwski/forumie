@@ -39,6 +39,9 @@ const EmailDegistir = () => {
   return (
     <>
       <div className="col-10 col-lg-6 offset-1 offset-lg-3">
+        <h4 style={{ fontWeight: "300" }} className="text-center pt-5">
+          Email Değiştir
+        </h4>
         <form onSubmit={emailDegistir}>
           <p className="mt-5">Eski Email</p>
           <input
@@ -65,7 +68,7 @@ const EmailDegistir = () => {
               setNewEmail1(e.target.value);
             }}
           />
-          <input type="submit" className="center btn btn-outline-dark mt-5" />
+          <input type="submit" className="center btn btn-outline-danger mt-5" />
         </form>
       </div>
     </>

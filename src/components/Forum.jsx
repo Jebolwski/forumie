@@ -53,14 +53,12 @@ const Forum = (props) => {
                   ) : props.forum.url ? (
                     <img
                       src={`http://127.0.0.1:8000/api${props.forum.url}`}
-                      className=" rounded-circle border mt-1 ms-4"
-                      style={{ width: "max(5vw,60px)" }}
+                      className="forumie-profil-foto rounded-circle border mt-1 ms-4"
                     />
                   ) : (
                     <img
                       src="https://i.kym-cdn.com/photos/images/facebook/001/150/314/fb4.png"
-                      className=" border rounded-circle mt-1 ms-4"
-                      style={{ width: "max(5vw,60px)" }}
+                      className="forumie-profil-foto border rounded-circle mt-1 ms-4"
                     />
                   )}
                 </Link>

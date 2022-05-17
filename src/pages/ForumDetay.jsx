@@ -376,22 +376,31 @@ const ForumDetay = () => {
                     </Link>
                   </h6>
                   <hr />
-                  {cevap.cevaba_cevap ? (
-                    <>
-                      <h6>
+                  <h6>
+                    <Link
+                      to={`/profil/${slugify(forum.username).toLowerCase()}/`}
+                      className="text-decoration-none me-1"
+                    >
+                      @{forum.username.toLowerCase()}
+                    </Link>
+                    {cevap.cevaba_cevap ? (
+                      <>
+                        ve
                         <Link
                           to={`/profil/${slugify(
                             cevap.cevaba_cevap_profil_username
                           ).toLowerCase()}/`}
-                          className="text-decoration-none"
+                          className="text-decoration-none ms-1"
                         >
-                          @{cevap.cevaba_cevap_profil_username}
+                          @{cevap.cevaba_cevap_profil_username.toLowerCase()}
                         </Link>{" "}
-                        adlı kullanıcıya yanıt olarak
-                      </h6>
-                      <hr />
-                    </>
-                  ) : null}
+                        adlı kullanıcılara yanıt olarak
+                        <hr />
+                      </>
+                    ) : (
+                      <>adlı kullanıcıya yanıt olarak</>
+                    )}
+                  </h6>
                   <h6 style={{ fontWeight: "400" }}>
                     {cevap.cevap}{" "}
                     {user && user.username == cevap.username ? (

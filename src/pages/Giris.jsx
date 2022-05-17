@@ -17,7 +17,7 @@ const Giris = () => {
           <p>Şifre</p>
           <input type="password" className="form-control" name="password" />
           <div
-            class="giris-alert-1 alert alert-danger mt-4 display-none"
+            className="giris-alert-1 alert alert-danger mt-4 display-none"
             role="alert"
           >
             <svg
@@ -25,7 +25,7 @@ const Giris = () => {
               width="24"
               height="24"
               fill="currentColor"
-              class="bi bi-exclamation-triangle-fill flex-shrink-0 me-3"
+              className="bi bi-exclamation-triangle-fill flex-shrink-0 me-3"
               viewBox="0 0 16 16"
               role="img"
               aria-label="Warning:"
