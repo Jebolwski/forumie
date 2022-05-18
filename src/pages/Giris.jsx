@@ -46,6 +46,12 @@ const Giris = () => {
             Kayıt Ol
           </Link>
         </p>
+        <p className="mt-3 text-center">
+          Parolanı mı unuttun ?{" "}
+          <Link to={"/sifre-sifirlama/"} className="text-dark">
+            Şifre Sıfırla
+          </Link>
+        </p>
       </div>
     </>
   );

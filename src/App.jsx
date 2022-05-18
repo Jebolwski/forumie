@@ -17,6 +17,8 @@ import Kayit from "./pages/Kayit";
 import EmailDegistir from "./pages/EmailDegistir";
 import SifreDegistir from "./pages/SifreDegistir";
 import ProfilDuzenle from "./pages/ProfilDuzenle";
+import EmailIletildi from "./pages/EmailIletildi";
+import SifreSifirlamaEmail from "./pages/SifreSifirlamaEmail";
 
 function App() {
   return (
@@ -32,6 +34,8 @@ function App() {
             <Route path="/forumlar/" element={<Forumlar />} />
             <Route path="/profil/:slug/" element={<Profil />} />
             <Route path="/forum/:id/" element={<ForumDetay />} />
+            <Route path="/email-iletildi/" element={<EmailIletildi />} />
+            <Route path="/sifre-sifirlama/" element={<SifreSifirlamaEmail />} />
             <Route element={<ForumRoutes />}>
               <Route
                 path="/profil/:slug/duzenle/"
