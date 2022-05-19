@@ -1,12 +1,10 @@
-from unicodedata import name
-from django.urls import path
+from django.urls import path,include
 from . import views
 from .views import MyTokenObtainPairView
 from django.contrib.auth import views as authview
 from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
-from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -42,5 +40,6 @@ urlpatterns = [
     path('email-degistir/',views.EmailDegistir,name="email-degistir"),
 
     path('change_password/<int:pk>/', views.ChangePasswordView.as_view(), name='auth_change_password'),
+    path('password_reset/', include('django_rest_passwordreset.urls', namespace='password_reset')),
 
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
