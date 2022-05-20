@@ -69,7 +69,7 @@ class ForumYanit(models.Model):
 @receiver(reset_password_token_created)
 def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
 
-    email_plaintext_message = "Şifrenizi sıfırlamak için bu linke tıklayabilirsiniz http://localhost:3000/sifre-yenile/{}/".format(reset_password_token.key)
+    email_plaintext_message = "Şifrenizi sıfırlamak için bu linke tıklayabilirsiniz http://localhost:3000/sifre-sifirla/{}/".format(reset_password_token.key)
 
     send_mail(
         # title:
