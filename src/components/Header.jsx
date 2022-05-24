@@ -114,7 +114,7 @@ const Header = () => {
               </a>
             ) : (
               <Link
-                to={"/giris"}
+                to={"/giris/"}
                 className="text-white text-decoration-none d-flex"
               >
                 <AiOutlineLogin size={24} className="mx-1" />{" "}

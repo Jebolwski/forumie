@@ -98,14 +98,14 @@ const Profil = () => {
                 src={`http://127.0.0.1:8000/api${profil.arkaplan_foto}`}
                 onClick={arkaplan_foto_buyu}
                 className="col-12"
-                style={{ marginTop: "-26px" }}
+                style={{ marginTop: "-26px", cursor: "pointer" }}
               />
             ) : (
               <img
                 src="https://preview.redd.it/228r4jaqsmb31.jpg?auto=webp&s=e0c0156785ec570727ed1059be0c8df1f47b6797"
                 onClick={arkaplan_foto_buyu}
                 className="col-12"
-                style={{ marginTop: "-26px" }}
+                style={{ marginTop: "-26px", cursor: "pointer" }}
               />
             )}
           </p>

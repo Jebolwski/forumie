@@ -474,7 +474,7 @@ const ForumDetay = () => {
                           />
                         </div>
                       ) : (
-                        <>
+                        <div>
                           <textarea
                             id={`${`-${cevap.id}`}`}
                             rows="5"
@@ -482,12 +482,7 @@ const ForumDetay = () => {
                             disabled
                             placeholder={"Cevaplamak için giriş yapın."}
                           ></textarea>
-                          <input
-                            type="submit"
-                            disabled
-                            className="btn btn-outline-danger center mt-2"
-                          />
-                        </>
+                        </div>
                       )}
                     </div>
                   </form>

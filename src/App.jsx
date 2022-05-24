@@ -7,7 +7,6 @@ import Header from "./components/Header";
 import Break from "./components/Break";
 import Forumlar from "./pages/Forumlar";
 import ForumDetay from "./pages/ForumDetay";
-import ForumEkle from "./pages/ForumEkle";
 import Ayarlar from "./pages/Ayarlar";
 import ForumSil from "./pages/ForumSil";
 import ForumRoutes from "./routes/ForumRoutes";
@@ -19,6 +18,8 @@ import SifreDegistir from "./pages/SifreDegistir";
 import ProfilDuzenle from "./pages/ProfilDuzenle";
 import EmailIletildi from "./pages/EmailIletildi";
 import SifreSifirlamaEmail from "./pages/SifreSifirlamaEmail";
+import SifreSifirlamaYeniSifre from "./pages/SifreSifirlamaYeniSifre";
+import SifreDegisti from "./pages/SifreDegisti/SifreDegisti";
 
 function App() {
   return (
@@ -28,14 +29,25 @@ function App() {
           <Header />
           <Break />
           <Routes>
-            <Route path="/" exact element={<Home />} />
+            <Route path="/" element={<Home />} />
             <Route path="/giris/" element={<Giris />} />
             <Route path="/kayit-ol/" element={<Kayit />} />
             <Route path="/forumlar/" element={<Forumlar />} />
             <Route path="/profil/:slug/" element={<Profil />} />
             <Route path="/forum/:id/" element={<ForumDetay />} />
-            <Route path="/email-iletildi/" element={<EmailIletildi />} />
-            <Route path="/sifre-sifirlama/" element={<SifreSifirlamaEmail />} />
+            <Route element={<ForumRoutes />}>
+              <Route
+                path="/sifre-sifirla/:slug/"
+                element={<SifreSifirlamaYeniSifre />}
+              />
+              <Route path="/sifre-degisti/" element={<SifreDegisti />} />
+              <Route path="/email-iletildi/" element={<EmailIletildi />} />
+              <Route
+                path="/sifre-sifirlama/"
+                element={<SifreSifirlamaEmail />}
+              />
+            </Route>
+
             <Route element={<ForumRoutes />}>
               <Route
                 path="/profil/:slug/duzenle/"
@@ -44,7 +56,6 @@ function App() {
               <Route path="/forum/:id/sil/" element={<ForumSil />} />
               <Route path="/email-degistir/" element={<EmailDegistir />} />
               <Route path="/forum/:id/duzenle/" element={<ForumDuzenle />} />
-              <Route path="/forum-ekle/" element={<ForumEkle />} />
               <Route path="/ayarlar/" element={<Ayarlar />} />
               <Route path="/sifre-degistir/" element={<SifreDegistir />} />
             </Route>
