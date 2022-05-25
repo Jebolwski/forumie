@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams, Link, Navigate, useNavigate } from "react-router-dom";
-import AuthContext from "../context/AuthContext";
-import { BsTrashFill } from "../../node_modules/react-icons/bs/index.esm";
-import { HiReply } from "../../node_modules/react-icons/hi/index.esm";
+import AuthContext from "../../context/AuthContext";
+import { BsTrashFill } from "../../../node_modules/react-icons/bs/index.esm";
+import { HiReply } from "../../../node_modules/react-icons/hi/index.esm";
 import { AiOutlineEdit, AiFillDelete } from "react-icons/ai/index.esm";
-import slugify from "../../node_modules/slugify/slugify";
+import slugify from "../../../node_modules/slugify/slugify";
 import "./ForumDetay.css";
 import { AiFillHeart } from "react-icons/ai/index.esm";
-import { FaRetweet } from "../../node_modules/react-icons/fa/index.esm";
+import { FaRetweet } from "../../../node_modules/react-icons/fa/index.esm";
 const ForumDetay = () => {
   let { user, authTokens } = useContext(AuthContext);
   let { id } = useParams();

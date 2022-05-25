@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
-import { BsChatDots } from "../../node_modules/react-icons/bs/index.esm";
-import { BiSearchAlt } from "../../node_modules/react-icons/bi/index.esm";
-import AuthContext from "../context/AuthContext";
+import { BsChatDots } from "react-icons/bs/index.esm";
+import { BiSearchAlt } from "react-icons/bi/index.esm";
+import AuthContext from "../../context/AuthContext";
 import { AiOutlineLoading3Quarters } from "react-icons/ai/index.esm";
 import { ImCross } from "react-icons/im/index.esm";
-import Forum from "../components/Forum";
-import "./Forumlar.css";
+import Forum from "../../components/Forum";
+import "../Forum/Forumlar.css";
 import slugify from "slugify";
 const Forumlar = () => {
   const [forumlar, setForumlar] = useState([]);

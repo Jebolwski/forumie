@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-import AuthContext from "../context/AuthContext";
+import AuthContext from "../../context/AuthContext";
 import "./EmailDegistir.css";
 const EmailDegistir = () => {
   let navigate = useNavigate();

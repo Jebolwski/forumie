@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
-import slugify from "../../node_modules/slugify/slugify";
-import AuthContext from "../context/AuthContext";
-import { FaUserEdit } from "../../node_modules/react-icons/fa/index.esm";
+import slugify from "slugify";
+import AuthContext from "../../context/AuthContext";
+import { FaUserEdit } from "react-icons/fa/index.esm";
 import "./Profil.css";
 import { Link, useParams } from "react-router-dom";
-import Forum from "../components/Forum";
-import { ImCross } from "../../node_modules/react-icons/im/index.esm";
+import Forum from "../../components/Forum";
+import { ImCross } from "react-icons/im/index.esm";
 const Profil = () => {
   const { slug } = useParams();
   const [profil, setProfil] = useState([]);

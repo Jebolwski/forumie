@@ -1,25 +1,26 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import "./App.css";
-import Home from "./pages/Home";
-import Giris from "./pages/Giris";
+import Home from "./pages/Ev/Home";
+import Giris from "./pages/KayitGiris/Giris";
 import Header from "./components/Header";
 import Break from "./components/Break";
-import Forumlar from "./pages/Forumlar";
-import ForumDetay from "./pages/ForumDetay";
-import Ayarlar from "./pages/Ayarlar";
-import ForumSil from "./pages/ForumSil";
+import Forumlar from "./pages/Forum/Forumlar";
+import ForumDetay from "./pages/Forum/ForumDetay";
+import Ayarlar from "./pages/Ayarlar/Ayarlar";
+import ForumSil from "./pages/Forum/ForumSil";
 import ForumRoutes from "./routes/ForumRoutes";
-import ForumDuzenle from "./pages/ForumDuzenle";
-import Profil from "./pages/Profil";
-import Kayit from "./pages/Kayit";
-import EmailDegistir from "./pages/EmailDegistir";
-import SifreDegistir from "./pages/SifreDegistir";
-import ProfilDuzenle from "./pages/ProfilDuzenle";
-import EmailIletildi from "./pages/EmailIletildi";
-import SifreSifirlamaEmail from "./pages/SifreSifirlamaEmail";
-import SifreSifirlamaYeniSifre from "./pages/SifreSifirlamaYeniSifre";
+import ForumDuzenle from "./pages/Forum/ForumDuzenle";
+import Profil from "./pages/Profil/Profil";
+import Kayit from "./pages/KayitGiris/Kayit";
+import EmailDegistir from "./pages/EmailDegistir/EmailDegistir";
+import SifreDegistir from "./pages/EmailSifreDegistirme/SifreDegistir";
+import ProfilDuzenle from "./pages/Profil/ProfilDuzenle";
+import EmailIletildi from "./pages/EmailSifreDegistirme/EmailIletildi";
+import SifreSifirlamaEmail from "./pages/EmailSifreDegistirme/SifreSifirlamaEmail";
+import SifreSifirlamaYeniSifre from "./pages/EmailSifreDegistirme/SifreSifirlamaYeniSifre";
 import SifreDegisti from "./pages/SifreDegisti/SifreDegisti";
+import EmailRoutes from "./routes/EmailRoute";
 
 function App() {
   return (
@@ -35,13 +36,14 @@ function App() {
             <Route path="/forumlar/" element={<Forumlar />} />
             <Route path="/profil/:slug/" element={<Profil />} />
             <Route path="/forum/:id/" element={<ForumDetay />} />
-            <Route element={<ForumRoutes />}>
+
+            <Route element={<EmailRoutes />}>
+              <Route path="/sifre-degisti/" element={<SifreDegisti />} />
+              <Route path="/email-iletildi/" element={<EmailIletildi />} />
               <Route
                 path="/sifre-sifirla/:slug/"
                 element={<SifreSifirlamaYeniSifre />}
               />
-              <Route path="/sifre-degisti/" element={<SifreDegisti />} />
-              <Route path="/email-iletildi/" element={<EmailIletildi />} />
               <Route
                 path="/sifre-sifirlama/"
                 element={<SifreSifirlamaEmail />}

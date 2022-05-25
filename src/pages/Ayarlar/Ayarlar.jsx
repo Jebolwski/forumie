@@ -1,8 +1,11 @@
 import React, { useContext } from "react";
-import AuthContext from "../context/AuthContext";
+import AuthContext from "../../context/AuthContext";
 import { Link } from "react-router-dom";
-import { ImKey, ImProfile } from "../../node_modules/react-icons/im/index.esm";
-import { AiOutlineMail } from "../../node_modules/react-icons/ai/index.esm";
+import {
+  ImKey,
+  ImProfile,
+} from "../../../node_modules/react-icons/im/index.esm";
+import { AiOutlineMail } from "../../../node_modules/react-icons/ai/index.esm";
 import slugify from "slugify";
 
 const Ayarlar = () => {

@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
-import slugify from "../../node_modules/slugify/slugify";
+import slugify from "../../../node_modules/slugify/slugify";
 import { useNavigate, useParams } from "react-router-dom";
-import AuthContext from "../context/AuthContext";
+import AuthContext from "../../context/AuthContext";
 
 const ForumDuzenle = () => {
   let forumlarGel = async () => {

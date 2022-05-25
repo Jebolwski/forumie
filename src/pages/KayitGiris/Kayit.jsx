@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-import slugify from "../../node_modules/slugify/slugify";
-import AuthContext from "../context/AuthContext";
+import slugify from "../../../node_modules/slugify/slugify";
+import AuthContext from "../../context/AuthContext";
 import "./Giris.css";
 const Kayit = () => {
   let navigate = useNavigate();

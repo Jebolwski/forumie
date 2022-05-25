@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-import AuthContext from "../context/AuthContext";
+import AuthContext from "../../context/AuthContext";
 import "./ProfilDuzenle.css";
-import slugify from "../../node_modules/slugify/slugify";
+import slugify from "../../../node_modules/slugify/slugify";
 import { useNavigate } from "react-router-dom";
 import FormData from "form-data";
 
