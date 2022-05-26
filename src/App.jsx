@@ -36,14 +36,14 @@ function App() {
             <Route path="/forumlar/" element={<Forumlar />} />
             <Route path="/profil/:slug/" element={<Profil />} />
             <Route path="/forum/:id/" element={<ForumDetay />} />
-
+            <Route
+              path="/sifre-sifirla/:slug/"
+              element={<SifreSifirlamaYeniSifre />}
+            />
             <Route element={<EmailRoutes />}>
               <Route path="/sifre-degisti/" element={<SifreDegisti />} />
               <Route path="/email-iletildi/" element={<EmailIletildi />} />
-              <Route
-                path="/sifre-sifirla/:slug/"
-                element={<SifreSifirlamaYeniSifre />}
-              />
+
               <Route
                 path="/sifre-sifirlama/"
                 element={<SifreSifirlamaEmail />}

@@ -3,7 +3,7 @@ import AuthContext from "../context/AuthContext";
 import { Outlet, Navigate } from "react-router-dom";
 const ForumRoutes = () => {
   let { user } = useContext(AuthContext);
-  return user ? <Navigate to="/giris/" /> : <Outlet />;
+  return user ? <Outlet /> : <Navigate to="/giris/" />;
 };
 
 export default ForumRoutes;
