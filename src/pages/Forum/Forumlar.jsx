@@ -9,6 +9,7 @@ import "../Forum/Forumlar.css";
 import slugify from "slugify";
 const Forumlar = () => {
   const [forumlar, setForumlar] = useState([]);
+  const [flag, setFlag] = useState(false);
   const [profil, setProfil] = useState([]);
   const [forumSayisi, setForumSayisi] = useState(0);
   const [arama, setArama] = useState("");
@@ -66,8 +67,8 @@ const Forumlar = () => {
       },
     });
 
-    let data = await response.json();
     if (response.status === 200) {
+      let data = await response.json();
       setForumlar(data);
       profilGel();
     }
@@ -122,7 +123,29 @@ const Forumlar = () => {
       fetchforumlar();
     }
   };
+  var div = 1;
 
+  let cevaplama = (e) => {
+    div = e.target.parentNode.parentNode.parentNode.parentNode;
+    console.log(div);
+    setFlag(flag == true ? false : true);
+  };
+
+  let cevap_div = document.querySelector(".cevap-div");
+  let cevaplama_ana = () => {
+    cevap_div.style.display = "block";
+    let cevapla_cevapla = cevap_div.querySelector("cevapla-cevapla");
+    let aciklama_cevapla = cevap_div.querySelector("aciklama-cevapla");
+    let baslik_cevapla = cevap_div.querySelector("baslik-cevapla");
+    // cevapla_cevapla.innerHTML = div
+    //   .querySelector("username")
+    //   .innerHTML.toLowerCase();
+  };
+
+  useEffect(() => {
+    cevaplama_ana();
+  }, [flag]);
+  cevap_div.style.display = "none";
   return (
     <div className="text-center">
       <div className="mb-4">
@@ -145,13 +168,58 @@ const Forumlar = () => {
               <td>
                 {user ? (
                   <div onClick={ekleme}>
-                    <BsChatDots size={30} color="darkred" />
+                    <BsChatDots
+                      size={30}
+                      style={{ cursor: "pointer" }}
+                      color="darkred"
+                    />
                   </div>
                 ) : null}
               </td>
             </tr>
           </tbody>
         </table>
+      </div>
+      <div
+        className="cevap-div col-10 offset-1 col-lg-8 offset-lg-2 p-3 border rounded"
+        style={{ display: "none" }}
+      >
+        <div className="acikp profil-f mb-2">
+          <img
+            src="https://pbs.twimg.com/profile_images/1490036796125757448/8E-1PovE_400x400.jpg"
+            style={{ width: "4vw", minWidth: "40px" }}
+            className="rounded-circle"
+          />
+          <span className="ms-3">Yönetici</span>
+        </div>
+        <div
+          className="col-8 offset-1 text-left p-3"
+          style={{ borderLeft: "3px solid darkred" }}
+        >
+          <p className="acikp baslik-cevapla">Başlık</p>
+          <hr />
+          <p className="acikp aciklama-cevapla">Açıklama</p>
+          <hr />
+          <p className="text-break cevapla-cevapla acikp">
+            @yönetici adlı kullanıcıya yanıt olarak
+          </p>
+        </div>
+        <div className="acikp profil-f mt-2">
+          <img
+            src="https://pbs.twimg.com/profile_images/1490036796125757448/8E-1PovE_400x400.jpg"
+            style={{ width: "4vw", minWidth: "40px" }}
+            className="rounded-circle"
+          />
+          <span className="ms-3">Jebolwski</span>
+        </div>
+        <div className="mx-3 mt-4">
+          <textarea className="form-control" rows="6"></textarea>
+          <input
+            type="submit"
+            value={"Cevapla"}
+            className="btn btn-outline-danger mt-3"
+          />
+        </div>
       </div>
       <div className="ekleme-div-parent hidden">
         <div className="ekleme-div p-5">
@@ -195,6 +263,7 @@ const Forumlar = () => {
         </div>
       </div>
       <hr />
+
       {forumlar.length > 0 ? (
         forumlar
           .filter((forum) => {
@@ -206,7 +275,9 @@ const Forumlar = () => {
               return forum;
             }
           })
-          .map((forum) => <Forum forum={forum} key={forum.id} />)
+          .map((forum) => (
+            <Forum forum={forum} cevapla={cevaplama} key={forum.id} />
+          ))
       ) : (
         <h5 className="text-center mt-5" style={{ fontWeight: "400" }}>
           Herhangi bir forumie oluşturulmamış.

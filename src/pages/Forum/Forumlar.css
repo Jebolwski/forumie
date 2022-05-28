@@ -73,6 +73,14 @@
   box-shadow: 0px;
 }
 
+.acikp {
+  text-align: start;
+}
+
+.profil-f {
+  margin-left: 3.4vw;
+}
+
 @media only screen and (max-width: 650px) {
   .ekleme-div {
     width: 65vw;

@@ -4,7 +4,10 @@ import slugify from "../../node_modules/slugify/slugify";
 import { AiFillHeart } from "react-icons/ai/index.esm";
 import "./Forum.css";
 import AuthContext from "../context/AuthContext";
-import { FaRetweet } from "../../node_modules/react-icons/fa/index.esm";
+import {
+  FaRetweet,
+  FaRegComments,
+} from "../../node_modules/react-icons/fa/index.esm";
 
 const Forum = (props) => {
   let { user, authTokens } = useContext(AuthContext);
@@ -67,7 +70,7 @@ const Forum = (props) => {
                   className="ms-2 text-decoration-none text-dark"
                 >
                   <span className="ms-2">
-                    {props.forum.username}{" "}
+                    <span className="username">{props.forum.username}</span>{" "}
                     <span className="d-none d-md-inline">
                       · {props.forum.guncelle}
                     </span>
@@ -94,6 +97,14 @@ const Forum = (props) => {
           </Link>
           <hr />
           <ul className="list-unstyled justify-content-evenly d-flex">
+            <li>
+              <span className="pt-3">
+                <FaRegComments size={18} onClick={props.cevapla} />
+              </span>
+              <span id={`${props.forum.id}`} className="ms-2 my-1 py-1">
+                {props.forum.yanit_sayisi}
+              </span>
+            </li>
             <li>
               <span
                 className="reforumie"
@@ -152,6 +163,8 @@ const Forum = (props) => {
                         re_forumielendi.style.color = "black";
                       }
                     }
+                  } else {
+                    navigate("/giris/");
                   }
                 }}
               >
@@ -223,6 +236,8 @@ const Forum = (props) => {
                         likelendi.style.color = "rgba(197, 119, 119, 0.589)";
                       }
                     }
+                  } else {
+                    navigate("/giris/");
                   }
                 }}
               >
