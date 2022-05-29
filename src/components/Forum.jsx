@@ -45,23 +45,23 @@ const Forum = (props) => {
                     props.forum.url ? (
                       <img
                         src={`http://127.0.0.1:8000/api${props.forum.url}`}
-                        className="forumie-profil-foto rounded-circle border mt-1"
+                        className="soru_url forumie-profil-foto rounded-circle border mt-1"
                       />
                     ) : (
                       <img
                         src="https://i.kym-cdn.com/photos/images/facebook/001/150/314/fb4.png"
-                        className="forumie-profil-foto border rounded-circle mt-1"
+                        className="soru_url forumie-profil-foto border rounded-circle mt-1"
                       />
                     )
                   ) : props.forum.url ? (
                     <img
                       src={`http://127.0.0.1:8000/api${props.forum.url}`}
-                      className="forumie-profil-foto rounded-circle border mt-1 ms-4"
+                      className="soru_url forumie-profil-foto rounded-circle border mt-1 ms-4"
                     />
                   ) : (
                     <img
                       src="https://i.kym-cdn.com/photos/images/facebook/001/150/314/fb4.png"
-                      className="forumie-profil-foto border rounded-circle mt-1 ms-4"
+                      className="soru_url forumie-profil-foto border rounded-circle mt-1 ms-4"
                     />
                   )}
                 </Link>
@@ -80,14 +80,14 @@ const Forum = (props) => {
 
               <hr />
               <h5
-                className="ms-3 ms-lg-5 me-4 text-break"
+                className="soru_baslik ms-3 ms-lg-5 me-4 text-break"
                 style={{ fontWeight: "500", textAlign: "left" }}
               >
                 {props.forum.baslik}
               </h5>
               <hr />
               <h6
-                className="ms-3 ms-lg-5 me-4 text-break"
+                className="soru_aciklama ms-3 ms-lg-5 me-4 text-break"
                 style={{ fontWeight: "400", textAlign: "left" }}
               >
                 {props.forum.soru}
@@ -98,9 +98,17 @@ const Forum = (props) => {
           <hr />
           <ul className="list-unstyled justify-content-evenly d-flex">
             <li>
-              <span className="pt-3">
-                <FaRegComments size={18} onClick={props.cevapla} />
-              </span>
+              {user ? (
+                <FaRegComments
+                  size={18}
+                  style={{ cursor: "pointer" }}
+                  onClick={props.cevapla}
+                />
+              ) : (
+                <Link to={"/giris/"}>
+                  <FaRegComments size={18} color="black" />
+                </Link>
+              )}
               <span id={`${props.forum.id}`} className="ms-2 my-1 py-1">
                 {props.forum.yanit_sayisi}
               </span>

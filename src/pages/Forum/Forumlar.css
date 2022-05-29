@@ -40,6 +40,23 @@
   cursor: pointer;
 }
 
+#cevap_div {
+  overflow-y: auto;
+  z-index: 12;
+  background-color: white;
+}
+
+#cevap_div_parent {
+  overflow-y: auto;
+  position: fixed;
+  z-index: 9;
+  width: 100vw;
+  top: 0;
+  height: 100vh;
+  background-color: rgba(93, 133, 192, 0.4);
+  padding-top: 30px;
+}
+
 .ekleme-div-foto {
   position: absolute;
   top: 60px;
@@ -71,6 +88,10 @@
   border-color: transparent;
   border-bottom: 1px solid darkred;
   box-shadow: 0px;
+}
+
+.visible {
+  display: block;
 }
 
 .acikp {
