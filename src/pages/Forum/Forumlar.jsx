@@ -13,10 +13,13 @@ const Forumlar = () => {
   const [profil, setProfil] = useState([]);
   const [username, setUsername] = useState();
   const [soruBaslik, setSoruBaslik] = useState();
+  const [id, setId] = useState();
   const [soruAciklama, setSoruAciklama] = useState();
+  const [cevap, setCevap] = useState();
   const [soruUrl, setSoruUrl] = useState();
   const [forumSayisi, setForumSayisi] = useState(0);
   const [arama, setArama] = useState("");
+  const [cevapSayisiDiv, setCevapSayisiDiv] = useState();
   const [paginationNumber, setPaginationNumber] = useState(2);
   const [scrollFetchState, setScrollFetchState] = useState(0);
   let { user, authTokens } = useContext(AuthContext);
@@ -86,9 +89,6 @@ const Forumlar = () => {
     setForumSayisi(data1);
     profilGel();
   };
-  useEffect(() => {
-    forumlarGel();
-  }, []);
 
   const fetchforumlar = async () => {
     setScrollFetchState(1);
@@ -134,11 +134,38 @@ const Forumlar = () => {
     setSoruBaslik(div.querySelector(".soru_baslik").innerText);
     setSoruAciklama(div.querySelector(".soru_aciklama").innerText);
     setSoruUrl(div.querySelector(".soru_url").src);
-    console.log(username);
-    console.log(soruBaslik);
-    console.log(soruAciklama);
-    console.log(soruUrl);
+    setId(div.querySelector(".idsi").innerText);
+    setCevapSayisiDiv(div.querySelector(".yanit_sayisi_1"));
+
     setFlag(flag == true ? false : true);
+  };
+
+  let cevapla_post = async (e) => {
+    e.preventDefault();
+    let response = await fetch(`http://127.0.0.1:8000/api/forum/cevap/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: user.username,
+        cevap: cevap,
+        forum: id,
+        cevaba_cevap: null,
+        cevaba_cevap_profil_username: null,
+      }),
+    });
+    if (response.status == 200) {
+      cevapSayisiDiv.innerText = parseInt(cevapSayisiDiv.innerText) + 1;
+      cevaplama_ana_kapa();
+      let cevabiniz_olusturuldu = document.querySelector(
+        ".cevabiniz_olusturuldu"
+      );
+      cevabiniz_olusturuldu.classList.remove("d-none");
+      setTimeout(() => {
+        cevabiniz_olusturuldu.classList.add("d-none");
+      }, 3000);
+    }
   };
 
   let cevaplama_ana = () => {
@@ -147,6 +174,7 @@ const Forumlar = () => {
       cevap_div.classList.remove("d-none");
     }
   };
+
   let cevaplama_ana_kapa = () => {
     if (user) {
       let cevap_div = document.getElementById("cevap_div_parent");
@@ -158,6 +186,10 @@ const Forumlar = () => {
   useEffect(() => {
     cevaplama_ana();
   }, [flag]);
+  useEffect(() => {
+    forumlarGel();
+    cevaplama_ana_kapa();
+  }, []);
   return (
     <div className="text-center">
       <div className="mb-4">
@@ -240,18 +272,25 @@ const Forumlar = () => {
               <span className="ms-3">{user.username}</span>
             </div>
             <div className="mx-3 mt-4">
-              <textarea className="form-control" rows="6"></textarea>
+              <textarea
+                className="form-control"
+                onChange={(e) => {
+                  setCevap(e.target.value);
+                }}
+                rows="6"
+              ></textarea>
               <input
                 type="submit"
                 value={"Cevapla"}
                 className="btn btn-outline-danger mt-3"
-                onClick={cevapekle}
+                onClick={cevapla_post}
               />
             </div>
           </div>
         </div>
       ) : null}
 
+      <p className="cevabiniz_olusturuldu d-none">Cevabınız oluşturuldu.</p>
       <div className="ekleme-div-parent hidden d-none">
         <div className="ekleme-div p-5">
           <ImCross color="darkred" className="cross" onClick={divKapa} />
@@ -294,7 +333,6 @@ const Forumlar = () => {
         </div>
       </div>
       <hr />
-
       {forumlar.length > 0 ? (
         forumlar
           .filter((forum) => {

@@ -29,7 +29,7 @@ const Forum = (props) => {
             {props.profil.username} ReForumieledi
           </span>
         ) : null}
-
+        <span className="idsi d-none">{props.forum.id}</span>
         <div className="forumie" key={props.forum.id}>
           <Link
             to={`/forum/${props.forum.id}/`}
@@ -109,7 +109,10 @@ const Forum = (props) => {
                   <FaRegComments size={18} color="black" />
                 </Link>
               )}
-              <span id={`${props.forum.id}`} className="ms-2 my-1 py-1">
+              <span
+                id={`${props.forum.id}`}
+                className="yanit_sayisi_1 ms-2 my-1 py-1"
+              >
                 {props.forum.yanit_sayisi}
               </span>
             </li>
