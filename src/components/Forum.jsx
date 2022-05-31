@@ -109,10 +109,7 @@ const Forum = (props) => {
                   <FaRegComments size={18} color="black" />
                 </Link>
               )}
-              <span
-                id={`${props.forum.id}`}
-                className="yanit_sayisi_1 ms-2 my-1 py-1"
-              >
+              <span className="yanit_sayisi_1 ms-2 my-1 py-1">
                 {props.forum.yanit_sayisi}
               </span>
             </li>

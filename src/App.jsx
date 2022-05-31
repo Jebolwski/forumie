@@ -21,7 +21,8 @@ import SifreSifirlamaEmail from "./pages/EmailSifreDegistirme/SifreSifirlamaEmai
 import SifreSifirlamaYeniSifre from "./pages/EmailSifreDegistirme/SifreSifirlamaYeniSifre";
 import SifreDegisti from "./pages/SifreDegisti/SifreDegisti";
 import EmailRoutes from "./routes/EmailRoute";
-
+import Anketler from "./pages/Anketler/Anketler";
+//http://localhost:3000/sifre-sifirla/4dbfec08a67c66159e/
 function App() {
   return (
     <div className="App">
@@ -34,10 +35,11 @@ function App() {
             <Route path="/giris/" element={<Giris />} />
             <Route path="/kayit-ol/" element={<Kayit />} />
             <Route path="/forumlar/" element={<Forumlar />} />
+            <Route path="/anketler/" element={<Anketler />} />
             <Route path="/profil/:slug/" element={<Profil />} />
             <Route path="/forum/:id/" element={<ForumDetay />} />
             <Route
-              path="/sifre-sifirla/:slug/"
+              path="/sifre-sifirla/:id/"
               element={<SifreSifirlamaYeniSifre />}
             />
             <Route element={<EmailRoutes />}>

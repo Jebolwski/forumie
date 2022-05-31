@@ -7,7 +7,7 @@ import {
   AiOutlineHome,
   AiOutlineLogin,
 } from "../../node_modules/react-icons/ai/index.esm";
-import { CgProfile } from "../../node_modules/react-icons/cg/index.esm";
+import { CgProfile, CgPoll } from "../../node_modules/react-icons/cg/index.esm";
 import {
   MdOutlineChatBubbleOutline,
   MdOutlineMarkChatUnread,
@@ -49,7 +49,7 @@ const Header = () => {
         >
           <li>
             {user ? (
-              <div className="d-none d-md-block">
+              <div className="d-none d-md-inline-block">
                 <img src={logo} style={{ width: "30px" }} className="mx-3" />
                 {user.username}
               </div>
@@ -83,18 +83,23 @@ const Header = () => {
                 className="text-white text-decoration-none d-flex"
               >
                 <CgProfile size={24} className="mx-1" />{" "}
-                <span className="d-none d-lg-block">Profil</span>
+                <span className="d-none d-lg-inline-block">Profil</span>
               </Link>
             </li>
           ) : null}
-
+          <li>
+            <Link to={`/anketler/`} className="text-white">
+              <CgPoll color="white" size={24} className="mx-1" />
+              <span className="d-none d-lg-inline-block">Anketler</span>
+            </Link>
+          </li>
           {user ? (
             <li>
               <Link
                 to={"/ayarlar/"}
                 className="text-white text-decoration-none d-flex"
               >
-                <FiSettings size={24} className="mx-1" />
+                <FiSettings size={24} className="mx-1" />{" "}
                 <span className="d-none d-lg-block">Ayarlar</span>
               </Link>
             </li>
