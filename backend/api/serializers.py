@@ -7,6 +7,7 @@ from django.contrib.auth.password_validation import validate_password
 
 class ForumSerializer(ModelSerializer):
     url = serializers.SerializerMethodField('get_profil_url')
+    yanit_sayisi = serializers.SerializerMethodField('get_yanit_sayisi')
     
     class Meta:
         model       = Forum
@@ -19,6 +20,9 @@ class ForumSerializer(ModelSerializer):
         else:
             return None
     
+    def get_yanit_sayisi(self,forum):
+        num = len(ForumYanit.objects.filter(forum_id=forum.id))
+        return num
 
 
 class ForumYanitSerializer(ModelSerializer):
