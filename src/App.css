@@ -9,3 +9,8 @@
 body {
   height: 130vh;
 }
+
+.form-control {
+  border: 0;
+  border-bottom: 2px solid rgb(65, 154, 189);
+}

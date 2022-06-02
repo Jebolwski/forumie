@@ -22,6 +22,7 @@ import SifreSifirlamaYeniSifre from "./pages/EmailSifreDegistirme/SifreSifirlama
 import SifreDegisti from "./pages/SifreDegisti/SifreDegisti";
 import EmailRoutes from "./routes/EmailRoute";
 import Anketler from "./pages/Anketler/Anketler";
+import AnketEkle from "./pages/Anketler/AnketEkle";
 //http://localhost:3000/sifre-sifirla/4dbfec08a67c66159e/
 function App() {
   return (
@@ -58,6 +59,7 @@ function App() {
                 element={<ProfilDuzenle />}
               />
               <Route path="/forum/:id/sil/" element={<ForumSil />} />
+              <Route path="/anketler/ekle/" element={<AnketEkle />} />
               <Route path="/email-degistir/" element={<EmailDegistir />} />
               <Route path="/forum/:id/duzenle/" element={<ForumDuzenle />} />
               <Route path="/ayarlar/" element={<Ayarlar />} />

@@ -1,0 +1,9 @@
+.icon {
+  color: darkred;
+  transition: 0.2s;
+}
+
+.icon:hover {
+  color: rgb(90, 28, 28);
+  transition: 0.2s;
+}
