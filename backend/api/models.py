@@ -219,124 +219,44 @@ class AnketSoru(models.Model):
 
 class AnketCevap(models.Model):
     soru1cevap1=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
-    soru1cevap2=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
-    soru1cevap3=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
-    soru1cevap4=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
-    soru1cevap5=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
 
     soru2cevap1=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
-    soru2cevap2=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
-    soru2cevap3=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
-    soru2cevap4=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
-    soru2cevap5=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
-
+    
     soru3cevap1=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
-    soru3cevap2=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
-    soru3cevap3=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
-    soru3cevap4=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
-    soru3cevap5=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
 
     soru4cevap1=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
-    soru4cevap2=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
-    soru4cevap3=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
-    soru4cevap4=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
-    soru4cevap5=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
 
     soru5cevap1=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
-    soru5cevap2=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
-    soru5cevap3=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
-    soru5cevap4=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
-    soru5cevap5=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
 
     soru6cevap1=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
-    soru6cevap2=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
-    soru6cevap3=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
-    soru6cevap4=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
-    soru6cevap5=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
 
     soru7cevap1=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
-    soru7cevap2=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
-    soru7cevap3=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
-    soru7cevap4=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
-    soru7cevap5=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
 
     soru8cevap1=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
-    soru8cevap1=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
-    soru8cevap3=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
-    soru8cevap4=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
-    soru8cevap5=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
 
     soru9cevap1=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
-    soru9cevap2=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
-    soru9cevap3=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
-    soru9cevap4=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
-    soru9cevap5=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
 
     soru10cevap1=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
-    soru10cevap2=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
-    soru10cevap3=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
-    soru10cevap4=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
-    soru10cevap5=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
 
     soru11cevap1=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
-    soru11cevap2=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
-    soru11cevap3=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
-    soru11cevap4=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
-    soru11cevap5=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
 
     soru12cevap1=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
-    soru12cevap2=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
-    soru12cevap3=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
-    soru12cevap4=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
-    soru12cevap5=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
 
     soru13cevap1=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
-    soru13cevap2=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
-    soru13cevap3=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
-    soru13cevap4=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
-    soru13cevap5=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
 
     soru14cevap1=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
-    soru14cevap2=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
-    soru14cevap3=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
-    soru14cevap4=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
-    soru14cevap5=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
 
     soru15cevap1=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
-    soru15cevap2=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
-    soru15cevap3=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
-    soru15cevap4=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
-    soru15cevap5=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
 
     soru16cevap1=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
-    soru16cevap2=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
-    soru16cevap3=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
-    soru16cevap4=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
-    soru16cevap5=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
 
     soru17cevap1=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
-    soru17cevap2=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
-    soru17cevap3=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
-    soru17cevap4=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
-    soru17cevap5=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
 
     soru18cevap1=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
-    soru18cevap2=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
-    soru18cevap3=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
-    soru18cevap4=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
-    soru18cevap5=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
 
     soru19cevap1=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
-    soru19cevap2=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
-    soru19cevap3=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
-    soru19cevap4=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
-    soru19cevap5=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
 
     soru20cevap1=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
-    soru20cevap2=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
-    soru20cevap3=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
-    soru20cevap4=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
-    soru20cevap5=models.CharField(null=True,blank=True,choices=CEVAP_CHOICES,max_length=5)
 
 
 
