@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import "./AnketEkle.css";
 import { AiFillPlusSquare } from "react-icons/ai/index.esm";
 import { BsClipboardPlus } from "react-icons/bs/index.esm";
 
 const AnketEkle = () => {
+  const [count, setCount] = useState(0);
   const cevapEkle = (e) => {
     let div = e.target.parentNode.parentNode.querySelector(".cevaplar");
     if (div.childElementCount != 5) {
@@ -44,8 +45,8 @@ const AnketEkle = () => {
     }
   };
   const soruEkle = (e) => {
+    setCount(count + 1);
     let div = e.target.parentNode.parentNode.querySelector(".sorular");
-    console.log(div);
     div.innerHTML += `<div class="soru">
           
          
@@ -55,7 +56,7 @@ const AnketEkle = () => {
             class="form-control mt-5"
           />
 
-          <div class="cevaplar">
+          <div class="cevaplar ${count}">
             <div class="rounded ms-3 mt-4">
               <div class="d-flex">
                 <input type="radio" class="mt-3" ="a" />
@@ -77,12 +78,20 @@ const AnketEkle = () => {
               </div>
             </div>
           </div>
-          <svg stroke="currentColor" fill="currentColor" stroke-width="0" 
-          viewBox="0 0 1024 1024" class="icon mt-2 ms-3" height="30" width="30" xmlns="http://www.w3.org/2000/svg" 
-          style="cursor: pointer;" onclick="cevapEkle(e)">
+          <svg stroke="currentColor" class="icon mt-2 ms-3" id="icon" fill="currentColor" stroke-width="0" 
+          viewBox="0 0 1024 1024"  height="30" width="30" xmlns="http://www.w3.org/2000/svg" 
+          style="cursor: pointer;">
           <path d="M880 112H144c-17.7 0-32 14.3-32 32v736c0 17.7 14.3 32 32 32h736c17.7 0 32-14.3 32-32V144c0-17.7-14.3-32-32-32zM704 536c0 4.4-3.6 8-8 8H544v152c0 4.4-3.6 8-8 8h-48c-4.4 0-8-3.6-8-8V544H328c-4.4 0-8-3.6-8-8v-48c0-4.4 3.6-8 8-8h152V328c0-4.4 3.6-8 8-8h48c4.4 0 8 3.6 8 8v152h152c4.4 0 8 3.6 8 8v48z"></path>
           </svg>
         </div>`;
+    let div1 = document.getElementsByClassName(`${count}`)[0];
+    console.log(div1);
+    let icon = div1.querySelector("#icon");
+    console.log(icon);
+    // icon.addEventListener("click", () => {
+    //   console.log("wow");
+    //   cevapEkle(e);
+    // });
   };
 
   return (
