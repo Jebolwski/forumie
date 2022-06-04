@@ -302,3 +302,15 @@ class ChangePasswordView(generics.UpdateAPIView):
     queryset = User.objects.all()
     permission_classes = (IsAuthenticated,)
     serializer_class = ChangePasswordSerializer
+
+
+@api_view(['GET','PUT','POST'])
+def AnketEkle(request):
+    if request.method=="POST":
+        serializer = AnketSoruSerializer(data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+
+            return Response(serializer.data)
+
+    return Response("Enter data!")

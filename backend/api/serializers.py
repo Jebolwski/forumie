@@ -88,3 +88,10 @@ class ChangePasswordSerializer(serializers.ModelSerializer):
         instance.save()
 
         return instance
+
+
+
+class AnketSoruSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = "__all__"
