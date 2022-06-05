@@ -72,6 +72,8 @@ class ForumYanit(models.Model):
 
 
 class AnketSoru(models.Model):
+    baslik=models.CharField(null=False,blank=False,max_length=200)
+    
     soru1=models.CharField(null=False,blank=False,max_length=200)
     soru1cevap1=models.CharField(null=False,blank=False,max_length=100)
     soru1cevap2=models.CharField(null=False,blank=False,max_length=100)

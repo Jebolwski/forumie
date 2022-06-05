@@ -308,6 +308,7 @@ class ChangePasswordView(generics.UpdateAPIView):
 def AnketEkle(request):
     if request.method=="POST":
         serializer = AnketSoruSerializer(data = request.data)
+        print(request.data)
         if serializer.is_valid():
             serializer.save()
 

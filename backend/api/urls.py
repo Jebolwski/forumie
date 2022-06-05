@@ -39,6 +39,9 @@ urlpatterns = [
     path('profil/<slug:my_slug>/duzenle/',views.ProfilDuzenleView,name="profil-duzenle"),
     path('email-degistir/',views.EmailDegistir,name="email-degistir"),
 
+    path('anket-ekle/',views.AnketEkle,name="anket-ekle"),
+
+
     path('change_password/<int:pk>/', views.ChangePasswordView.as_view(), name='auth_change_password'),
     path('password_reset/', include('django_rest_passwordreset.urls', namespace='password_reset')),
 
