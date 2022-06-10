@@ -411,6 +411,49 @@ const AnketEkle = () => {
           setSoru20cevap3(e.target.value);
         });
       }
+      let bir_uc = document.getElementsByClassName(".!31")[0];
+      console.log(bir_uc);
+      if (bir_uc) {
+        bir_uc.addEventListener("change", (e) => {
+          setSoru1cevap3(e.target.value);
+        });
+      }
+      let bir_dort = document.getElementsByClassName(".!41")[0];
+      console.log(bir_dort);
+      if (bir_dort) {
+        bir_dort.addEventListener("change", (e) => {
+          setSoru1cevap4(e.target.value);
+        });
+      }
+      let bir_bes = document.getElementsByClassName(".!51")[0];
+      console.log(bir_bes);
+      if (bir_bes) {
+        bir_bes.addEventListener("change", (e) => {
+          setSoru1cevap4(e.target.value);
+        });
+      }
+    }
+
+    let bir_uc = document.getElementsByClassName("!31")[0];
+    console.log(bir_uc);
+    if (bir_uc) {
+      bir_uc.addEventListener("change", (e) => {
+        setSoru1cevap3(e.target.value);
+      });
+    }
+    let bir_dort = document.getElementsByClassName("!41")[0];
+    console.log(bir_dort);
+    if (bir_dort) {
+      bir_dort.addEventListener("change", (e) => {
+        setSoru1cevap4(e.target.value);
+      });
+    }
+    let bir_bes = document.getElementsByClassName("!51")[0];
+    console.log(bir_bes);
+    if (bir_bes) {
+      bir_bes.addEventListener("change", (e) => {
+        setSoru1cevap5(e.target.value);
+      });
     }
 
     if (document.getElementsByClassName(`!4${count}`).length > 0) {
@@ -503,6 +546,7 @@ const AnketEkle = () => {
       if (count == 1) {
         input_yeri5.addEventListener("change", (e) => {
           setSoru1cevap5(e.target.value);
+          console.log("15");
         });
       } else if (count == 2) {
         input_yeri5.addEventListener("change", (e) => {
@@ -900,7 +944,7 @@ const AnketEkle = () => {
     <div>
       <h4 className="text-center pt-4">Anket Ekle</h4>
       <div className="sorular col-10 col-md-8 offset-1 offset-md-2 offset-1 mt-5">
-        <div className="soru">
+        <div className="1 soru">
           <input
             type="text"
             placeholder="Anketin Başlığı"
