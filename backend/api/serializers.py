@@ -92,6 +92,23 @@ class ChangePasswordSerializer(serializers.ModelSerializer):
 
 
 class AnketSoruSerializer(serializers.ModelSerializer):
+
+    url = serializers.SerializerMethodField('get_profil_url')
+    username = serializers.SerializerMethodField('get_profil_username')
     class Meta:
-        model = User
+        model = AnketSoru
         fields = "__all__"
+
+    def get_profil_url(self,anket):
+        if anket.profil.profil_foto:
+            url = anket.profil.profil_foto.url
+            return url
+        else:
+            return None
+
+    def get_profil_username(self,anket):
+        if anket.profil.profil_foto:
+            url = anket.profil.user.username
+            return url
+        else:
+            return None

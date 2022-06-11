@@ -73,7 +73,16 @@ class ForumYanit(models.Model):
 
 class AnketSoru(models.Model):
     baslik=models.CharField(null=False,blank=False,max_length=200)
+
+    profil        = models.ForeignKey(Profil,on_delete=models.CASCADE,null=True,blank=True)
+
+    goruldu         = models.ManyToManyField(User,related_name='goruldu',default=None,blank=True)
     
+    aciklama=models.CharField(null=False,blank=False,max_length=600)
+
+    likes         = models.ManyToManyField(User,related_name='likes2',default=None,blank=True)
+    dislikes      = models.ManyToManyField(User,related_name='dislikes2',default=None,blank=True)
+
     soru1=models.CharField(null=False,blank=False,max_length=200)
     soru1cevap1=models.CharField(null=False,blank=False,max_length=100)
     soru1cevap2=models.CharField(null=False,blank=False,max_length=100)
@@ -218,6 +227,11 @@ class AnketSoru(models.Model):
     soru20cevap4=models.CharField(null=True,blank=True,max_length=100)
     soru20cevap5=models.CharField(null=True,blank=True,max_length=100)
     
+    olusturma     = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    guncelle      = models.DateTimeField(auto_now=True,blank=True, null=True)
+
+    def __str__(self):
+        return str(self.baslik)
 
 class AnketCevap(models.Model):
     soru1cevap1=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)

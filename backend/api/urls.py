@@ -40,6 +40,7 @@ urlpatterns = [
     path('email-degistir/',views.EmailDegistir,name="email-degistir"),
 
     path('anket-ekle/',views.AnketEkle,name="anket-ekle"),
+    path('anketler/',views.Anketler,name="anketler"),
 
 
     path('change_password/<int:pk>/', views.ChangePasswordView.as_view(), name='auth_change_password'),
