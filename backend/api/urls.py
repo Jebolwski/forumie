@@ -41,6 +41,7 @@ urlpatterns = [
 
     path('anket-ekle/',views.AnketEkle,name="anket-ekle"),
     path('anketler/',views.Anketler,name="anketler"),
+path('anket/<int:pk>/',views.AnketDetay,name="anket"),
 
 
     path('change_password/<int:pk>/', views.ChangePasswordView.as_view(), name='auth_change_password'),

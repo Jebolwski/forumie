@@ -468,3 +468,10 @@ def Anketler(request):
     anketler = AnketSoru.objects.all()
     serializer = AnketSoruSerializer(anketler,many=True)
     return Response(serializer.data)
+
+
+@api_view(['GET'])
+def AnketDetay(request,pk):
+    anket = AnketSoru.objects.get(id=pk)
+    serializer = AnketSoruSerializer(anket,many=False)
+    return Response(serializer.data)
