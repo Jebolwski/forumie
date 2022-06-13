@@ -23,6 +23,7 @@ import SifreDegisti from "./pages/SifreDegisti/SifreDegisti";
 import EmailRoutes from "./routes/EmailRoute";
 import Anketler from "./pages/Anketler/Anketler";
 import AnketEkle from "./pages/Anketler/AnketEkle";
+import AnketDetay from "./pages/Anketler/AnketDetay";
 //http://localhost:3000/sifre-sifirla/4dbfec08a67c66159e/
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
             <Route path="/kayit-ol/" element={<Kayit />} />
             <Route path="/forumlar/" element={<Forumlar />} />
             <Route path="/anketler/" element={<Anketler />} />
+            <Route path="/anket/:id/" element={<AnketDetay />} />
             <Route path="/profil/:slug/" element={<Profil />} />
             <Route path="/forum/:id/" element={<ForumDetay />} />
             <Route

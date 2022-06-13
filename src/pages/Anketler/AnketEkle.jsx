@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import "./AnketEkle.css";
 import { AiFillPlusSquare } from "react-icons/ai/index.esm";
 import { BsClipboardPlus } from "react-icons/bs/index.esm";
+import { useContext } from "react";
+import AuthContext from "../../context/AuthContext";
+import { Navigate, useNavigate } from "react-router-dom";
 const AnketEkle = () => {
   const [baslik, setBaslik] = useState();
   const [soru1, setSoru1] = useState();
@@ -138,12 +141,18 @@ const AnketEkle = () => {
   const [soru20cevap4, setSoru20cevap4] = useState();
   const [soru20cevap5, setSoru20cevap5] = useState();
 
+  const [aciklama, setAciklama] = useState();
+
+  let { user } = useContext(AuthContext);
+  let navigate = useNavigate();
   const ekle = async () => {
     let response = await fetch("http://127.0.0.1:8000/api/anket-ekle/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
+        user_id: user.user_id,
         baslik: baslik,
+        aciklama: aciklama,
         soru1: soru1,
         soru2: soru2,
         soru3: soru3,
@@ -271,6 +280,9 @@ const AnketEkle = () => {
         soru20cevap5: soru20cevap5,
       }),
     });
+    if (response.status === 200) {
+      navigate("/anketler/");
+    }
   };
 
   const [count, setCount] = useState(2);
@@ -630,9 +642,12 @@ const AnketEkle = () => {
 
   const soruEkle = (e) => {
     let soru = document.getElementsByClassName("soru").length;
-    setCount(count + 1);
+
     if (soru < 21) {
-      let div = e.target.parentNode.parentNode.querySelector(".sorular");
+      let div =
+        e.target.parentNode.parentNode.parentNode.querySelector(".sorular");
+      console.log(e.target.parentNode.parentNode.parentNode);
+      setCount(count + 1);
       div.insertAdjacentHTML(
         "beforeend",
         `<div class="${count} soru border bg-light p-3 mt-4">
@@ -953,6 +968,14 @@ const AnketEkle = () => {
               setBaslik(e.target.value);
             }}
           />
+          <input
+            type="text"
+            placeholder="Anketin Açıklaması"
+            className="form-control mt-5"
+            onChange={(e) => {
+              setAciklama(e.target.value);
+            }}
+          />
           <h4 className="mt-5">Sorular</h4>
           <div className="1 border bg-light p-3">
             <input
@@ -1002,12 +1025,12 @@ const AnketEkle = () => {
         </div>
       </div>
       <div className="col-10 col-md-8 offset-1 offset-md-2 offset-2">
-        {/* <BsClipboardPlus
+        <BsClipboardPlus
           size={30}
           style={{ cursor: "pointer" }}
-          className="icon"
-        /> */}
-        <p onClick={soruEkle}>ekle</p>
+          className="icon mt-3 ms-3"
+          onClick={soruEkle}
+        />
       </div>
       <div>
         <button className="center btn btn-outline-danger my-3" onClick={ekle}>
