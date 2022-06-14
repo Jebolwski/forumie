@@ -13,11 +13,11 @@ from django_rest_passwordreset.signals import reset_password_token_created
 from django.core.mail import send_mail  
 
 CEVAP_CHOICES=(
-    (1,1),
-    (2,2),
-    (3,3),
-    (4,4),
-    (5,5),
+    ("1","1"),
+    ("2","2"),
+    ("3","3"),
+    ("4","4"),
+    ("5","5"),
 )
 
 
@@ -236,46 +236,51 @@ class AnketSoru(models.Model):
 
 
 class AnketCevap(models.Model):
-    soru1cevap1=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
+    anketsoru = models.ForeignKey(AnketSoru,on_delete=models.CASCADE,null=False,blank=False)
 
-    soru2cevap1=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
+    soru1cevap1=models.CharField(max_length=10,null=False,blank=False,choices=CEVAP_CHOICES)
+
+    soru2cevap1=models.CharField(max_length=10,null=True,blank=True,choices=CEVAP_CHOICES)
     
-    soru3cevap1=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
+    soru3cevap1=models.CharField(max_length=10,null=True,blank=True,choices=CEVAP_CHOICES)
 
-    soru4cevap1=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
+    soru4cevap1=models.CharField(max_length=10,null=True,blank=True,choices=CEVAP_CHOICES)
 
-    soru5cevap1=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
+    soru5cevap1=models.CharField(max_length=10,null=True,blank=True,choices=CEVAP_CHOICES)
 
-    soru6cevap1=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
+    soru6cevap1=models.CharField(max_length=10,null=True,blank=True,choices=CEVAP_CHOICES)
 
-    soru7cevap1=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
+    soru7cevap1=models.CharField(max_length=10,null=True,blank=True,choices=CEVAP_CHOICES)
 
-    soru8cevap1=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
+    soru8cevap1=models.CharField(max_length=10,null=True,blank=True,choices=CEVAP_CHOICES)
 
-    soru9cevap1=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
+    soru9cevap1=models.CharField(max_length=10,null=True,blank=True,choices=CEVAP_CHOICES)
 
-    soru10cevap1=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
+    soru10cevap1=models.CharField(max_length=10,null=True,blank=True,choices=CEVAP_CHOICES)
 
-    soru11cevap1=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
+    soru11cevap1=models.CharField(max_length=10,null=True,blank=True,choices=CEVAP_CHOICES)
 
-    soru12cevap1=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
+    soru12cevap1=models.CharField(max_length=10,null=True,blank=True,choices=CEVAP_CHOICES)
 
-    soru13cevap1=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
+    soru13cevap1=models.CharField(max_length=10,null=True,blank=True,choices=CEVAP_CHOICES)
 
-    soru14cevap1=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
+    soru14cevap1=models.CharField(max_length=10,null=True,blank=True,choices=CEVAP_CHOICES)
 
-    soru15cevap1=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
+    soru15cevap1=models.CharField(max_length=10,null=True,blank=True,choices=CEVAP_CHOICES)
 
-    soru16cevap1=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
+    soru16cevap1=models.CharField(max_length=10,null=True,blank=True,choices=CEVAP_CHOICES)
 
-    soru17cevap1=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
+    soru17cevap1=models.CharField(max_length=10,null=True,blank=True,choices=CEVAP_CHOICES)
 
-    soru18cevap1=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
+    soru18cevap1=models.CharField(max_length=10,null=True,blank=True,choices=CEVAP_CHOICES)
 
-    soru19cevap1=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
+    soru19cevap1=models.CharField(max_length=10,null=True,blank=True,choices=CEVAP_CHOICES)
 
-    soru20cevap1=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
+    soru20cevap1=models.CharField(max_length=10,null=True,blank=True,choices=CEVAP_CHOICES)
+    
 
+    def __str__(self):
+        return str(self.anketsoru.baslik)
 
 
 @receiver(reset_password_token_created)

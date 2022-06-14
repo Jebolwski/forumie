@@ -115,6 +115,7 @@ class AnketSoruSerializer(serializers.ModelSerializer):
             return None
 
     def get_soru_sayisi(self,anket):
+
         a=0
         if anket.soru1:
             a+=1
@@ -157,3 +158,10 @@ class AnketSoruSerializer(serializers.ModelSerializer):
         if anket.soru20:
             a+=1
         return a
+
+
+class AnketCevapSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = AnketCevap
+        fields = "__all__"

@@ -1,5 +1,3 @@
-from cmath import log
-import json
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated,IsAdminUser
@@ -480,6 +478,23 @@ def AnketDetay(request,pk):
 @api_view(['GET','POST'])
 def AnketCevapla(request,pk):
     anket = AnketSoru.objects.get(id=pk)
-    print(request.data)
-    serializer = AnketSoruSerializer(anket,many=False)
+    fake_data = request.data.copy()
+    fake_data['anketsoru']=AnketSoru.objects.get(id=pk).id
+    if request.method=="POST":
+        serializer = AnketCevapSerializer(data = fake_data)
+        if serializer.is_valid():
+            serializer.save()
+        else:
+            print("valid degil.")
+    return Response(serializer.data)
+
+
+@api_view(['GET','POST'])
+def AnketAnaliz(request,pk):
+    anket_cevaplari = AnketCevap.objects.filter(anketsoru=AnketSoru.objects.get(id=pk))
+    print(anket_cevaplari)
+    paginator = PageNumberPagination()
+    paginator.page_size = 1
+    anketler_paginated = paginator.paginate_queryset(anket_cevaplari, request)
+    serializer = AnketCevapSerializer(anketler_paginated,many=True)
     return Response(serializer.data)
