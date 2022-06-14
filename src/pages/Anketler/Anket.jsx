@@ -8,7 +8,7 @@ const Anket = (props) => {
   return (
     <>
       <div
-        className="anket-ornek col-8 offset-2 border border-dark mt-5 p-3 bg-light"
+        className="anket-ornek col-8 offset-2 border border-dark mb-5 p-3 bg-light"
         key={props.anket.id}
       >
         <ul className="list-unstyled d-flex justify-content-around">
@@ -41,7 +41,7 @@ const Anket = (props) => {
         <h5 className="ms-2 ms-md-4 ms-lg-5  mt-5">{props.anket.baslik}</h5>
         <p style={{ position: "relative", left: "80%", top: "-10px" }}>
           <Link to={`/anket/${props.anket.id}/`}>
-            <TiTick size={30} color="gray" />
+            <TiTick size={30} className="icon" />
           </Link>
         </p>
         <p className="ms-2 ms-md-4 ms-lg-5 mb-5">

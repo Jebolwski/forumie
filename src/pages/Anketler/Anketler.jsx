@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { GiHearts, GiBrokenHeart } from "react-icons/gi/index.esm";
-import { AiFillEye } from "react-icons/ai/index.esm";
-import { TiTick } from "react-icons/ti/index.esm";
+import { BsFileEarmarkPlusFill } from "react-icons/bs/index.esm";
+import { Link } from "react-router-dom";
 import "./Anketler.css";
 import Anket from "./Anket";
 const Anketler = () => {
@@ -23,7 +22,13 @@ const Anketler = () => {
 
   return (
     <div>
-      <h4 className="text-center">Anketler</h4>
+      <h4 className="text-center mb-4">Anketler</h4>
+      <Link to={"/anketler/ekle/"}>
+        <BsFileEarmarkPlusFill
+          className="icon offset-2 mb-3 mt-5 mb-2"
+          size="30"
+        />
+      </Link>
       {anketler.map((anket) => (
         <>
           <Anket anket={anket} key={anket.id} />
