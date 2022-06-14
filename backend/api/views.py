@@ -475,3 +475,11 @@ def AnketDetay(request,pk):
     anket = AnketSoru.objects.get(id=pk)
     serializer = AnketSoruSerializer(anket,many=False)
     return Response(serializer.data)
+
+
+@api_view(['GET','POST'])
+def AnketCevapla(request,pk):
+    anket = AnketSoru.objects.get(id=pk)
+    print(request.data)
+    serializer = AnketSoruSerializer(anket,many=False)
+    return Response(serializer.data)

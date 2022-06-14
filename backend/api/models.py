@@ -233,6 +233,8 @@ class AnketSoru(models.Model):
     def __str__(self):
         return str(self.baslik)
 
+
+
 class AnketCevap(models.Model):
     soru1cevap1=models.CharField(null=False,blank=False,choices=CEVAP_CHOICES,max_length=5)
 
