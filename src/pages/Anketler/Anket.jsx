@@ -1,5 +1,6 @@
 import React from "react";
 import { GiHearts, GiBrokenHeart } from "react-icons/gi/index.esm";
+import { AiOutlineAreaChart } from "react-icons/ai/index.esm";
 import { AiFillEye } from "react-icons/ai/index.esm";
 import { TiTick } from "react-icons/ti/index.esm";
 import { Link } from "react-router-dom";
@@ -42,6 +43,10 @@ const Anket = (props) => {
         <p style={{ position: "relative", left: "80%", top: "-10px" }}>
           <Link to={`/anket/${props.anket.id}/`}>
             <TiTick size={30} className="icon" />
+          </Link>
+
+          <Link to={`/anket/${props.anket.id}/analiz/`}>
+            <AiOutlineAreaChart size={24} color="gray" className="ms-4" />
           </Link>
         </p>
         <p className="ms-2 ms-md-4 ms-lg-5 mb-5">

@@ -22,13 +22,25 @@ const Anketler = () => {
 
   return (
     <div>
-      <h4 className="text-center mb-4">Anketler</h4>
-      <Link to={"/anketler/ekle/"}>
-        <BsFileEarmarkPlusFill
-          className="icon offset-2 mb-3 mt-5 mb-2"
-          size="30"
-        />
-      </Link>
+      <h4 className="text-center mb-4">
+        Anketler{" "}
+        {anketler.length > 0 ? null : (
+          <Link to={"/anketler/ekle/"}>
+            <BsFileEarmarkPlusFill className="icon ms-4" size="30" />
+          </Link>
+        )}
+      </h4>
+      {anketler.length > 0 ? (
+        <Link to={"/anketler/ekle/"}>
+          <BsFileEarmarkPlusFill
+            className="icon offset-2 mb-3 mt-5 mb-2"
+            size="30"
+          />
+        </Link>
+      ) : (
+        <h5 className="text-center mt-5 pt-5 ">Anket eklenmemiş...</h5>
+      )}
+
       {anketler.map((anket) => (
         <>
           <Anket anket={anket} key={anket.id} />

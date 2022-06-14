@@ -24,6 +24,7 @@ import EmailRoutes from "./routes/EmailRoute";
 import Anketler from "./pages/Anketler/Anketler";
 import AnketEkle from "./pages/Anketler/AnketEkle";
 import AnketDetay from "./pages/Anketler/AnketDetay";
+import AnketAnaliz from "./pages/Anketler/AnketAnaliz";
 //http://localhost:3000/sifre-sifirla/4dbfec08a67c66159e/
 function App() {
   return (
@@ -62,6 +63,7 @@ function App() {
               />
               <Route path="/forum/:id/sil/" element={<ForumSil />} />
               <Route path="/anketler/ekle/" element={<AnketEkle />} />
+              <Route path="/anket/:id/analiz/" element={<AnketAnaliz />} />
               <Route path="/email-degistir/" element={<EmailDegistir />} />
               <Route path="/forum/:id/duzenle/" element={<ForumDuzenle />} />
               <Route path="/ayarlar/" element={<Ayarlar />} />

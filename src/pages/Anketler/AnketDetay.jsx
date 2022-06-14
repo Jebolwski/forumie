@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 
 const AnketDetay = () => {
   let param = useParams();
+  let navigate = useNavigate();
   const [anket, setAnket] = useState();
   const [loading, setLoading] = useState(true);
   const [soru1cevap, setSoru1cevap] = useState();
@@ -45,26 +46,26 @@ const AnketDetay = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          soru1cevap: soru1cevap,
-          soru2cevap: soru2cevap,
-          soru3cevap: soru3cevap,
-          soru4cevap: soru4cevap,
-          soru5cevap: soru5cevap,
-          soru6cevap: soru6cevap,
-          soru7cevap: soru7cevap,
-          soru8cevap: soru8cevap,
-          soru9cevap: soru9cevap,
-          soru10cevap: soru10cevap,
-          soru11cevap: soru11cevap,
-          soru12cevap: soru12cevap,
-          soru13cevap: soru13cevap,
-          soru14cevap: soru14cevap,
-          soru15cevap: soru15cevap,
-          soru16cevap: soru16cevap,
-          soru17cevap: soru17cevap,
-          soru18cevap: soru18cevap,
-          soru19cevap: soru19cevap,
-          soru20cevap: soru20cevap,
+          soru1cevap1: soru1cevap,
+          soru2cevap1: soru2cevap,
+          soru3cevap1: soru3cevap,
+          soru4cevap1: soru4cevap,
+          soru5cevap1: soru5cevap,
+          soru6cevap1: soru6cevap,
+          soru7cevap1: soru7cevap,
+          soru8cevap1: soru8cevap,
+          soru9cevap1: soru9cevap,
+          soru10cevap1: soru10cevap,
+          soru11cevap1: soru11cevap,
+          soru12cevap1: soru12cevap,
+          soru13cevap1: soru13cevap,
+          soru14cevap1: soru14cevap,
+          soru15cevap1: soru15cevap,
+          soru16cevap1: soru16cevap,
+          soru17cevap1: soru17cevap,
+          soru18cevap1: soru18cevap,
+          soru19cevap1: soru19cevap,
+          soru20cevap1: soru20cevap,
         }),
       }
     );
@@ -72,6 +73,7 @@ const AnketDetay = () => {
       let data = await response.json();
       setAnket(data);
       setLoading(false);
+      navigate("/anketler/");
     }
   };
 
@@ -100,7 +102,7 @@ const AnketDetay = () => {
                 className="me-2 s11"
                 name="1"
                 onChange={() => {
-                  setSoru1cevap(1);
+                  setSoru1cevap("1");
                 }}
               />
               {anket.soru1cevap1}
@@ -111,7 +113,7 @@ const AnketDetay = () => {
                 className="me-2 s12"
                 name="1"
                 onChange={() => {
-                  setSoru1cevap(2);
+                  setSoru1cevap("2");
                 }}
               />
               {anket.soru1cevap2}
@@ -123,7 +125,7 @@ const AnketDetay = () => {
                   className="me-2 s13"
                   name="1"
                   onChange={() => {
-                    setSoru1cevap(3);
+                    setSoru1cevap("3");
                   }}
                 />
                 {anket.soru1cevap3}
@@ -136,7 +138,7 @@ const AnketDetay = () => {
                   className="me-2 s14"
                   name="1"
                   onChange={() => {
-                    setSoru1cevap(4);
+                    setSoru1cevap("4");
                   }}
                 />
                 {anket.soru1cevap4}
@@ -149,7 +151,7 @@ const AnketDetay = () => {
                   className="me-2 s15"
                   name="1"
                   onChange={() => {
-                    setSoru1cevap(5);
+                    setSoru1cevap("5");
                   }}
                 />
                 {anket.soru1cevap5}
@@ -166,7 +168,7 @@ const AnketDetay = () => {
                 className="me-2"
                 name="2"
                 onChange={() => {
-                  setSoru2cevap(1);
+                  setSoru2cevap("1");
                 }}
               />
               {anket.soru2cevap1}
@@ -177,7 +179,7 @@ const AnketDetay = () => {
                 className="me-2"
                 name="2"
                 onChange={() => {
-                  setSoru2cevap(2);
+                  setSoru2cevap("2");
                 }}
               />
               {anket.soru2cevap2}
@@ -189,7 +191,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="2"
                   onChange={() => {
-                    setSoru2cevap(3);
+                    setSoru2cevap("3");
                   }}
                 />
                 {anket.soru2cevap3}
@@ -202,7 +204,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="2"
                   onChange={() => {
-                    setSoru2cevap(4);
+                    setSoru2cevap("4");
                   }}
                 />
                 {anket.soru2cevap4}
@@ -215,7 +217,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="2"
                   onChange={() => {
-                    setSoru2cevap(5);
+                    setSoru2cevap("5");
                   }}
                 />
                 {anket.soru2cevap5}
@@ -232,7 +234,7 @@ const AnketDetay = () => {
                 className="me-2"
                 name="3"
                 onChange={() => {
-                  setSoru3cevap(1);
+                  setSoru3cevap("1");
                 }}
               />
               {anket.soru3cevap1}
@@ -243,7 +245,7 @@ const AnketDetay = () => {
                 className="me-2"
                 name="3"
                 onChange={() => {
-                  setSoru3cevap(2);
+                  setSoru3cevap("2");
                 }}
               />
               {anket.soru3cevap2}
@@ -255,7 +257,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="3"
                   onChange={() => {
-                    setSoru3cevap(3);
+                    setSoru3cevap("3");
                   }}
                 />
                 {anket.soru3cevap3}
@@ -268,7 +270,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="3"
                   onChange={() => {
-                    setSoru3cevap(4);
+                    setSoru3cevap("4");
                   }}
                 />
                 {anket.soru3cevap4}
@@ -281,7 +283,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="3"
                   onChange={() => {
-                    setSoru3cevap(5);
+                    setSoru3cevap("5");
                   }}
                 />
                 {anket.soru3cevap5}
@@ -298,7 +300,7 @@ const AnketDetay = () => {
                 className="me-2"
                 name="4"
                 onChange={() => {
-                  setSoru4cevap(1);
+                  setSoru4cevap("1");
                 }}
               />
               {anket.soru4cevap1}
@@ -309,7 +311,7 @@ const AnketDetay = () => {
                 className="me-2"
                 name="4"
                 onChange={() => {
-                  setSoru4cevap(2);
+                  setSoru4cevap("2");
                 }}
               />
               {anket.soru4cevap2}
@@ -321,7 +323,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="2"
                   onChange={() => {
-                    setSoru4cevap(3);
+                    setSoru4cevap("3");
                   }}
                 />
                 {anket.soru2cevap3}
@@ -334,7 +336,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="4"
                   onChange={() => {
-                    setSoru4cevap(4);
+                    setSoru4cevap("4");
                   }}
                 />
                 {anket.soru2cevap4}
@@ -347,7 +349,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="4"
                   onChange={() => {
-                    setSoru4cevap(5);
+                    setSoru4cevap("5");
                   }}
                 />
                 {anket.soru2cevap5}
@@ -364,7 +366,7 @@ const AnketDetay = () => {
                 className="me-2"
                 name="5"
                 onChange={() => {
-                  soru5cevap(1);
+                  soru5cevap("1");
                 }}
               />
               {anket.soru5cevap1}
@@ -375,7 +377,7 @@ const AnketDetay = () => {
                 className="me-2"
                 name="5"
                 onChange={() => {
-                  soru5cevap(2);
+                  soru5cevap("2");
                 }}
               />
               {anket.soru5cevap2}
@@ -387,7 +389,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="5"
                   onChange={() => {
-                    soru5cevap(3);
+                    soru5cevap("3");
                   }}
                 />
                 {anket.soru5cevap3}
@@ -400,7 +402,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="5"
                   onChange={() => {
-                    soru4cevap(4);
+                    soru4cevap("4");
                   }}
                 />
                 {anket.soru5cevap4}
@@ -413,7 +415,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="5"
                   onChange={() => {
-                    soru4cevap(5);
+                    soru4cevap("5");
                   }}
                 />
                 {anket.soru5cevap5}
@@ -430,7 +432,7 @@ const AnketDetay = () => {
                 className="me-2"
                 name="6"
                 onChange={() => {
-                  soru6cevap(1);
+                  soru6cevap("1");
                 }}
               />
               {anket.soru6cevap1}
@@ -441,7 +443,7 @@ const AnketDetay = () => {
                 className="me-2"
                 name="6"
                 onChange={() => {
-                  soru6cevap(2);
+                  soru6cevap("2");
                 }}
               />
               {anket.soru6cevap2}
@@ -453,7 +455,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="6"
                   onChange={() => {
-                    soru6cevap(3);
+                    soru6cevap("3");
                   }}
                 />
                 {anket.soru6cevap3}
@@ -466,7 +468,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="6"
                   onChange={() => {
-                    soru6cevap(4);
+                    soru6cevap("4");
                   }}
                 />
                 {anket.soru6cevap4}
@@ -479,7 +481,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="6"
                   onChange={() => {
-                    soru6cevap(5);
+                    soru6cevap("5");
                   }}
                 />
                 {anket.soru6cevap5}
@@ -496,7 +498,7 @@ const AnketDetay = () => {
                 className="me-2"
                 name="7"
                 onChange={() => {
-                  soru7cevap(1);
+                  soru7cevap("1");
                 }}
               />
               {anket.soru7cevap1}
@@ -507,7 +509,7 @@ const AnketDetay = () => {
                 className="me-2"
                 name="7"
                 onChange={() => {
-                  soru7cevap(2);
+                  soru7cevap("2");
                 }}
               />
               {anket.soru7cevap2}
@@ -519,7 +521,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="7"
                   onChange={() => {
-                    soru7cevap(3);
+                    soru7cevap("3");
                   }}
                 />
                 {anket.soru7cevap3}
@@ -532,7 +534,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="7"
                   onChange={() => {
-                    soru7cevap(4);
+                    soru7cevap("4");
                   }}
                 />
                 {anket.soru7cevap4}
@@ -545,7 +547,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="7"
                   onChange={() => {
-                    soru7cevap(5);
+                    soru7cevap("5");
                   }}
                 />
                 {anket.soru7cevap5}
@@ -562,7 +564,7 @@ const AnketDetay = () => {
                 className="me-2"
                 name="8"
                 onChange={() => {
-                  soru8cevap(1);
+                  soru8cevap("1");
                 }}
               />
               {anket.soru8cevap1}
@@ -573,7 +575,7 @@ const AnketDetay = () => {
                 className="me-2"
                 name="8"
                 onChange={() => {
-                  soru8cevap(2);
+                  soru8cevap("2");
                 }}
               />
               {anket.soru8cevap2}
@@ -585,7 +587,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="8"
                   onChange={() => {
-                    soru8cevap(3);
+                    soru8cevap("3");
                   }}
                 />
                 {anket.soru8cevap3}
@@ -598,7 +600,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="8"
                   onChange={() => {
-                    soru8cevap(4);
+                    soru8cevap("4");
                   }}
                 />
                 {anket.soru8cevap4}
@@ -611,7 +613,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="8"
                   onChange={() => {
-                    soru8cevap(5);
+                    soru8cevap("5");
                   }}
                 />
                 {anket.soru8cevap5}
@@ -628,7 +630,7 @@ const AnketDetay = () => {
                 className="me-2"
                 name="9"
                 onChange={() => {
-                  soru9cevap(1);
+                  soru9cevap("1");
                 }}
               />
               {anket.soru9cevap1}
@@ -639,7 +641,7 @@ const AnketDetay = () => {
                 className="me-2"
                 name="9"
                 onChange={() => {
-                  soru9cevap(2);
+                  soru9cevap("2");
                 }}
               />
               {anket.soru9cevap2}
@@ -651,7 +653,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="9"
                   onChange={() => {
-                    soru9cevap(3);
+                    soru9cevap("3");
                   }}
                 />
                 {anket.soru9cevap3}
@@ -664,7 +666,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="9"
                   onChange={() => {
-                    soru9cevap(4);
+                    soru9cevap("4");
                   }}
                 />
                 {anket.soru9cevap4}
@@ -677,7 +679,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="9"
                   onChange={() => {
-                    soru9cevap(5);
+                    soru9cevap("5");
                   }}
                 />
                 {anket.soru9cevap5}
@@ -694,7 +696,7 @@ const AnketDetay = () => {
                 className="me-2"
                 name="10"
                 onChange={() => {
-                  soru10cevap(1);
+                  soru10cevap("1");
                 }}
               />
               {anket.soru10cevap1}
@@ -705,7 +707,7 @@ const AnketDetay = () => {
                 className="me-2"
                 name="10"
                 onChange={() => {
-                  soru10cevap(2);
+                  soru10cevap("2");
                 }}
               />
               {anket.soru10cevap2}
@@ -717,7 +719,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="10"
                   onChange={() => {
-                    soru10cevap(3);
+                    soru10cevap("3");
                   }}
                 />
                 {anket.soru10cevap3}
@@ -730,7 +732,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="10"
                   onChange={() => {
-                    soru10cevap(4);
+                    soru10cevap("4");
                   }}
                 />
                 {anket.soru10cevap4}
@@ -743,7 +745,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="10"
                   onChange={() => {
-                    soru10cevap(5);
+                    soru10cevap("5");
                   }}
                 />
                 {anket.soru10cevap5}
@@ -760,7 +762,7 @@ const AnketDetay = () => {
                 className="me-2"
                 name="11"
                 onChange={() => {
-                  soru11cevap(1);
+                  soru11cevap("1");
                 }}
               />
               {anket.soru11cevap1}
@@ -771,7 +773,7 @@ const AnketDetay = () => {
                 className="me-2"
                 name="11"
                 onChange={() => {
-                  soru11cevap(2);
+                  soru11cevap("2");
                 }}
               />
               {anket.soru11cevap2}
@@ -783,7 +785,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="11"
                   onChange={() => {
-                    soru11cevap(3);
+                    soru11cevap("3");
                   }}
                 />
                 {anket.soru11cevap3}
@@ -796,7 +798,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="11"
                   onChange={() => {
-                    soru11cevap(4);
+                    soru11cevap("4");
                   }}
                 />
                 {anket.soru11cevap4}
@@ -809,7 +811,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="11"
                   onChange={() => {
-                    soru11cevap(5);
+                    soru11cevap("5");
                   }}
                 />
                 {anket.soru11cevap5}
@@ -826,7 +828,7 @@ const AnketDetay = () => {
                 className="me-2"
                 name="12"
                 onChange={() => {
-                  soru12cevap(1);
+                  soru12cevap("1");
                 }}
               />
               {anket.soru12cevap1}
@@ -837,7 +839,7 @@ const AnketDetay = () => {
                 className="me-2"
                 name="12"
                 onChange={() => {
-                  soru12cevap(2);
+                  soru12cevap("2");
                 }}
               />
               {anket.soru12cevap2}
@@ -849,7 +851,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="12"
                   onChange={() => {
-                    soru12cevap(3);
+                    soru12cevap("3");
                   }}
                 />
                 {anket.soru12cevap3}
@@ -862,7 +864,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="12"
                   onChange={() => {
-                    soru12cevap(4);
+                    soru12cevap("4");
                   }}
                 />
                 {anket.soru12cevap4}
@@ -875,7 +877,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="12"
                   onChange={() => {
-                    soru12cevap(5);
+                    soru12cevap("5");
                   }}
                 />
                 {anket.soru12cevap5}
@@ -892,7 +894,7 @@ const AnketDetay = () => {
                 className="me-2"
                 name="13"
                 onChange={() => {
-                  soru13cevap(1);
+                  soru13cevap("1");
                 }}
               />
               {anket.soru13cevap1}
@@ -903,7 +905,7 @@ const AnketDetay = () => {
                 className="me-2"
                 name="13"
                 onChange={() => {
-                  soru13cevap(2);
+                  soru13cevap("2");
                 }}
               />
               {anket.soru13cevap2}
@@ -915,7 +917,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="13"
                   onChange={() => {
-                    soru13cevap(3);
+                    soru13cevap("3");
                   }}
                 />
                 {anket.soru13cevap3}
@@ -928,7 +930,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="13"
                   onChange={() => {
-                    soru13cevap(4);
+                    soru13cevap("4");
                   }}
                 />
                 {anket.soru13cevap4}
@@ -941,7 +943,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="13"
                   onChange={() => {
-                    soru13cevap(5);
+                    soru13cevap("5");
                   }}
                 />
                 {anket.soru13cevap5}
@@ -958,7 +960,7 @@ const AnketDetay = () => {
                 className="me-2"
                 name="14"
                 onChange={() => {
-                  soru14cevap(1);
+                  soru14cevap("1");
                 }}
               />
               {anket.soru14cevap1}
@@ -969,7 +971,7 @@ const AnketDetay = () => {
                 className="me-2"
                 name="14"
                 onChange={() => {
-                  soru14cevap(2);
+                  soru14cevap("2");
                 }}
               />
               {anket.soru14cevap2}
@@ -981,7 +983,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="14"
                   onChange={() => {
-                    soru14cevap(3);
+                    soru14cevap("3");
                   }}
                 />
                 {anket.soru14cevap3}
@@ -994,7 +996,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="14"
                   onChange={() => {
-                    soru14cevap(4);
+                    soru14cevap("4");
                   }}
                 />
                 {anket.soru14cevap4}
@@ -1007,7 +1009,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="14"
                   onChange={() => {
-                    soru14cevap(5);
+                    soru14cevap("5");
                   }}
                 />
                 {anket.soru14cevap5}
@@ -1024,7 +1026,7 @@ const AnketDetay = () => {
                 className="me-2"
                 name="15"
                 onChange={() => {
-                  soru15cevap(1);
+                  soru15cevap("1");
                 }}
               />
               {anket.soru15cevap1}
@@ -1035,7 +1037,7 @@ const AnketDetay = () => {
                 className="me-2"
                 name="15"
                 onChange={() => {
-                  soru15cevap(2);
+                  soru15cevap("2");
                 }}
               />
               {anket.soru15cevap2}
@@ -1047,7 +1049,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="15"
                   onChange={() => {
-                    soru15cevap(3);
+                    soru15cevap("3");
                   }}
                 />
                 {anket.soru15cevap3}
@@ -1060,7 +1062,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="15"
                   onChange={() => {
-                    soru15cevap(4);
+                    soru15cevap("4");
                   }}
                 />
                 {anket.soru15cevap4}
@@ -1073,7 +1075,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="15"
                   onChange={() => {
-                    soru15cevap(5);
+                    soru15cevap("5");
                   }}
                 />
                 {anket.soru15cevap5}
@@ -1090,7 +1092,7 @@ const AnketDetay = () => {
                 className="me-2"
                 name="16"
                 onChange={() => {
-                  soru16cevap(1);
+                  soru16cevap("1");
                 }}
               />
               {anket.soru16cevap1}
@@ -1101,7 +1103,7 @@ const AnketDetay = () => {
                 className="me-2"
                 name="16"
                 onChange={() => {
-                  soru16cevap(2);
+                  soru16cevap("2");
                 }}
               />
               {anket.soru16cevap2}
@@ -1113,7 +1115,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="16"
                   onChange={() => {
-                    soru16cevap(3);
+                    soru16cevap("3");
                   }}
                 />
                 {anket.soru16cevap3}
@@ -1126,7 +1128,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="16"
                   onChange={() => {
-                    soru16cevap(4);
+                    soru16cevap("4");
                   }}
                 />
                 {anket.soru16cevap4}
@@ -1139,7 +1141,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="16"
                   onChange={() => {
-                    soru16cevap(5);
+                    soru16cevap("5");
                   }}
                 />
                 {anket.soru16cevap5}
@@ -1156,7 +1158,7 @@ const AnketDetay = () => {
                 className="me-2"
                 name="17"
                 onChange={() => {
-                  soru17cevap(1);
+                  soru17cevap("1");
                 }}
               />
               {anket.soru17cevap1}
@@ -1167,7 +1169,7 @@ const AnketDetay = () => {
                 className="me-2"
                 name="17"
                 onChange={() => {
-                  soru17cevap(2);
+                  soru17cevap("2");
                 }}
               />
               {anket.soru17cevap2}
@@ -1179,7 +1181,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="17"
                   onChange={() => {
-                    soru17cevap(3);
+                    soru17cevap("3");
                   }}
                 />
                 {anket.soru17cevap3}
@@ -1192,7 +1194,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="17"
                   onChange={() => {
-                    soru17cevap(4);
+                    soru17cevap("4");
                   }}
                 />
                 {anket.soru17cevap4}
@@ -1205,7 +1207,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="17"
                   onChange={() => {
-                    soru17cevap(5);
+                    soru17cevap("5");
                   }}
                 />
                 {anket.soru17cevap5}
@@ -1222,7 +1224,7 @@ const AnketDetay = () => {
                 className="me-2"
                 name="18"
                 onChange={() => {
-                  soru18cevap(1);
+                  soru18cevap("1");
                 }}
               />
               {anket.soru18cevap1}
@@ -1233,7 +1235,7 @@ const AnketDetay = () => {
                 className="me-2"
                 name="18"
                 onChange={() => {
-                  soru18cevap(2);
+                  soru18cevap("2");
                 }}
               />
               {anket.soru18cevap2}
@@ -1245,7 +1247,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="18"
                   onChange={() => {
-                    soru18cevap(3);
+                    soru18cevap("3");
                   }}
                 />
                 {anket.soru18cevap3}
@@ -1258,7 +1260,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="18"
                   onChange={() => {
-                    soru18cevap(4);
+                    soru18cevap("4");
                   }}
                 />
                 {anket.soru18cevap4}
@@ -1271,7 +1273,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="18"
                   onChange={() => {
-                    soru18cevap(5);
+                    soru18cevap("5");
                   }}
                 />
                 {anket.soru18cevap5}
@@ -1288,7 +1290,7 @@ const AnketDetay = () => {
                 className="me-2"
                 name="19"
                 onChange={() => {
-                  soru19cevap(1);
+                  soru19cevap("1");
                 }}
               />
               {anket.soru19cevap1}
@@ -1299,7 +1301,7 @@ const AnketDetay = () => {
                 className="me-2"
                 name="19"
                 onChange={() => {
-                  soru19cevap(2);
+                  soru19cevap("2");
                 }}
               />
               {anket.soru19cevap2}
@@ -1311,7 +1313,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="19"
                   onChange={() => {
-                    soru19cevap(3);
+                    soru19cevap("3");
                   }}
                 />
                 {anket.soru19cevap3}
@@ -1324,7 +1326,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="19"
                   onChange={() => {
-                    soru19cevap(4);
+                    soru19cevap("4");
                   }}
                 />
                 {anket.soru19cevap4}
@@ -1337,7 +1339,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="19"
                   onChange={() => {
-                    soru19cevap(5);
+                    soru19cevap("5");
                   }}
                 />
                 {anket.soru19cevap5}
@@ -1354,7 +1356,7 @@ const AnketDetay = () => {
                 className="me-2"
                 name="20"
                 onChange={() => {
-                  soru20cevap(1);
+                  soru20cevap("1");
                 }}
               />
               {anket.soru20cevap1}
@@ -1365,7 +1367,7 @@ const AnketDetay = () => {
                 className="me-2"
                 name="20"
                 onChange={() => {
-                  soru20cevap(2);
+                  soru20cevap("2");
                 }}
               />
               {anket.soru20cevap2}
@@ -1377,7 +1379,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="20"
                   onChange={() => {
-                    soru20cevap(3);
+                    soru20cevap("3");
                   }}
                 />
                 {anket.soru20cevap3}
@@ -1390,7 +1392,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="20"
                   onChange={() => {
-                    soru20cevap(4);
+                    soru20cevap("4");
                   }}
                 />
                 {anket.soru20cevap4}
@@ -1403,7 +1405,7 @@ const AnketDetay = () => {
                   className="me-2"
                   name="20"
                   onChange={() => {
-                    soru20cevap(5);
+                    soru20cevap("5");
                   }}
                 />
                 {anket.soru20cevap5}
