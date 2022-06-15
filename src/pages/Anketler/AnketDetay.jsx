@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { useContext } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
-
+import AuthContext from "../../context/AuthContext";
 const AnketDetay = () => {
   let param = useParams();
   let navigate = useNavigate();
@@ -26,7 +27,7 @@ const AnketDetay = () => {
   const [soru18cevap, setSoru18cevap] = useState();
   const [soru19cevap, setSoru19cevap] = useState();
   const [soru20cevap, setSoru20cevap] = useState();
-
+  let { user } = useContext(AuthContext);
   let anketGel = async () => {
     let response = await fetch(`http://127.0.0.1:8000/api/anket/${param.id}/`, {
       method: "GET",
@@ -46,6 +47,7 @@ const AnketDetay = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          user_id: user.user_id,
           soru1cevap1: soru1cevap,
           soru2cevap1: soru2cevap,
           soru3cevap1: soru3cevap,
