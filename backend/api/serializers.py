@@ -161,7 +161,12 @@ class AnketSoruSerializer(serializers.ModelSerializer):
 
 
 class AnketCevapSerializer(serializers.ModelSerializer):
-
+    cevaplayan_username = serializers.SerializerMethodField('get_cevaplayan')
     class Meta:
         model = AnketCevap
         fields = "__all__"
+    
+    
+    def get_cevaplayan(self,cevap):
+        url = cevap.profil.user.username
+        return url

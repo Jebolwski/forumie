@@ -238,6 +238,8 @@ class AnketSoru(models.Model):
 class AnketCevap(models.Model):
     anketsoru = models.ForeignKey(AnketSoru,on_delete=models.CASCADE,null=False,blank=False)
 
+    profil = models.ForeignKey(Profil,on_delete=models.CASCADE,null=False,blank=False)
+
     soru1cevap1=models.CharField(max_length=10,null=False,blank=False,choices=CEVAP_CHOICES)
 
     soru2cevap1=models.CharField(max_length=10,null=True,blank=True,choices=CEVAP_CHOICES)

@@ -480,6 +480,7 @@ def AnketCevapla(request,pk):
     anket = AnketSoru.objects.get(id=pk)
     fake_data = request.data.copy()
     fake_data['anketsoru']=AnketSoru.objects.get(id=pk).id
+    fake_data['profil']=Profil.objects.get(user_id=request.data["user_id"]).id
     if request.method=="POST":
         serializer = AnketCevapSerializer(data = fake_data)
         if serializer.is_valid():
@@ -489,7 +490,7 @@ def AnketCevapla(request,pk):
     return Response(serializer.data)
 
 
-@api_view(['GET','POST'])
+@api_view(['GET'])
 def AnketAnaliz(request,pk):
     anket_cevaplari = AnketCevap.objects.filter(anketsoru=AnketSoru.objects.get(id=pk))
     print(anket_cevaplari)
@@ -498,3 +499,8 @@ def AnketAnaliz(request,pk):
     anketler_paginated = paginator.paginate_queryset(anket_cevaplari, request)
     serializer = AnketCevapSerializer(anketler_paginated,many=True)
     return Response(serializer.data)
+
+@api_view(['GET'])
+def AnketCevapSayisi(request,pk):
+    anket_cevaplari = len(AnketCevap.objects.filter(anketsoru=AnketSoru.objects.get(id=pk)))
+    return Response(anket_cevaplari)
