@@ -370,11 +370,11 @@ def AnketEkle(request):
             soru6cevap4=request.data.get('soru6cevap4'),
             soru6cevap5=request.data.get('soru6cevap5'),
 
-            soru7cevap1=request.data.get('soru8cevap1'),
-            soru7cevap2=request.data.get('soru8cevap2'),
-            soru7cevap3=request.data.get('soru8cevap3'),
-            soru7cevap4=request.data.get('soru8cevap4'),
-            soru7cevap5=request.data.get('soru8cevap5'),
+            soru7cevap1=request.data.get('soru7cevap1'),
+            soru7cevap2=request.data.get('soru7cevap2'),
+            soru7cevap3=request.data.get('soru7cevap3'),
+            soru7cevap4=request.data.get('soru7cevap4'),
+            soru7cevap5=request.data.get('soru7cevap5'),
 
             soru8cevap1=request.data.get('soru8cevap1'),
             soru8cevap2=request.data.get('soru8cevap2'),
