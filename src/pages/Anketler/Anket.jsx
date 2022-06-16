@@ -15,11 +15,20 @@ const Anket = (props) => {
         <ul className="list-unstyled d-flex justify-content-around">
           <li>
             <h5 className="mt-2">
-              <img
-                style={{ height: "50px", width: "50px" }}
-                src={"http://127.0.0.1:8000/api" + props.anket.url}
-                className="col-1 rounded-circle"
-              />
+              {props.anket.url ? (
+                <img
+                  style={{ height: "50px", width: "50px" }}
+                  src={"http://127.0.0.1:8000/api" + props.anket.url}
+                  className="col-1 rounded-circle border"
+                />
+              ) : (
+                <img
+                  style={{ height: "50px", width: "50px" }}
+                  src="https://i.kym-cdn.com/photos/images/facebook/001/150/314/fb4.png"
+                  className="col-1 rounded-circle border"
+                />
+              )}
+
               <span className="ms-3 d-none d-md-inline-block">
                 {props.anket.username}
               </span>
