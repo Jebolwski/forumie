@@ -39,6 +39,9 @@ const Forum = (props) => {
               <div>
                 <Link
                   to={`/profil/${slugify(props.forum.username).toLowerCase()}/`}
+                  onClick={() => {
+                    props.setChange(props.change ? false : true);
+                  }}
                   className="ms-2 text-decoration-none text-dark"
                 >
                   {path == "http://localhost:3000/forumla" ? (
@@ -67,6 +70,9 @@ const Forum = (props) => {
                 </Link>
                 <Link
                   to={`/profil/${slugify(props.forum.username).toLowerCase()}/`}
+                  onClick={() => {
+                    props.setChange(props.change ? false : true);
+                  }}
                   className="ms-2 text-decoration-none text-dark"
                 >
                   <span className="ms-2">

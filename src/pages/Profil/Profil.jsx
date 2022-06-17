@@ -10,18 +10,24 @@ const Profil = () => {
   const { slug } = useParams();
   const [profil, setProfil] = useState([]);
   const [refresh, setRefresh] = useState(false);
+  const [change, setChange] = useState(false);
   const [forumlar, setForumlar] = useState([]);
   let [loading, setLoading] = useState(true);
   let { user } = useContext(AuthContext);
+
+  let param = useParams();
   let profilFonk = async () => {
     let response = await fetch(`http://127.0.0.1:8000/api/profil/${slug}/`, {
       method: "GET",
       "Conent-Type": "application/json",
     });
-    let data = await response.json();
-    setProfil(data);
-    setLoading(false);
+    if (response.status === 200) {
+      let data = await response.json();
+      setProfil(data);
+      setLoading(false);
+    }
   };
+
   let forumlari = async () => {
     if (loading == false) {
       let response = await fetch(`http://127.0.0.1:8000/api/forumlarim/`, {
@@ -30,7 +36,7 @@ const Profil = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          user_id: profil.user,
+          user_slug: param.slug,
         }),
       });
       if (response.status == 200) {
@@ -68,12 +74,15 @@ const Profil = () => {
     profilFonk();
     forumlari();
   }, []);
+
   useEffect(() => {
     forumlari();
   }, [loading]);
+
   useEffect(() => {
     forumlari();
-  }, [refresh]);
+    profilFonk();
+  }, [change]);
 
   if (loading) {
     return (
@@ -182,6 +191,8 @@ const Profil = () => {
                 <>
                   <Forum
                     forum={forum}
+                    change={change}
+                    setChange={setChange}
                     profil={profil}
                     key={forum.id}
                     setRefresh={setRefresh}
