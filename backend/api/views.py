@@ -185,8 +185,8 @@ def ForumDetayView(request,pk):
 
 @api_view(['GET','POST'])
 def KisininForumlariView(request):
-    profil = Profil.objects.get(user_id=request.data['user_id'])
-    user = User.objects.get(id=request.data['user_id'])
+    profil = Profil.objects.get(username_slug=request.data['user_slug'])
+    user = User.objects.get(id=profil.user.id)
     forumlar = []
     for i in Forum.objects.all():
         if user in i.reforumie.all():
