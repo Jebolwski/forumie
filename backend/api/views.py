@@ -1,3 +1,5 @@
+from math import fabs
+from urllib import response
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated,IsAdminUser
@@ -504,3 +506,18 @@ def AnketAnaliz(request,pk):
 def AnketCevapSayisi(request,pk):
     anket_cevaplari = len(AnketCevap.objects.filter(anketsoru=AnketSoru.objects.get(id=pk)))
     return Response(anket_cevaplari)
+
+
+@api_view(['PUT'])
+def AnketDuzenle(request,pk):
+    anket = AnketSoru.objects.get(id=pk)
+    serializer = AnketSoruSerializer(anket,data=request.data,many=False)
+    print(request.data)
+    if serializer.is_valid():
+        serializer.save()
+        print(serializer.data)
+        return Response(serializer.data)
+    else:
+        print("valid degil")
+    return Response("update")
+    

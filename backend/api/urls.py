@@ -42,6 +42,7 @@ urlpatterns = [
     path('anket-ekle/',views.AnketEkle,name="anket-ekle"),
     path('anketler/',views.Anketler,name="anketler"),
     path('anket/<int:pk>/cevap-sayisi/',views.AnketCevapSayisi,name="anketler"),
+    path('anket/<int:pk>/duzenle/',views.AnketDuzenle,name="anket-duzenle"),
     path('anket/<int:pk>/',views.AnketDetay,name="anket"),
     path('anket/<int:pk>/cevapla/',views.AnketCevapla,name="anket-cevapla"),
     path('anket/<int:pk>/analiz/',views.AnketAnaliz,name="anket-cevapla"),
