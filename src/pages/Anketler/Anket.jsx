@@ -4,6 +4,7 @@ import { AiOutlineAreaChart } from "react-icons/ai/index.esm";
 import { AiFillEye } from "react-icons/ai/index.esm";
 import { TiTick } from "react-icons/ti/index.esm";
 import { Link } from "react-router-dom";
+import { CgEditBlackPoint } from "react-icons/cg/index.esm";
 
 const Anket = (props) => {
   return (
@@ -48,16 +49,19 @@ const Anket = (props) => {
             <span className="ms-2">{props.anket.likes.length}</span>
           </li>
         </ul>
-        <h5 className="ms-2 ms-md-4 ms-lg-5  mt-5">{props.anket.baslik}</h5>
-        <p style={{ position: "relative", left: "80%", top: "-10px" }}>
+
+        <p className="pt-3 d-flex justify-content-evenly">
           <Link to={`/anket/${props.anket.id}/`}>
             <TiTick size={30} className="icon" />
           </Link>
-
           <Link to={`/anket/${props.anket.id}/analiz/`}>
             <AiOutlineAreaChart size={24} color="gray" className="ms-4" />
           </Link>
+          <Link to={`/anket/${props.anket.id}/duzenle/`}>
+            <CgEditBlackPoint size={30} className="icon ms-4" />
+          </Link>
         </p>
+        <h5 className="ms-2 ms-md-4 ms-lg-5  mt-5">{props.anket.baslik}</h5>
         <p className="ms-2 ms-md-4 ms-lg-5 mb-5">
           <i>{props.anket.aciklama}</i>
         </p>
