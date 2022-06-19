@@ -1,4 +1,3 @@
-from math import fabs
 from urllib import response
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
@@ -13,6 +12,8 @@ from django.utils.text import slugify
 from rest_framework.pagination import PageNumberPagination
 from rest_framework import generics
 import json
+import datetime
+
 
 
 
@@ -304,6 +305,69 @@ class ChangePasswordView(generics.UpdateAPIView):
     serializer_class = ChangePasswordSerializer
 
 
+
+
+@api_view(['GET'])
+def Anketler(request):
+    
+    anketler = AnketSoru.objects.all()
+    serializer = AnketSoruSerializer(anketler,many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def AnketDetay(request,pk):
+    anket = AnketSoru.objects.get(id=pk)
+    print(
+            anket.guncelle.strftime("%d")==datetime.datetime.now().strftime("%d")
+
+            and anket.guncelle.strftime("%B")==datetime.datetime.now().strftime("%B")
+
+            and anket.guncelle.strftime("%Y")==datetime.datetime.now().strftime("%Y")
+
+            and 
+            (
+               ((datetime.datetime.now().strftime("%H")==anket.guncelle.strftime("%H")) and (int(datetime.datetime.now().strftime("%M"))-int(anket.guncelle.strftime("%M")))<=5 )
+                   or 
+               ((int(datetime.datetime.now().strftime("%H")+3-int(anket.guncelle.strftime("%H")))==1) and (int(datetime.datetime.now().strftime("%M")) - int(anket.guncelle.strftime("%M")+60)<6)))
+         )
+    
+    
+    print("ay :",anket.guncelle.strftime("%m"),"saat :",int(anket.guncelle.strftime("%H"))+3,"dakika :",anket.guncelle.strftime("%M"))
+    serializer = AnketSoruSerializer(anket,many=False)
+    return Response(serializer.data)
+
+
+@api_view(['GET','POST'])
+def AnketCevapla(request,pk):
+    anket = AnketSoru.objects.get(id=pk)
+    fake_data = request.data.copy()
+    fake_data['anketsoru']=AnketSoru.objects.get(id=pk).id
+    fake_data['profil']=Profil.objects.get(user_id=request.data["user_id"]).id
+    if request.method=="POST":
+        serializer = AnketCevapSerializer(data = fake_data)
+        if serializer.is_valid():
+            serializer.save()
+        else:
+            print("valid degil.")
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def AnketAnaliz(request,pk):
+    anket_cevaplari = AnketCevap.objects.filter(anketsoru=AnketSoru.objects.get(id=pk))
+    paginator = PageNumberPagination()
+    paginator.page_size = 1
+    anketler_paginated = paginator.paginate_queryset(anket_cevaplari, request)
+    serializer = AnketCevapSerializer(anketler_paginated,many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def AnketCevapSayisi(request,pk):
+    anket_cevaplari = len(AnketCevap.objects.filter(anketsoru=AnketSoru.objects.get(id=pk)))
+    return Response(anket_cevaplari)
+
+
 @api_view(['GET','PUT','POST'])
 def AnketEkle(request):
     if request.method=="POST":
@@ -463,61 +527,259 @@ def AnketEkle(request):
     return Response("Enter data!")
 
 
-@api_view(['GET'])
-def Anketler(request):
-    anketler = AnketSoru.objects.all()
-    serializer = AnketSoruSerializer(anketler,many=True)
-    return Response(serializer.data)
-
-
-@api_view(['GET'])
-def AnketDetay(request,pk):
-    anket = AnketSoru.objects.get(id=pk)
-    serializer = AnketSoruSerializer(anket,many=False)
-    return Response(serializer.data)
-
-
-@api_view(['GET','POST'])
-def AnketCevapla(request,pk):
-    anket = AnketSoru.objects.get(id=pk)
-    fake_data = request.data.copy()
-    fake_data['anketsoru']=AnketSoru.objects.get(id=pk).id
-    fake_data['profil']=Profil.objects.get(user_id=request.data["user_id"]).id
-    if request.method=="POST":
-        serializer = AnketCevapSerializer(data = fake_data)
-        if serializer.is_valid():
-            serializer.save()
-        else:
-            print("valid degil.")
-    return Response(serializer.data)
-
-
-@api_view(['GET'])
-def AnketAnaliz(request,pk):
-    anket_cevaplari = AnketCevap.objects.filter(anketsoru=AnketSoru.objects.get(id=pk))
-    print(anket_cevaplari)
-    paginator = PageNumberPagination()
-    paginator.page_size = 1
-    anketler_paginated = paginator.paginate_queryset(anket_cevaplari, request)
-    serializer = AnketCevapSerializer(anketler_paginated,many=True)
-    return Response(serializer.data)
-
-@api_view(['GET'])
-def AnketCevapSayisi(request,pk):
-    anket_cevaplari = len(AnketCevap.objects.filter(anketsoru=AnketSoru.objects.get(id=pk)))
-    return Response(anket_cevaplari)
-
-
 @api_view(['PUT'])
 def AnketDuzenle(request,pk):
     anket = AnketSoru.objects.get(id=pk)
-    serializer = AnketSoruSerializer(anket,data=request.data,many=False)
-    print(request.data)
-    if serializer.is_valid():
-        serializer.save()
-        print(serializer.data)
-        return Response(serializer.data)
-    else:
-        print("valid degil")
+
+    serializer = AnketSoruSerializer(data = request.data)
+    if(request.data.get('baslik')):
+        anket.baslik=request.data.get('baslik')
+    if(request.data.get('profil')):
+        anket.profil = Profil.objects.get(user_id = request.data.get("user_id"))
+    if(request.data.get('aciklama')):
+        anket.aciklama=request.data.get("aciklama")
+    if(request.data.get('soru1')):
+        anket.soru1=request.data.get("soru1")
+    if(request.data.get('soru2')):
+        anket.soru2=request.data.get("soru2")
+    if(request.data.get('soru3')):
+        anket.soru3=request.data.get("soru3")
+    if(request.data.get('soru4')):
+        anket.soru4=request.data.get("soru4")
+    if(request.data.get('soru5')):
+        anket.soru5=request.data.get("soru5")
+    if(request.data.get('soru6')):
+        anket.soru6=request.data.get("soru6")
+    if(request.data.get('soru7')):
+        anket.soru7=request.data.get("soru7")
+    if(request.data.get('soru8')):
+        anket.soru8=request.data.get("soru8")
+    if(request.data.get('soru9')):
+        anket.soru9=request.data.get("soru9")
+    if(request.data.get('soru10')):
+        anket.soru10=request.data.get("soru10")
+    if(request.data.get('soru11')):
+        anket.soru11=request.data.get("soru11")
+    if(request.data.get('soru12')):
+        anket.soru12=request.data.get("soru12")
+    if(request.data.get('soru13')):
+        anket.soru13=request.data.get("soru13")
+    if(request.data.get('soru14')):
+        anket.soru14=request.data.get("soru14")
+    if(request.data.get('soru15')):
+        anket.soru15=request.data.get("soru15")
+    if(request.data.get('soru16')):
+        anket.soru16=request.data.get("soru16")
+    if(request.data.get('soru17')):
+        anket.soru17=request.data.get("soru17")
+    if(request.data.get('soru18')):
+        anket.soru18=request.data.get("soru18")
+    if(request.data.get('soru19')):
+        anket.soru19=request.data.get("soru19")
+    if(request.data.get('soru20')):
+        anket.soru20=request.data.get("soru20")
+    if(request.data.get('soru1cevap1')):
+        anket.soru1cevap1=request.data.get('soru1cevap1')
+    if(request.data.get('soru1cevap2')):
+        anket.soru1cevap2=request.data.get('soru1cevap2')
+    if(request.data.get('soru1cevap3')):
+        anket.soru1cevap3=request.data.get('soru1cevap3')
+    if(request.data.get('soru1cevap4')):
+        anket.soru1cevap4=request.data.get('soru1cevap4')
+    if(request.data.get('soru1cevap5')):
+        anket.soru1cevap5=request.data.get('soru1cevap5')
+    if(request.data.get('soru2cevap1')):
+        anket.soru2cevap1=request.data.get('soru2cevap1')
+    if(request.data.get('soru2cevap2')):
+        anket.soru2cevap2=request.data.get('soru2cevap2')
+    if(request.data.get('soru2cevap3')):
+        anket.soru2cevap3=request.data.get('soru2cevap3')
+    if(request.data.get('soru2cevap4')):
+        anket.soru2cevap4=request.data.get('soru2cevap4')
+    if(request.data.get('soru2cevap5')):
+        anket.soru2cevap5=request.data.get('soru2cevap5')
+    if(request.data.get('soru3cevap1')):
+        anket.soru3cevap1=request.data.get('soru3cevap1')
+    if(request.data.get('soru3cevap2')):
+        anket.soru3cevap2=request.data.get('soru3cevap2')
+    if(request.data.get('soru3cevap3')):
+        anket.soru3cevap3=request.data.get('soru3cevap3')
+    if(request.data.get('soru3cevap4')):
+        anket.soru3cevap4=request.data.get('soru3cevap4')
+    if(request.data.get('soru3cevap5')):
+        anket.soru3cevap5=request.data.get('soru3cevap5')
+    if(request.data.get('soru4cevap1')):
+        anket.soru4cevap1=request.data.get('soru4cevap1')
+    if(request.data.get('soru4cevap2')):
+        anket.soru4cevap2=request.data.get('soru4cevap2')
+    if(request.data.get('soru4cevap3')):
+        anket.soru4cevap3=request.data.get('soru4cevap3')
+    if(request.data.get('soru4cevap4')):
+        anket.soru4cevap4=request.data.get('soru4cevap4')
+    if(request.data.get('soru4cevap5')):
+        anket.soru4cevap5=request.data.get('soru4cevap5')
+    if(request.data.get('soru5cevap1')):
+        anket.soru5cevap1=request.data.get('soru5cevap1')
+    if(request.data.get('soru5cevap2')):
+        anket.soru5cevap2=request.data.get('soru5cevap2')
+    if(request.data.get('soru5cevap3')):
+        anket.soru5cevap3=request.data.get('soru5cevap3')
+    if(request.data.get('soru5cevap4')):
+        anket.soru5cevap4=request.data.get('soru5cevap4')
+    if(request.data.get('soru5cevap5')):
+        anket.soru5cevap5=request.data.get('soru5cevap5')
+    if(request.data.get('soru6cevap1')):
+        anket.soru6cevap1=request.data.get('soru6cevap1')
+    if(request.data.get('soru6cevap2')):
+        anket.soru6cevap2=request.data.get('soru6cevap2')
+    if(request.data.get('soru6cevap3')):
+        anket.soru6cevap3=request.data.get('soru6cevap3')
+    if(request.data.get('soru6cevap4')):
+        anket.soru6cevap4=request.data.get('soru6cevap4')
+    if(request.data.get('soru6cevap5')):
+        anket.soru6cevap5=request.data.get('soru6cevap5')
+    if(request.data.get('soru7cevap1')):
+        anket.soru7cevap1=request.data.get('soru7cevap1')
+    if(request.data.get('soru7cevap2')):
+        anket.soru7cevap2=request.data.get('soru7cevap2')
+    if(request.data.get('soru7cevap3')):
+        anket.soru7cevap3=request.data.get('soru7cevap3')
+    if(request.data.get('soru7cevap4')):
+        anket.soru7cevap4=request.data.get('soru7cevap4')
+    if(request.data.get('soru7cevap5')):
+        anket.soru7cevap5=request.data.get('soru7cevap5')
+    if(request.data.get('soru8cevap1')):
+        anket.soru8cevap1=request.data.get('soru8cevap1')
+    if(request.data.get('soru8cevap2')):
+        anket.soru8cevap2=request.data.get('soru8cevap2')
+    if(request.data.get('soru8cevap3')):
+        anket.soru8cevap3=request.data.get('soru8cevap3')
+    if(request.data.get('soru8cevap4')):
+        anket.soru8cevap4=request.data.get('soru8cevap4')
+    if(request.data.get('soru8cevap5')):
+        anket.soru8cevap5=request.data.get('soru8cevap5')
+    if(request.data.get('soru9cevap1')):
+        anket.soru9cevap1=request.data.get('soru9cevap1')
+    if(request.data.get('soru9cevap2')):
+        anket.soru9cevap2=request.data.get('soru9cevap2')
+    if(request.data.get('soru9cevap3')):
+        anket.soru9cevap3=request.data.get('soru9cevap3')
+    if(request.data.get('soru9cevap4')):
+        anket.soru9cevap4=request.data.get('soru9cevap4')
+    if(request.data.get('soru9cevap5')):
+        anket.soru9cevap5=request.data.get('soru9cevap5')
+    if(request.data.get('soru10cevap1')):
+        anket.soru10cevap1=request.data.get('soru10cevap1')
+    if(request.data.get('soru10cevap2')):
+        anket.soru10cevap2=request.data.get('soru10cevap2')
+    if(request.data.get('soru10cevap3')):
+        anket.soru10cevap3=request.data.get('soru10cevap3')
+    if(request.data.get('soru10cevap4')):
+        anket.soru10cevap4=request.data.get('soru10cevap4')
+    if(request.data.get('soru10cevap5')):
+        anket.soru10cevap5=request.data.get('soru10cevap5')
+    if(request.data.get('soru11cevap1')):
+        anket.soru11cevap1=request.data.get('soru11cevap1')
+    if(request.data.get('soru11cevap2')):
+        anket.soru11cevap2=request.data.get('soru11cevap2')
+    if(request.data.get('soru11cevap3')):
+        anket.soru11cevap3=request.data.get('soru11cevap3')
+    if(request.data.get('soru11cevap4')):
+        anket.soru11cevap4=request.data.get('soru11cevap4')
+    if(request.data.get('soru11cevap5')):
+        anket.soru11cevap5=request.data.get('soru11cevap5')
+    if(request.data.get('soru12cevap1')):
+        anket.soru12cevap1=request.data.get('soru12cevap1')
+    if(request.data.get('soru12cevap2')):
+        anket.soru12cevap2=request.data.get('soru12cevap2')
+    if(request.data.get('soru12cevap3')):
+        anket.soru12cevap3=request.data.get('soru12cevap3')
+    if(request.data.get('soru12cevap4')):
+        anket.soru12cevap4=request.data.get('soru12cevap4')
+    if(request.data.get('soru12cevap5')):
+        anket.soru12cevap5=request.data.get('soru12cevap5')
+    if(request.data.get('soru13cevap1')):
+        anket.soru13cevap1=request.data.get('soru13cevap1')
+    if(request.data.get('soru13cevap2')):
+        anket.soru13cevap2=request.data.get('soru13cevap2')
+    if(request.data.get('soru13cevap3')):
+        anket.soru13cevap3=request.data.get('soru13cevap3')
+    if(request.data.get('soru13cevap4')):
+        anket.soru13cevap4=request.data.get('soru13cevap4')
+    if(request.data.get('soru13cevap5')):
+        anket.soru13cevap5=request.data.get('soru13cevap5')
+    if(request.data.get('soru14cevap1')):
+        anket.soru14cevap1=request.data.get('soru14cevap1')
+    if(request.data.get('soru14cevap2')):
+        anket.soru14cevap2=request.data.get('soru14cevap2')
+    if(request.data.get('soru14cevap3')):
+        anket.soru14cevap3=request.data.get('soru14cevap3')
+    if(request.data.get('soru14cevap4')):
+        anket.soru14cevap4=request.data.get('soru14cevap4')
+    if(request.data.get('soru14cevap5')):
+        anket.soru14cevap5=request.data.get('soru14cevap5')
+    if(request.data.get('soru15cevap1')):
+        anket.soru15cevap1=request.data.get('soru15cevap1')
+    if(request.data.get('soru15cevap2')):
+        anket.soru15cevap2=request.data.get('soru15cevap2')
+    if(request.data.get('soru15cevap3')):
+        anket.soru15cevap3=request.data.get('soru15cevap3')
+    if(request.data.get('soru15cevap4')):
+        anket.soru15cevap4=request.data.get('soru15cevap4')
+    if(request.data.get('soru15cevap5')):
+        anket.soru15cevap5=request.data.get('soru15cevap5')
+    if(request.data.get('soru16cevap1')):
+        anket.soru16cevap1=request.data.get('soru16cevap1')
+    if(request.data.get('soru16cevap2')):
+        anket.soru16cevap2=request.data.get('soru16cevap2')
+    if(request.data.get('soru16cevap3')):
+        anket.soru16cevap3=request.data.get('soru16cevap3')
+    if(request.data.get('soru16cevap4')):
+        anket.soru16cevap4=request.data.get('soru16cevap4')
+    if(request.data.get('soru16cevap5')):
+        anket.soru16cevap5=request.data.get('soru16cevap5')
+    if(request.data.get('soru17cevap1')):
+        anket.soru17cevap1=request.data.get('soru17cevap1')
+    if(request.data.get('soru17cevap2')):
+        anket.soru17cevap2=request.data.get('soru17cevap2')
+    if(request.data.get('soru17cevap3')):
+        anket.soru17cevap3=request.data.get('soru17cevap3')
+    if(request.data.get('soru17cevap4')):
+        anket.soru17cevap4=request.data.get('soru17cevap4')
+    if(request.data.get('soru17cevap5')):
+        anket.soru17cevap5=request.data.get('soru17cevap5')
+    if(request.data.get('soru18cevap1')):
+        anket.soru18cevap1=request.data.get('soru18cevap1')
+    if(request.data.get('soru18cevap2')):
+        anket.soru18cevap2=request.data.get('soru18cevap2')
+    if(request.data.get('soru18cevap3')):
+        anket.soru18cevap3=request.data.get('soru18cevap3')
+    if(request.data.get('soru18cevap4')):
+        anket.soru18cevap4=request.data.get('soru18cevap4')
+    if(request.data.get('soru18cevap5')):
+        anket.soru18cevap5=request.data.get('soru18cevap5')
+    if(request.data.get('soru19cevap1')):
+        anket.soru19cevap1=request.data.get('soru19cevap1')
+    if(request.data.get('soru19cevap2')):
+        anket.soru19cevap2=request.data.get('soru19cevap2')
+    if(request.data.get('soru19cevap3')):
+        anket.soru19cevap3=request.data.get('soru19cevap3')
+    if(request.data.get('soru19cevap4')):
+        anket.soru19cevap4=request.data.get('soru19cevap4')
+    if(request.data.get('soru19cevap5')):
+        anket.soru19cevap5=request.data.get('soru19cevap5')
+    if(request.data.get('soru20cevap1')):
+        anket.soru20cevap1=request.data.get('soru20cevap1')
+    if(request.data.get('soru20cevap2')):
+        anket.soru20cevap2=request.data.get('soru20cevap2')
+    if(request.data.get('soru20cevap3')):
+        anket.soru20cevap3=request.data.get('soru20cevap3')
+    if(request.data.get('soru20cevap4')):
+        anket.soru20cevap4=request.data.get('soru20cevap4')
+    if(request.data.get('soru20cevap5')):
+        anket.soru20cevap5=request.data.get('soru20cevap5')
+
+    anket.save()
+
     return Response("update")
     
