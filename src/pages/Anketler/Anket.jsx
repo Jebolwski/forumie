@@ -5,8 +5,28 @@ import { AiFillEye } from "react-icons/ai/index.esm";
 import { TiTick } from "react-icons/ti/index.esm";
 import { Link } from "react-router-dom";
 import { CgEditBlackPoint } from "react-icons/cg/index.esm";
+import moment from "../../../node_modules/moment/moment";
 
 const Anket = (props) => {
+  let time1 = moment().format("h:mm");
+  console.log(time1);
+  var today = new Date();
+
+  var time =
+    today.getDate() + "-" + today.getMonth() + "-" + today.getFullYear();
+  // console.log(
+  //   time,
+  //   " ",
+  //   props.anket.guncelle.slice(
+  //     props.anket.guncelle.length - 5,
+  //     props.anket.guncelle.length
+  //   )
+  // );
+  console.log(props.anket.guncelle);
+  let guncelleme = false;
+  if (today.getFullYear() == 1) {
+    console.log("s");
+  }
   return (
     <>
       <div
@@ -55,10 +75,10 @@ const Anket = (props) => {
             <TiTick size={30} className="icon" />
           </Link>
           <Link to={`/anket/${props.anket.id}/analiz/`}>
-            <AiOutlineAreaChart size={24} color="gray" className="ms-4" />
+            <AiOutlineAreaChart size={24} color="gray" className="" />
           </Link>
           <Link to={`/anket/${props.anket.id}/duzenle/`}>
-            <CgEditBlackPoint size={30} className="icon ms-4" />
+            <CgEditBlackPoint size={30} className="icon " />
           </Link>
         </p>
         <h5 className="ms-2 ms-md-4 ms-lg-5  mt-5">{props.anket.baslik}</h5>
