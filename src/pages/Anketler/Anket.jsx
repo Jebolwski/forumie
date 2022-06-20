@@ -1,32 +1,31 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { GiHearts, GiBrokenHeart } from "react-icons/gi/index.esm";
 import { AiOutlineAreaChart } from "react-icons/ai/index.esm";
 import { AiFillEye } from "react-icons/ai/index.esm";
 import { TiTick } from "react-icons/ti/index.esm";
 import { Link } from "react-router-dom";
-import { CgEditBlackPoint } from "react-icons/cg/index.esm";
+import { FiEdit3 } from "react-icons/fi/index.esm";
 import moment from "../../../node_modules/moment/moment";
 
 const Anket = (props) => {
-  let time1 = moment().format("h:mm");
-  console.log(time1);
-  var today = new Date();
-
-  var time =
-    today.getDate() + "-" + today.getMonth() + "-" + today.getFullYear();
-  // console.log(
-  //   time,
-  //   " ",
-  //   props.anket.guncelle.slice(
-  //     props.anket.guncelle.length - 5,
-  //     props.anket.guncelle.length
-  //   )
-  // );
-  console.log(props.anket.guncelle);
-  let guncelleme = false;
-  if (today.getFullYear() == 1) {
-    console.log("s");
-  }
+  const [duzenlenebilir, setDuzenlenebilir] = useState();
+  let Duzenlenebilirmi = async () => {
+    let response = await fetch(
+      `http://127.0.0.1:8000/api/anket/${props.anket.id}/duzenlenebilirmi/`,
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    if (response.status === 200) {
+      let data = await response.json();
+      setDuzenlenebilir(data);
+      console.log(data);
+    }
+  };
+  useEffect(() => {
+    Duzenlenebilirmi();
+  }, []);
   return (
     <>
       <div
@@ -77,9 +76,11 @@ const Anket = (props) => {
           <Link to={`/anket/${props.anket.id}/analiz/`}>
             <AiOutlineAreaChart size={24} color="gray" className="" />
           </Link>
-          <Link to={`/anket/${props.anket.id}/duzenle/`}>
-            <CgEditBlackPoint size={30} className="icon " />
-          </Link>
+          {duzenlenebilir == "Y" ? (
+            <Link to={`/anket/${props.anket.id}/duzenle/`}>
+              <FiEdit3 size={21} className="icon " />
+            </Link>
+          ) : null}
         </p>
         <h5 className="ms-2 ms-md-4 ms-lg-5  mt-5">{props.anket.baslik}</h5>
         <p className="ms-2 ms-md-4 ms-lg-5 mb-5">
