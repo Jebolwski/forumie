@@ -1,0 +1,85 @@
+.aciklama {
+  overflow: hidden;
+  max-width: 300px;
+  max-height: 32px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+
+.forumie-toplam {
+  min-height: 180px;
+  border: 1px solid darkred;
+}
+
+.fake-forumie {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  min-height: 180px;
+  z-index: 1;
+}
+
+.forumie-profil-foto {
+  margin-left: -42vw;
+  width: 5vw;
+  height: 5vw;
+}
+
+.forumie {
+  position: relative;
+  top: 0;
+}
+
+.like:hover {
+  color: rgb(167, 62, 62);
+}
+
+.like:hover .l-icon {
+  padding: 1.5px;
+  background-color: rgba(223, 87, 87, 0.589);
+  border-radius: 20px;
+}
+
+.reforumie:hover {
+  color: rgb(44, 139, 65);
+}
+
+.reforumie:hover .r-icon {
+  padding: 1.5px;
+  background-color: rgba(90, 168, 123, 0.575);
+  border-radius: 20px;
+}
+
+@media only screen and (max-width: 992px) {
+  .forumie-profil-foto {
+    margin-left: -30vw;
+    height: 8vw;
+    width: 8vw;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .forumie-profil-foto {
+    margin-left: -59vw;
+    height: 8vw;
+    width: 8vw;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .forumie-profil-foto {
+    margin-left: -48vw;
+    height: 9.8vw;
+    width: 9.8vw;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .forumie-profil-foto {
+    margin-left: -35vw;
+    height: 9vw;
+    width: 9vw;
+  }
+}

@@ -1,0 +1,14 @@
+.giris-alert {
+  animation-name: fade;
+  animation-delay: 3s;
+  animation-duration: 2s;
+}
+
+@keyframes fade {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
